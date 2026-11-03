@@ -3,62 +3,277 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Artist Marketplace - MVP Preview</title>
+    <title>Artist Marketplace - MVP Platform</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f9f9f9; color: #333; }
-        header { background: #2c3e50; color: #fff; padding: 20px; text-align: center; }
-        .hero { background: #ecf0f1; padding: 40px 20px; text-align: center; }
-        .container { max-width: 1100px; margin: 20px auto; padding: 0 20px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .card { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 15px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .card img { width: 100%; height: 200px; object-fit: cover; border-radius: 5px; }
-        .btn { background: #e74c3c; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px; }
+        :root {
+            --primary: #2c3e50;
+            --accent: #e74c3c;
+            --bg: #f9f9f9;
+            --card-bg: #fff;
+            --text: #333;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg); color: var(--text); line-height: 1.6; }
+        
+        /* Navigation */
+        header { background: var(--primary); color: #fff; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; }
+        .logo { font-size: 22px; font-weight: bold; color: #fff; text-decoration: none; }
+        .nav-links { display: flex; list-style: none; gap: 20px; }
+        .nav-links a { color: #fff; text-decoration: none; cursor: pointer; transition: color 0.3s; font-size: 15px; }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+
+        /* Sections */
+        .page-section { display: none; padding: 40px 20px; max-width: 1200px; margin: 0 auto; min-height: 70vh; }
+        .page-section.active { display: block; }
+
+        /* Hero Section */
+        .hero { background: linear-gradient(rgba(44,62,80,0.8), rgba(44,62,80,0.8)), url('https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=1200&q=80') center/cover; color: #fff; text-align: center; padding: 80px 20px; border-radius: 8px; margin-bottom: 30px; }
+        .hero h1 { font-size: 38px; margin-bottom: 15px; }
+        .hero p { font-size: 18px; margin-bottom: 25px; }
+        .btn { background: var(--accent); color: #fff; padding: 12px 25px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; text-decoration: none; display: inline-block; transition: background 0.3s; }
         .btn:hover { background: #c0392b; }
-        footer { text-align: center; padding: 20px; background: #2c3e50; color: #fff; margin-top: 40px; }
+
+        /* Grid Layouts */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
+        .card { background: var(--card-bg); border: 1px solid #e1e1e1; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.05); transition: transform 0.3s; }
+        .card:hover { transform: translateY(-5px); }
+        .card img { width: 100%; height: 220px; object-fit: cover; }
+        .card-content { padding: 15px; }
+        .card-content h3 { margin-bottom: 8px; font-size: 18px; }
+        .price { color: var(--accent); font-weight: bold; font-size: 18px; margin: 10px 0; }
+
+        /* Forms (Contact, Login, Checkout) */
+        .form-container { max-width: 500px; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin: 0 auto; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: 600; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 15px; }
+        .form-group textarea { resize: vertical; height: 100px; }
+
+        /* Footer */
+        footer { background: var(--primary); color: #fff; text-align: center; padding: 20px; margin-top: 50px; }
+
+        /* Responsive */
+        @media(max-width: 768px) {
+            .nav-links { display: none; } /* Simplified for prototype mobile view */
+        }
     </style>
 </head>
 <body>
 
+    <!-- Header & Navigation -->
     <header>
-        <h1>🎨 Artist Marketplace</h1>
-        <p>A Platform to Showcase & Sell Artworks Online</p>
+        <div class="nav-container">
+            <a href="#" class="logo" onclick="switchPage('home')">🎨 ArtMarket MVP</a>
+            <ul class="nav-links">
+                <li><a onclick="switchPage('home')" id="link-home" class="active">Home</a></li>
+                <li><a onclick="switchPage('shop')" id="link-shop">Explore Art</a></li>
+                <li><a onclick="switchPage('about')" id="link-about">About Us</a></li>
+                <li><a onclick="switchPage('contact')" id="link-contact">Contact</a></li>
+                <li><a onclick="switchPage('login')" id="link-login" style="border: 1px solid #fff; padding: 5px 12px; border-radius: 4px;">Artist Portal</a></li>
+                <li><a onclick="switchPage('checkout')" id="link-checkout" style="background: var(--accent); padding: 5px 12px; border-radius: 4px;">Cart (<span id="cart-count">0</span>)</a></li>
+            </ul>
+        </div>
     </header>
 
-    <section class="hero">
-        <h2>Welcome to the MVP Preview</h2>
-        <p>This is a preliminary interface layout for your artwork marketplace platform.</p>
-    </section>
-
-    <div class="container">
-        <h3>Featured Artworks</h3>
+    <!-- 1. HOME PAGE -->
+    <section id="page-home" class="page-section active">
+        <div class="hero">
+            <h1>Discover & Buy Unique Artworks Online</h1>
+            <p>A complete platform connecting independent artists with global art lovers.</p>
+            <button class="btn" onclick="switchPage('shop')">Explore Collection</button>
+        </div>
+        <h2>Featured Masterpieces</h2>
         <div class="grid">
             <div class="card">
-                <div style="background:#ddd; height:200px; display:flex; align-items:center; justify-content:center; color:#777; border-radius:5px;">Art Image 1</div>
-                <h4>Abstract Canvas</h4>
-                <p>Artist: John Doe</p>
-                <p><strong>₹4,500</strong></p>
-                <button class="btn">View Details</button>
+                <img src="https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=500&q=80" alt="Art">
+                <div class="card-content">
+                    <h3>Abstract Harmony</h3>
+                    <p>Artist: Rahul V.</p>
+                    <div class="price">₹5,500</div>
+                    <button class="btn" onclick="addToCart('Abstract Harmony', 5500)">Add to Cart</button>
+                </div>
             </div>
             <div class="card">
-                <div style="background:#ddd; height:200px; display:flex; align-items:center; justify-content:center; color:#777; border-radius:5px;">Art Image 2</div>
-                <h4>Sunset Portrait</h4>
-                <p>Artist: Jane Smith</p>
-                <p><strong>₹6,200</strong></p>
-                <button class="btn">View Details</button>
+                <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=500&q=80" alt="Art">
+                <div class="card-content">
+                    <h3>Vibrant Strokes</h3>
+                    <p>Artist: Ananya M.</p>
+                    <div class="price">₹8,200</div>
+                    <button class="btn" onclick="addToCart('Vibrant Strokes', 8200)">Add to Cart</button>
+                </div>
             </div>
             <div class="card">
-                <div style="background:#ddd; height:200px; display:flex; align-items:center; justify-content:center; color:#777; border-radius:5px;">Art Image 3</div>
-                <h4>Modern Scenery</h4>
-                <p>Artist: Alex Lee</p>
-                <p><strong>₹3,800</strong></p>
-                <button class="btn">View Details</button>
+                <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=500&q=80" alt="Art">
+                <div class="card-content">
+                    <h3>Golden Horizon</h3>
+                    <p>Artist: Sreejith K.</p>
+                    <div class="price">₹12,000</div>
+                    <button class="btn" onclick="addToCart('Golden Horizon', 12000)">Add to Cart</button>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 
+    <!-- 2. SHOP / GALLERY PAGE -->
+    <section id="page-shop" class="page-section">
+        <h2>All Artworks Gallery</h2>
+        <p style="margin-bottom: 20px; color: #666;">Browse through our curated collection of paintings and digital canvas arts.</p>
+        <div class="grid">
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=500&q=80" alt="Art">
+                <div class="card-content">
+                    <h3>Abstract Harmony</h3>
+                    <div class="price">₹5,500</div>
+                    <button class="btn" onclick="addToCart('Abstract Harmony', 5500)">Add to Cart</button>
+                </div>
+            </div>
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=500&q=80" alt="Art">
+                <div class="card-content">
+                    <h3>Vibrant Strokes</h3>
+                    <div class="price">₹8,200</div>
+                    <button class="btn" onclick="addToCart('Vibrant Strokes', 8200)">Add to Cart</button>
+                </div>
+            </div>
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=500&q=80" alt="Art">
+                <div class="card-content">
+                    <h3>Golden Horizon</h3>
+                    <div class="price">₹12,000</div>
+                    <button class="btn" onclick="addToCart('Golden Horizon', 12000)">Add to Cart</button>
+                </div>
+            </div>
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?auto=format&fit=crop&w=500&q=80" alt="Art">
+                <div class="card-content">
+                    <h3>Royal Heritage</h3>
+                    <div class="price">₹15,000</div>
+                    <button class="btn" onclick="addToCart('Royal Heritage', 15000)">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. ABOUT US PAGE -->
+    <section id="page-about" class="page-section">
+        <div style="max-width: 800px; margin: 0 auto; background: #fff; padding: 40px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+            <h2>About Our Marketplace</h2>
+            <p style="margin-top: 15px;">Our Artist Marketplace MVP is designed to empower local and international artists by giving them a direct channel to showcase and monetize their creative works without hassle.</p>
+            <p style="margin-top: 10px;">We ensure secure transactions, verified artist profiles, and smooth delivery tracking so that art enthusiasts get authentic pieces directly from creators.</p>
+        </div>
+    </section>
+
+    <!-- 4. CONTACT PAGE -->
+    <section id="page-contact" class="page-section">
+        <div class="form-container">
+            <h2>Get in Touch</h2>
+            <p style="margin-bottom: 20px; color: #666;">Have questions regarding custom artworks or shipping? Send us a message.</p>
+            <form onsubmit="event.preventDefault(); alert('Message sent successfully!');">
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea placeholder="Type your message here..." required></textarea>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- 5. ARTIST LOGIN / REGISTRATION PORTAL -->
+    <section id="page-login" class="page-section">
+        <div class="form-container">
+            <h2>Artist Registration / Login</h2>
+            <p style="margin-bottom: 20px; color: #666;">Join our platform to upload and sell your art pieces.</p>
+            <form onsubmit="event.preventDefault(); alert('Artist account registered/logged in successfully!');">
+                <div class="form-group">
+                    <label>Email / Artist ID</label>
+                    <input type="email" placeholder="artist@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" placeholder="********" required>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Access Dashboard</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- 6. CHECKOUT & PAYMENT KIT PAGE -->
+    <section id="page-checkout" class="page-section">
+        <div class="form-container" style="max-width: 600px;">
+            <h2>Secure Checkout & Payment Kit</h2>
+            <p style="margin-bottom: 20px; color: #666;">Complete your purchase securely via integrated payment gateway simulator.</p>
+            <div id="cart-summary" style="background: #f1f2f6; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+                <p><strong>Selected Items:</strong> <span id="cart-items-text">No items in cart</span></p>
+                <p style="margin-top: 5px;"><strong>Total Amount:</strong> <span id="cart-total" style="color: var(--accent); font-weight: bold;">₹0</span></p>
+            </div>
+            <form onsubmit="event.preventDefault(); alert('Redirecting to Payment Gateway (Razorpay/PhonePe)...');">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" placeholder="Buyer Name" required>
+                </div>
+                <div class="form-group">
+                    <label>Delivery Address</label>
+                    <textarea placeholder="Shipping street address, city, pin..." style="height: 70px;" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Payment Method</label>
+                    <select>
+                        <option>UPI / Google Pay / PhonePe</option>
+                        <option>Credit / Debit Card</option>
+                        <option>Net Banking</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn" style="width: 100%; background: #27ae60;">Proceed to Pay</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer>
-        <p>&copy; 2026 Artist Marketplace. All Rights Reserved.</p>
+        <p>&copy; 2026 Artist Marketplace Platform. MVP Version 1.0. All Rights Reserved.</p>
     </footer>
 
+    <!-- Interactive Navigation & Cart Script -->
+    <script>
+        let cart = [];
+
+        function switchPage(pageId) {
+            // Hide all sections
+            document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.nav-links a').forEach(link => link.classList.remove('active'));
+            
+            // Show target section
+            document.getElementById('page-' + pageId).classList.add('active');
+            
+            // Highlight nav link if exists
+            const activeLink = document.getElementById('link-' + pageId);
+            if(activeLink) activeLink.classList.add('active');
+            
+            window.scrollTo(0, 0);
+        }
+
+        function addToCart(itemName, itemPrice) {
+            cart.push({ name: itemName, price: itemPrice });
+            document.getElementById('cart-count').innerText = cart.length;
+            
+            // Update Checkout summary text
+            let names = cart.map(i => i.name).join(', ');
+            let total = cart.reduce((sum, i) => sum + i.price, 0);
+            
+            document.getElementById('cart-items-text').innerText = names;
+            document.getElementById('cart-total').innerText = '₹' + total.toLocaleString();
+            
+            alert(itemName + " added to cart successfully!");
+        }
+    </script>
 </body>
 </html>
