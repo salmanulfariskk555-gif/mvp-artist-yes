@@ -1,494 +1,211 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>kaalaverse| Original Art Marketplace</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
-
+<meta name="theme-color" content="#101014">
+<meta name="description" content="Kaalaverse — Discover creators, shop original art, subscribe to artists, book performers and experience live entertainment.">
+<title>Kaalaverse — Your world. Your artists. Your experiences.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{
- --bg:#f8f7f3;--dark:#211f1b;--rust:#b85f42;
- --muted:#77736c;--line:#e6e2d9;--white:#fff;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--dark);font-family:'DM Sans',sans-serif}
-button,input,select,textarea{font:inherit}
-button{cursor:pointer}
-a{text-decoration:none;color:inherit}
-.announcement{background:var(--dark);color:white;text-align:center;padding:10px;font-size:10px;letter-spacing:2px}
-header{height:76px;padding:0 6%;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);position:sticky;top:0;background:#f8f7f3ed;backdrop-filter:blur(12px);z-index:10}
-.logo{font:700 28px 'Playfair Display';display:flex;align-items:center;gap:10px}
-.logo span{background:var(--rust);color:white;border-radius:50%;padding:2px 10px}
-nav{display:flex;gap:25px}
-nav a{font-size:12px}
-nav a:hover{color:var(--rust)}
-.actions{display:flex;align-items:center;gap:12px}
-.icon{border:0;background:none;font-size:21px}
-.count{font-size:10px;color:var(--rust);font-weight:bold}
-.btn{border:0;padding:13px 19px;font-size:11px;font-weight:700;cursor:pointer}
-.dark{background:var(--dark);color:white}
-.dark:hover{background:var(--rust)}
-.outline{background:transparent;border:1px solid #aaa}
-h1,h2,h3{font-family:'Playfair Display',serif;font-weight:500}
-h1{font-size:clamp(55px,7vw,95px);line-height:.98;margin:25px 0}
-h2{font-size:clamp(36px,5vw,56px)}
-em{color:var(--rust)}
-p{color:var(--muted);line-height:1.8}
-.hero{padding:75px 8%;display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
-.eyebrow{color:var(--rust);font-size:10px;font-weight:bold;letter-spacing:3px}
-.hero p{max-width:400px}
-.hero-image{width:100%;height:440px;object-fit:cover}
-.hero-buttons{display:flex;gap:15px;align-items:center;flex-wrap:wrap}
-.hero-note{margin-top:30px;font-size:11px}
-.section{padding:80px 7%}
-.section-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
-.filters{display:flex;gap:8px;flex-wrap:wrap;margin:25px 0}
-.filter{background:none;border:1px solid var(--line);padding:9px 15px;font-size:11px}
-.filter.active,.filter:hover{background:var(--dark);color:white}
-.product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:30px 17px}
-.product{min-width:0}
-.product-img{position:relative;aspect-ratio:.82;background:#eee;overflow:hidden}
-.product-img img{width:100%;height:100%;object-fit:cover;transition:.4s}
-.product:hover img{transform:scale(1.05)}
-.heart{position:absolute;right:10px;top:10px;border:0;background:white;border-radius:50%;width:36px;height:36px;font-size:19px}
-.product-info{padding:13px 0}
-.product-info h3{font-size:18px;margin:0 0 7px}
-.product-meta{display:flex;justify-content:space-between;font-size:11px;color:var(--muted)}
-.product-meta b{color:var(--dark)}
-.add{width:100%;padding:12px;background:var(--dark);color:white;border:0;margin-top:12px;font-size:10px}
-.add:hover{background:var(--rust)}
-.artist{background:#272722;color:white;display:grid;grid-template-columns:1fr 1fr}
-.artist img{width:100%;height:100%;min-height:380px;object-fit:cover}
-.artist-content{padding:65px 12%}
-.artist-content p{color:#ccc}
-.artist-content h2{font-size:48px}
-.story{display:grid;grid-template-columns:1fr 1.5fr;gap:40px}
-.story-items{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.story-items article{border-top:1px solid var(--line);padding-top:15px}
-.story-items h3{font-size:18px}
-.story-items p{font-size:11px}
-.payment{background:#eeeae1;padding:80px 7%;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
-.qr-card{background:white;padding:25px;text-align:center;max-width:350px;margin:auto;width:100%}
-.qr-card img{width:100%;max-width:250px;display:block;margin:15px auto;object-fit:contain}
-.upi{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:white;padding:14px;margin-top:20px;font-size:12px}
-.newsletter{background:var(--rust);color:white;padding:50px 7%;display:flex;justify-content:space-between;align-items:center;gap:20px}
-.newsletter input{padding:13px;border:0}
-footer{background:var(--dark);color:white;padding:45px 7%}
-footer p{color:#aaa}
-.overlay{display:none;position:fixed;inset:0;background:#0008;z-index:20}
-.overlay.show{display:block}
-.drawer{position:fixed;right:-450px;top:0;width:min(420px,100%);height:100%;background:white;z-index:21;padding:25px;transition:.3s;overflow:auto}
-.drawer.show{right:0}
-.drawer-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}
-.drawer-head button,.close{border:0;background:none;font-size:27px}
-.cart-row{display:flex;gap:12px;align-items:center;padding:15px 0;border-bottom:1px solid var(--line)}
-.cart-row img{width:65px;height:70px;object-fit:cover}
-.cart-row h4{margin:0;font:17px 'Playfair Display'}
-.cart-row button{border:0;background:none;color:var(--rust);font-size:11px}
-.modal{display:none;position:fixed;z-index:30;inset:0;background:#0009;align-items:center;justify-content:center;padding:15px}
-.modal.show{display:flex}
-.modal-box{background:white;width:min(520px,100%);max-height:90vh;overflow:auto;padding:30px;position:relative}
-.modal-box input,.modal-box textarea,.modal-box select{width:100%;padding:12px;margin:7px 0 14px;border:1px solid var(--line)}
-.modal-box label{font-size:11px;font-weight:bold}
-.modal-box .close{position:absolute;right:15px;top:10px}
-.submit{width:100%;padding:13px;background:var(--dark);color:white;border:0;margin-top:8px}
-.submit:hover{background:var(--rust)}
-.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--dark);color:white;padding:13px 20px;z-index:50;display:none;font-size:12px}
-.empty{text-align:center;padding:30px;color:var(--muted)}
-.admin-stat{background:#f3f0e9;padding:15px;margin:10px 0}
-@media(max-width:900px){.product-grid{grid-template-columns:repeat(2,1fr)}nav{gap:12px}.hero{padding:55px 6%}}
-@media(max-width:600px){
- header{height:65px;padding:0 4%}nav{display:none}
- .actions{gap:7px}.actions .dark{display:none}
- .hero{grid-template-columns:1fr;padding:45px 6%;gap:25px}
- .hero-image{height:300px}.section{padding:60px 5%}
- .product-grid{gap:20px 12px}.product-info h3{font-size:15px}
- .artist{grid-template-columns:1fr}.artist img{min-height:250px}
- .artist-content{padding:40px 8%}
- .story,.payment{grid-template-columns:1fr}
- .story-items{grid-template-columns:1fr}
- .payment{padding:55px 6%}
- .newsletter{display:block}
- .newsletter input{width:65%}
-}
+:root{--bg:#0c0c10;--panel:#15151c;--panel2:#1c1c25;--text:#f6f5fa;--muted:#aaa8b5;--line:#2b2a35;--purple:#8052ff;--purple2:#a58aff;--green:#30c878;--radius:20px;--max:1180px}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}body{margin:0;background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif}a{color:inherit;text-decoration:none}button,input,select,textarea{font:inherit}button{cursor:pointer}img{max-width:100%;display:block}.wrap{width:min(var(--max),92%);margin:auto}.announcement{background:#21183c;color:#d9ceff;text-align:center;padding:9px 12px;font-size:11px;letter-spacing:1.2px}
+header{position:sticky;top:0;z-index:20;background:#0c0c10ed;backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}.navrow{height:76px;display:flex;align-items:center;justify-content:space-between;gap:22px}.brand{font:700 25px 'Space Grotesk';letter-spacing:-1px;white-space:nowrap}.brand b{color:var(--purple2)}nav{display:flex;align-items:center;gap:18px}nav a,.utility button{font-size:12px;color:#d2d0da;white-space:nowrap}nav a:hover,.utility button:hover{color:var(--purple2)}.utility{display:flex;align-items:center;gap:12px}.utility button,.menu-toggle{background:none;border:0;color:var(--text)}.pill{border:1px solid var(--line);padding:10px 15px;border-radius:999px}.primary{background:var(--purple);border:1px solid var(--purple);color:white;padding:12px 18px;border-radius:999px;font-weight:700}.primary:hover{background:#6c3ff0}.secondary{background:transparent;border:1px solid #514b62;color:white;padding:12px 18px;border-radius:999px}.menu-toggle{display:none;font-size:24px}
+.hero{padding:76px 0 54px}.hero-box{border:1px solid #292633;border-radius:28px;padding:clamp(28px,6vw,72px);background:radial-gradient(ellipse at 80% 10%,#38235e 0%,transparent 43%),linear-gradient(135deg,#1a1921,#101014 65%);overflow:hidden;position:relative}.eyebrow{color:var(--purple2);font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase}.hero h1{font:700 clamp(38px,6vw,72px)/1.06 'Space Grotesk';max-width:800px;margin:20px 0}.gradient{background:linear-gradient(90deg,#fff,#b9a5ff);-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{max-width:620px;color:#c2bfcc;line-height:1.8;font-size:16px}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}.hero-foot{margin-top:28px;color:#9995a7;font-size:12px}
+.section{padding:64px 0;border-top:1px solid #24232c}.section-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:26px}.section h2{font:700 clamp(27px,4vw,42px)/1.15 'Space Grotesk';margin:9px 0}.sub{color:var(--muted);line-height:1.7;margin:8px 0}.category-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.category{position:relative;min-height:190px;border-radius:18px;overflow:hidden;background:#24232d;border:1px solid var(--line)}.category img{width:100%;height:100%;position:absolute;inset:0;object-fit:cover;opacity:.68;transition:.35s}.category:hover img{transform:scale(1.05);opacity:.85}.category strong{position:absolute;bottom:17px;left:18px;font:700 20px 'Space Grotesk';text-shadow:0 2px 12px #000}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:17px}.card{background:var(--panel);border:1px solid var(--line);border-radius:17px;overflow:hidden;min-width:0}.card-img{height:220px;position:relative;background:#24232d}.card-img img{width:100%;height:100%;object-fit:cover}.card-body{padding:15px}.card h3{font:600 16px 'Space Grotesk';margin:0 0 7px}.meta{color:var(--muted);font-size:12px;display:flex;justify-content:space-between;gap:8px}.price{color:white;font-weight:700}.card-actions{display:flex;gap:8px;margin-top:13px}.card-actions button{flex:1;padding:10px 8px;font-size:11px;border-radius:9px}.heart{position:absolute;top:10px;right:10px;border:0;border-radius:50%;width:36px;height:36px;background:#101014d9;color:white;font-size:18px}
+.feature-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}.feature{border:1px solid var(--line);border-radius:20px;overflow:hidden;background:var(--panel)}.feature img{width:100%;height:250px;object-fit:cover}.feature .inside{padding:20px}.feature h3{font:600 22px 'Space Grotesk';margin:0 0 8px}.feature p{color:var(--muted);line-height:1.7}.creator-cta{padding:36px;border-radius:22px;background:linear-gradient(120deg,#2b2050,#17151f);border:1px solid #4a3a70;display:flex;justify-content:space-between;align-items:center;gap:20px}.creator-cta h2{margin:8px 0}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.filters button{border:1px solid var(--line);background:transparent;color:#ccc;padding:8px 13px;border-radius:999px;font-size:12px}.filters button.active{background:var(--purple);border-color:var(--purple);color:white}.search-sort{display:flex;gap:10px;flex-wrap:wrap}.field{background:#111117;color:white;border:1px solid var(--line);border-radius:10px;padding:11px 13px;min-width:0}
+.event-list{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.event{background:var(--panel);border:1px solid var(--line);border-radius:17px;overflow:hidden}.event img{height:175px;width:100%;object-fit:cover}.event .inside{padding:16px}.tag{font-size:10px;color:#c8b9ff;background:#30264b;padding:5px 9px;border-radius:999px}
+.policy-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.policy{border:1px solid var(--line);background:var(--panel);padding:18px;border-radius:14px}.policy h3{font:600 15px 'Space Grotesk';margin:0 0 7px}.policy p{font-size:12px;color:var(--muted);line-height:1.6;margin:0}
+footer{padding:45px 0 28px;border-top:1px solid var(--line);background:#09090c}.footgrid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:30px}.footlinks{display:grid;gap:10px;color:var(--muted);font-size:13px}.copyright{border-top:1px solid var(--line);margin-top:30px;padding-top:20px;color:#777482;font-size:11px}
+.overlay{display:none;position:fixed;inset:0;background:#000b;z-index:40}.overlay.show{display:block}.drawer{position:fixed;z-index:41;right:-440px;top:0;width:min(420px,100%);height:100%;overflow:auto;background:#15151c;border-left:1px solid var(--line);padding:24px;transition:.25s}.drawer.show{right:0}.drawer-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px}.drawer-head button,.close{background:none;border:0;color:white;font-size:25px}.cart-row{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}.cart-row img{width:65px;height:70px;object-fit:cover;border-radius:8px}.cart-row p{color:var(--muted);font-size:12px}.modal{display:none;position:fixed;inset:0;z-index:50;background:#000c;align-items:center;justify-content:center;padding:16px}.modal.show{display:flex}.modal-box{width:min(560px,100%);max-height:90vh;overflow:auto;background:#17171f;border:1px solid var(--line);border-radius:18px;padding:26px;position:relative}.modal-box .close{position:absolute;right:15px;top:10px}.modal-box h2{font:700 25px 'Space Grotesk';margin:8px 35px 15px 0}.modal-box label{display:block;font-size:12px;color:#c9c6d1;margin:12px 0 6px}.modal-box input,.modal-box select,.modal-box textarea{width:100%;padding:12px;background:#0f0f14;border:1px solid var(--line);border-radius:9px;color:white}.modal-box textarea{min-height:90px}.modal-box form button{width:100%;margin-top:16px}.toast{position:fixed;z-index:60;bottom:20px;left:50%;transform:translateX(-50%);background:#292536;border:1px solid #51456c;color:white;border-radius:999px;padding:12px 18px;display:none;font-size:13px}.qr-placeholder{border:1px dashed #686078;border-radius:15px;padding:24px;text-align:center;color:#c6c1d0}.small{font-size:11px;color:var(--muted);line-height:1.6}.hamburger-menu{display:none;padding:0 0 16px}.hamburger-menu.open{display:grid;grid-template-columns:1fr 1fr;gap:12px}.hamburger-menu a{font-size:13px;color:#ddd}
+@media(max-width:1050px){nav{display:none}.menu-toggle{display:block}.cards{grid-template-columns:repeat(2,1fr)}.category-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){.navrow{height:66px}.brand{font-size:22px}.utility{gap:7px}.utility .utility-label{display:none}.utility .primary{padding:9px 12px}.hero{padding:35px 0}.hero-box{padding:28px 22px}.hero p{font-size:14px}.section{padding:46px 0}.section-head{align-items:start;flex-direction:column}.category-grid{gap:10px}.category{min-height:145px}.category strong{font-size:16px;left:12px;bottom:12px}.cards{gap:10px}.card-img{height:155px}.card-body{padding:11px}.card h3{font-size:14px}.card-actions{flex-direction:column}.feature-grid,.event-list,.policy-grid,.footgrid{grid-template-columns:1fr}.creator-cta{display:block;padding:25px}.creator-cta .primary{margin-top:15px}.search-sort{width:100%}.search-sort input{flex:1;width:100%}.hamburger-menu.open{grid-template-columns:1fr 1fr}}
 </style>
 </head>
-
 <body>
-
-<div class="announcement">A HOME FOR ORIGINAL ART ✦ INDEPENDENT ARTISTS ✦ MADE WITH PASSION</div>
-
+<div class="announcement">KAALAVERSE · DISCOVER CREATORS · SHOP ORIGINAL ART · SUBSCRIBE · BOOK · EXPERIENCE LIVE ENTERTAINMENT</div>
 <header>
- <a class="logo" href="#"><span>k.</span> kaalaverse</a>
- <nav>
-  <a href="#explore">Explore Art</a>
-  <a href="#artists">Artists</a>
-  <a href="#how">About</a>
-  <a href="#payment">Payment</a>
- </nav>
- <div class="actions">
-  <button class="icon" onclick="searchArt()">⌕</button>
-  <button class="icon" onclick="openDrawer('wishlist')">♡ <span class="count" id="wishCount">0</span></button>
-  <button class="icon" onclick="openDrawer('cart')">🛍 <span class="count" id="cartCount">0</span></button>
-  <button class="btn dark" onclick="login()">Sign In</button>
+ <div class="wrap navrow">
+  <a class="brand" href="#home">KAALA<b>VERSE</b></a>
+  <nav>
+   <a href="#home">Home</a><a href="#artists">Discover Artists</a><a href="#art">Explore Art</a><a href="#creators">Creators</a><a href="#creator-memberships">Memberships</a><a href="#events">Live Events</a><a href="#book">Book an Artist</a><a href="#workshops">Workshops</a><a href="#join">Join Kaalaverse</a>
+  </nav>
+  <div class="utility">
+   <button onclick="searchOpen()" title="Search">⌕ <span class="utility-label">Search</span></button>
+   <button onclick="openDrawer('wishlist')" title="Wishlist">♡ <span id="wishCount">0</span></button>
+   <button onclick="openDrawer('cart')" title="Cart">▢ <span id="cartCount">0</span></button>
+   <button class="primary" onclick="login()">Login</button>
+  </div>
+  <button class="menu-toggle" onclick="toggleMenu()" aria-label="Open menu">☰</button>
+ </div>
+ <div class="wrap hamburger-menu" id="mobileMenu">
+  <a href="#home" onclick="toggleMenu()">Home</a><a href="#artists" onclick="toggleMenu()">Discover Artists</a><a href="#art" onclick="toggleMenu()">Explore Art</a><a href="#creators" onclick="toggleMenu()">Creators</a><a href="#creator-memberships" onclick="toggleMenu()">Memberships</a><a href="#events" onclick="toggleMenu()">Live Events</a><a href="#book" onclick="toggleMenu()">Book an Artist</a><a href="#workshops" onclick="toggleMenu()">Workshops</a><a href="#join" onclick="toggleMenu()">Join Kaalaverse</a>
  </div>
 </header>
 
-<section class="hero">
- <div>
-  <div class="eyebrow">THE ART YOU LOVE</div>
-  <h1>Make room<br>for <em>original.</em></h1>
-  <p>Discover beautiful original artworks, meet independent artists and collect something special.</p>
-  <div class="hero-buttons">
-   <a class="btn dark" href="#explore">Explore Collection ↗</a>
-   <a href="#artists">Meet Artists →</a>
-  </div>
-  <div class="hero-note">✳ Independent artists. Original creations.</div>
- </div>
- <img class="hero-image" src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=1000&q=85" alt="Featured painting">
-</section>
+<main id="home">
+<section class="hero"><div class="wrap"><div class="hero-box">
+ <div class="eyebrow">A CREATIVE WORLD · MADE IN INDIA</div>
+ <h1>Your world. Your artists.<br><span class="gradient">Your experiences.</span></h1>
+ <p>Discover exceptional creators, collect original art and experience extraordinary performances. One platform for creativity, connection and culture.</p>
+ <div class="hero-actions"><a class="primary" href="#artists">Explore Artists ↗</a><a class="secondary" href="#book">Book Performers</a></div>
+ <div class="hero-foot">✦ Discover creators. Shop original art. Subscribe to artists. Book performers.</div>
+</div></div></section>
 
-<section class="section" id="explore">
- <div class="section-head">
-  <div>
-   <div class="eyebrow">THE COLLECTION</div>
-   <h2>Find your <em>next favourite.</em></h2>
-  </div>
-  <select id="sort" onchange="renderProducts()">
-   <option value="featured">Featured</option>
-   <option value="low">Price: Low to High</option>
-   <option value="high">Price: High to Low</option>
-  </select>
+<section class="section" id="categories"><div class="wrap">
+ <div class="section-head"><div><div class="eyebrow">FIND YOUR CREATIVE SPACE</div><h2>Explore categories</h2><p class="sub">A world of talent, all in one place.</p></div></div>
+ <div class="category-grid">
+  <a class="category" href="#art"><img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=800&q=80" alt="Visual art"><strong>Visual Art ↗</strong></a>
+  <a class="category" href="#artists"><img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=800&q=80" alt="Music"><strong>Music & Bands ↗</strong></a>
+  <a class="category" href="#book"><img src="https://images.unsplash.com/photo-1504609813442-a8924e83f76e?auto=format&fit=crop&w=800&q=80" alt="Dance"><strong>Dance & Performance ↗</strong></a>
+  <a class="category" href="#events"><img src="https://images.unsplash.com/photo-1524368638413-2f0f4e9e9e4b?auto=format&fit=crop&w=800&q=80" alt="Comedy"><strong>Comedy & Entertainment ↗</strong></a>
+  <a class="category" href="#art"><img src="https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=800&q=80" alt="Photography"><strong>Photography ↗</strong></a>
+  <a class="category" href="#workshops"><img src="https://images.unsplash.com/photo-1460661419201-fd4ce853d78c?auto=format&fit=crop&w=800&q=80" alt="Workshop"><strong>Workshops ↗</strong></a>
  </div>
+</div></section>
 
- <div class="filters">
-  <button class="filter active" onclick="filterArt('All',this)">All Art</button>
-  <button class="filter" onclick="filterArt('Painting',this)">Painting</button>
-  <button class="filter" onclick="filterArt('Photography',this)">Photography</button>
-  <button class="filter" onclick="filterArt('Illustration',this)">Illustration</button>
-  <button class="filter" onclick="filterArt('Sculpture',this)">Sculpture</button>
- </div>
- <div class="product-grid" id="products"></div>
-</section>
+<section class="section" id="artists"><div class="wrap">
+ <div class="section-head"><div><div class="eyebrow">PEOPLE BEHIND THE WORK</div><h2>Featured artists</h2><p class="sub">Meet independent creators and explore their portfolios.</p></div><button class="secondary" onclick="artistRegister()">Create artist profile</button></div>
+ <div class="cards" id="artistCards"></div>
+</div></section>
 
-<section class="artist" id="artists">
- <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=1000&q=85" alt="Artist studio">
- <div class="artist-content">
-  <div class="eyebrow">FOR THE ARTISTS</div>
-  <h2>Your art deserves<br>a bigger <em>canvas.</em></h2>
-  <p>Create an artist profile, upload your artwork and showcase your creativity.</p>
-  <button class="btn" style="background:white" onclick="artistRegister()">Become an Artist ↗</button>
-  <br><br>
-  <button class="btn" style="background:#555;color:white" onclick="uploadArt()">＋ Upload Artwork</button>
-  <br><br>
-  <button class="btn" style="background:#555;color:white" onclick="artistDashboard()">My Artist Dashboard</button>
- </div>
-</section>
+<section class="section" id="art"><div class="wrap">
+ <div class="section-head"><div><div class="eyebrow">THE MARKETPLACE</div><h2>Explore original art</h2><p class="sub">Discover artwork and add your favourites to your collection.</p></div><div class="search-sort"><input class="field" id="artSearch" placeholder="Search artwork or artist..." oninput="renderArt()"><select class="field" id="sort" onchange="renderArt()"><option value="featured">Featured</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option></select></div></div>
+ <div class="filters" id="filters"><button class="active" onclick="setFilter('All',this)">All Art</button><button onclick="setFilter('Painting',this)">Painting</button><button onclick="setFilter('Photography',this)">Photography</button><button onclick="setFilter('Illustration',this)">Illustration</button><button onclick="setFilter('Sculpture',this)">Sculpture</button></div>
+ <div class="cards" id="artCards"></div>
+</div></section>
 
-<section class="section story" id="how">
- <div>
-  <div class="eyebrow">OUR COMMUNITY</div>
-  <h2>Good art.<br><em>Good stories.</em></h2>
- </div>
- <div class="story-items">
-  <article><h3>Discover</h3><p>Find unique artwork from talented artists.</p></article>
-  <article><h3>Connect</h3><p>Meet independent creators and their stories.</p></article>
-  <article><h3>Collect</h3><p>Save and purchase your favourite art.</p></article>
- </div>
-</section>
+<section class="section" id="creators"><div class="wrap"><div class="feature-grid">
+ <article class="feature"><img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=900&q=80" onerror="this.src='https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=900&q=80'" alt="Creator making art"><div class="inside"><span class="tag">CREATOR MEMBERSHIPS</span><h3>Exclusive creator content</h3><p>Follow your favourite creators. Unlock exclusive content through memberships.</p><button class="primary" onclick="document.getElementById('creator-memberships').scrollIntoView({behavior:'smooth'})">Explore memberships</button></div></article>
+ <article class="feature"><img src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=900&q=80" alt="Live concert"><div class="inside"><span class="tag">WHAT'S ON</span><h3>Upcoming live events</h3><p>Concerts, comedy shows, dance performances, art exhibitions and more.</p><button class="primary" onclick="eventRequest()">Submit an event</button></div></article>
+ </div></div></section>
 
-<section class="payment" id="payment">
- <div>
-  <div class="eyebrow">UPI PAYMENT</div>
-  <h2>Scan & <em>Pay.</em></h2>
-  <p>Use any UPI application to scan the client's payment QR code.</p>
-  <div class="upi">
-   <b>UPI ID: joecolaba-3@okicici</b>
-   <button class="btn dark" onclick="copyUPI()">Copy</button>
-  </div>
-  <p style="font-size:10px">Always verify the recipient name and amount before approving payment.</p>
- </div>
- <div class="qr-card">
-  <div class="eyebrow">SCAN TO PAY</div>
-  <!-- Keep the supplied QR image beside index.html -->
-  <img src="client-upi-qr.jpg" alt="Client UPI QR Code">
-  <h3>Joseph Peter</h3>
-  <p>Scan with any UPI app</p>
- </div>
-</section>
 
-<section class="newsletter">
- <div>
-  <div class="eyebrow" style="color:white">STAY INSPIRED</div>
-  <h2>Stay close to <em style="color:#f6d4bd">creative.</em></h2>
- </div>
- <form onsubmit="event.preventDefault();notify('Thank you for subscribing!')">
-  <input type="email" placeholder="Your email" required>
-  <button class="btn dark">Subscribe</button>
- </form>
-</section>
+<section class="section" id="creator-memberships"><div class="wrap">
+ <div class="section-head"><div><div class="eyebrow">SUPPORT THE PEOPLE YOU LOVE</div><h2>Creator memberships</h2>
+ <p class="sub">Preview membership tiers and sample exclusive benefits from creators.</p></div></div>
+ <div class="cards">
+  <article class="card"><div class="card-body"><span class="tag">STARTER</span><h3>Studio Supporter</h3><p class="sub">Behind-the-scenes updates, creator notes and community access.</p><div class="price">₹99 / month</div><div class="card-actions"><button class="primary" onclick="subscribeDemo('Studio Supporter',99)">Choose plan</button></div></div></article>
+  <article class="card"><div class="card-body"><span class="tag">POPULAR</span><h3>Inner Circle</h3><p class="sub">Exclusive posts, early previews and monthly live sessions.</p><div class="price">₹299 / month</div><div class="card-actions"><button class="primary" onclick="subscribeDemo('Inner Circle',299)">Choose plan</button></div></div></article>
+  <article class="card"><div class="card-body"><span class="tag">PREMIUM</span><h3>Collector Club</h3><p class="sub">Priority access, special releases and member-only experiences.</p><div class="price">₹799 / month</div><div class="card-actions"><button class="primary" onclick="subscribeDemo('Collector Club',799)">Choose plan</button></div></div></article>
+  <article class="card"><div class="card-body"><span class="tag">CREATOR TOOLS</span><h3>For artists</h3><p class="sub">Showcase your work and propose your own membership tiers.</p><div class="price">Creator application</div><div class="card-actions"><button class="secondary" onclick="artistRegister()">Apply to join</button></div></div></article>
+ </div><p class="small">Membership selections are saved as local demo requests only. No subscription or recurring payment is activated.</p>
+</div></section>
 
-<footer>
- <div class="logo"><span>a.</span> atelier</div>
- <p>A marketplace for original art and independent artists.</p>
- <p>© 2026 Atelier Marketplace</p>
-</footer>
+<section class="section" id="events"><div class="wrap">
+ <div class="section-head"><div><div class="eyebrow">WHAT'S ON</div><h2>Live events & experiences</h2><p class="sub">Explore sample event formats across music, performance and visual arts.</p></div><button class="secondary" onclick="eventRequest()">Submit an event</button></div>
+ <div class="event-list">
+  <article class="event"><img src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=900&q=80" alt="Live music concert"><div class="inside"><span class="tag">MUSIC</span><h3>Live music & concerts</h3><p class="sub">Discover independent musicians, bands and live performances.</p><button class="secondary" onclick="eventRequest()">Enquire / submit event</button></div></article>
+  <article class="event"><img src="https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=900&q=80" alt="Stage performance"><div class="inside"><span class="tag">PERFORMANCE</span><h3>Shows & stage acts</h3><p class="sub">Find dance, theatre, comedy and other live entertainment.</p><button class="secondary" onclick="eventRequest()">Enquire / submit event</button></div></article>
+  <article class="event"><img src="https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?auto=format&fit=crop&w=900&q=80" alt="Art exhibition"><div class="inside"><span class="tag">EXHIBITIONS</span><h3>Art exhibitions</h3><p class="sub">Experience exhibitions, showcases and creative gatherings.</p><button class="secondary" onclick="eventRequest()">Enquire / submit event</button></div></article>
+ </div>
+</div></section>
+<section class="section" id="book"><div class="wrap"><div class="feature-grid">
+ <article class="feature"><img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=900&q=80" alt="Live performer"><div class="inside"><span class="tag">BOOK TALENT</span><h3>Book an artist</h3><p>Hire performers for weddings, corporate events, private celebrations and festivals.</p><button class="primary" onclick="bookingRequest()">Book a performer</button></div></article>
+ <article class="feature" id="workshops"><img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=900&q=80" alt="Art workshop"><div class="inside"><span class="tag">LEARN & CREATE</span><h3>Workshops & masterclasses</h3><p>Discover classes, creative sessions and masterclasses led by talented artists.</p><button class="primary" onclick="workshopRequest()">Find a workshop</button></div></article>
+ </div></div></section>
+
+<section class="section" id="join"><div class="wrap"><div class="creator-cta"><div><div class="eyebrow">FOR CREATORS & PERFORMERS</div><h2>Turn your creativity into an income stream.</h2><p class="sub">Build your profile, showcase your work and connect with your audience.</p></div><button class="primary" onclick="artistRegister()">Become a Kaalaverse Creator ↗</button></div></div></section>
+
+<section class="section" id="verification"><div class="wrap"><div class="eyebrow">TRUST & SAFETY</div><h2>Creator verification</h2><p class="sub">Kaalaverse's proposed verification workflow covers creator identity, artwork ownership, performer credentials and event organisers. Verification requests in this MVP are saved locally for demonstration and are not independently reviewed.</p><button class="secondary" onclick="verificationRequest()">Request verification</button></div></section>
+
+<section class="section" id="payment"><div class="wrap"><div class="feature-grid"><div><div class="eyebrow">MANUAL UPI PAYMENT</div><h2>Scan & <span class="gradient">pay.</span></h2><p class="sub">Use any UPI app to scan the payment QR. Confirm the recipient name and amount in your UPI app before paying.</p><p><b>UPI ID:</b> joecolaba-3@okicici <button class="secondary" onclick="copyUPI()">Copy UPI ID</button></p><p class="small">This is a manual payment demo. The website cannot verify payment automatically. Do not upload bank credentials or UPI PIN.</p></div><div class="qr-placeholder"><img id="qrImage" src="client-upi-qr.jpg" alt="Client UPI QR code" style="max-width:230px;margin:0 auto 12px" onerror="this.style.display='none';document.getElementById('qrFallback').style.display='block'"><div id="qrFallback">Add the supplied QR image as <b>client-upi-qr.jpg</b> in the same folder as index.html.</div><p>Scan to pay using any UPI app</p></div></div></div></section>
+
+<section class="section" id="policies"><div class="wrap"><div class="eyebrow">CLEAR & RESPONSIBLE PLATFORM</div><h2>Policies & guidelines</h2><p class="sub">Draft policy pages are included as MVP placeholders. Have the final wording reviewed for your business and applicable laws before launch.</p><div class="policy-grid">
+ <article class="policy"><h3>Terms of Service</h3><p>Platform access, user responsibilities and acceptable use.</p><button class="secondary" onclick="policyOpen('Terms of Service')">View draft</button></article>
+ <article class="policy"><h3>Privacy Policy</h3><p>What personal information is collected and how it is handled.</p><button class="secondary" onclick="policyOpen('Privacy Policy')">View draft</button></article>
+ <article class="policy"><h3>Artist Agreements</h3><p>Creator responsibilities, listings, rights and platform relationship.</p><button class="secondary" onclick="policyOpen('Artist Agreements')">View draft</button></article>
+ <article class="policy"><h3>Refund Policy</h3><p>Refund request process and eligibility to be defined.</p><button class="secondary" onclick="policyOpen('Refund Policy')">View draft</button></article>
+ <article class="policy"><h3>Cancellation Policy</h3><p>Booking and event cancellation terms to be confirmed.</p><button class="secondary" onclick="policyOpen('Cancellation Policy')">View draft</button></article>
+ <article class="policy"><h3>Copyright Policy</h3><p>Ownership, permissions, infringement reporting and takedowns.</p><button class="secondary" onclick="policyOpen('Copyright Policy')">View draft</button></article>
+ <article class="policy"><h3>Content Moderation</h3><p>Reporting, review and removal of prohibited content.</p><button class="secondary" onclick="policyOpen('Content Moderation Guidelines')">View draft</button></article>
+ </div></div></section>
+</main>
+
+
+<section class="section" id="platform-status"><div class="wrap">
+ <div class="eyebrow">FRONTEND PREVIEW</div><h2>One creative platform. Many ways to connect.</h2>
+ <p class="sub">This delivery is the complete visual and interaction prototype for client review. Forms, wishlist, cart, demo orders, membership interests and requests use this browser's local storage. They are not shared across visitors or devices. Live authentication, creator uploads, verification review, event publishing, subscription billing, booking payments and admin permissions will be connected in the backend phase.</p>
+</div></section>
+<footer><div class="wrap"><div class="footgrid"><div><a class="brand" href="#home">KAALA<b>VERSE</b></a><p class="sub">Discover creators. Shop original art. Subscribe to artists. Book performers. Experience live entertainment.</p></div><div><b>Explore</b><div class="footlinks"><a href="#artists">Discover Artists</a><a href="#art">Explore Art</a><a href="#events">Live Events</a><a href="#workshops">Workshops</a></div></div><div><b>Platform</b><div class="footlinks"><a href="#join">Join Kaalaverse</a><a href="#verification">Verification</a><a href="#policies">Policies</a><a href="#payment">Payment</a></div></div></div><div class="copyright">© 2026 Kaalaverse. All rights reserved. · Frontend MVP demonstration.</div></div></footer>
 
 <div class="overlay" id="overlay" onclick="closeAll()"></div>
-
-<div class="drawer" id="cart">
- <div class="drawer-head"><h2>Your Cart</h2><button onclick="closeAll()">×</button></div>
- <div id="cartItems"></div>
- <h3 id="total">Total: ₹0</h3>
- <button class="btn dark" style="width:100%" onclick="checkout()">Proceed to Checkout</button>
-</div>
-
-<div class="drawer" id="wishlist">
- <div class="drawer-head"><h2>Wishlist</h2><button onclick="closeAll()">×</button></div>
- <div id="wishItems"></div>
-</div>
-
-<div class="modal" id="modal">
- <div class="modal-box">
-  <button class="close" onclick="closeAll()">×</button>
-  <div id="modalContent"></div>
- </div>
-</div>
+<aside class="drawer" id="cart"><div class="drawer-head"><h2>Your Cart</h2><button onclick="closeAll()">×</button></div><div id="cartItems"></div><h3 id="total">Total: ₹0</h3><button class="primary" style="width:100%" onclick="checkout()">Proceed to Checkout</button></aside>
+<aside class="drawer" id="wishlist"><div class="drawer-head"><h2>Your Wishlist</h2><button onclick="closeAll()">×</button></div><div id="wishItems"></div></aside>
+<div class="modal" id="modal"><div class="modal-box"><button class="close" onclick="closeAll()">×</button><div id="modalContent"></div></div></div>
 <div class="toast" id="toast"></div>
-
 <script>
-// SAMPLE ARTWORK COLLECTION
-const initialProducts=[
-{id:1,title:"The Quiet Garden",artist:"Mira Joseph",category:"Painting",price:6800,img:"https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=700&q=85"},
-{id:2,title:"Blue Hour Study",artist:"Aarav Menon",category:"Painting",price:4200,img:"https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?auto=format&fit=crop&w=700&q=85"},
-{id:3,title:"Soft Geometry",artist:"Leah Thomas",category:"Illustration",price:3500,img:"https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&w=700&q=85"},
-{id:4,title:"A Place to Pause",artist:"Nikhil Das",category:"Photography",price:5600,img:"https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=700&q=85"},
-{id:5,title:"Earth in Bloom",artist:"Mira Joseph",category:"Painting",price:8900,img:"https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?auto=format&fit=crop&w=700&q=85"},
-{id:6,title:"Fragments of Light",artist:"Devika Rao",category:"Photography",price:2900,img:"https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=700&q=85"},
-{id:7,title:"Sunday Forms",artist:"Aarav Menon",category:"Sculpture",price:7400,img:"https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?auto=format&fit=crop&w=700&q=85"},
-{id:8,title:"Wildflower Notes",artist:"Leah Thomas",category:"Illustration",price:3100,img:"https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=700&q=85"},
-{id:9,title:"Abstract Dreams",artist:"Sarah Williams",category:"Painting",price:5500,img:"https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&w=700&q=85"},
-{id:10,title:"Nature's Beauty",artist:"David Thomas",category:"Painting",price:4200,img:"https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=700&q=85"},
-{id:11,title:"Modern Expression",artist:"Anna James",category:"Illustration",price:6200,img:"https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?auto=format&fit=crop&w=700&q=85"},
-{id:12,title:"Golden Landscape",artist:"Michael Roy",category:"Photography",price:3800,img:"https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=700&q=85"},
-{id:13,title:"Creative Canvas",artist:"Emma Rose",category:"Painting",price:7500,img:"https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?auto=format&fit=crop&w=700&q=85"},
-{id:14,title:"Artistic Vision",artist:"John Peter",category:"Sculpture",price:8500,img:"https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?auto=format&fit=crop&w=700&q=85"}
+const seedArt=[
+{id:1,title:"The Quiet Garden",artist:"Mira Joseph",category:"Painting",price:6800,img:"https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=700&q=80"},
+{id:2,title:"Blue Hour Study",artist:"Aarav Menon",category:"Painting",price:4200,img:"https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?auto=format&fit=crop&w=700&q=80"},
+{id:3,title:"Soft Geometry",artist:"Leah Thomas",category:"Illustration",price:3500,img:"https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&w=700&q=80"},
+{id:4,title:"A Place to Pause",artist:"Nikhil Das",category:"Photography",price:5600,img:"https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=700&q=80"},
+{id:5,title:"Earth in Bloom",artist:"Mira Joseph",category:"Painting",price:8900,img:"https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?auto=format&fit=crop&w=700&q=80"},
+{id:6,title:"Fragments of Light",artist:"Devika Rao",category:"Photography",price:2900,img:"https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=700&q=80"},
+{id:7,title:"Sunday Forms",artist:"Aarav Menon",category:"Sculpture",price:7400,img:"https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?auto=format&fit=crop&w=700&q=80"},
+{id:8,title:"Wildflower Notes",artist:"Leah Thomas",category:"Illustration",price:3100,img:"https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=700&q=80"}
 ];
-
-function load(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}}
-let products=load("atelier_products",initialProducts);
-let cart=load("atelier_cart",[]);
-let wishlist=load("atelier_wishlist",[]);
-let category="All";
-
-function save(){
- localStorage.setItem("atelier_products",JSON.stringify(products));
- localStorage.setItem("atelier_cart",JSON.stringify(cart));
- localStorage.setItem("atelier_wishlist",JSON.stringify(wishlist));
+const artists=[{name:"Mira Joseph",type:"Visual Artist",img:"https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80"},{name:"Aarav Menon",type:"Musician",img:"https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80"},{name:"Devika Rao",type:"Dancer",img:"https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=600&q=80"},{name:"Leah Thomas",type:"Illustrator",img:"https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80"}];
+const get=(k,d)=>{try{return JSON.parse(localStorage.getItem("kaala_"+k))??d}catch{return d}};
+let products=get("products",seedArt),cart=get("cart",[]),wishlist=get("wishlist",[]),filter="All";
+const save=()=>{localStorage.setItem("kaala_products",JSON.stringify(products));localStorage.setItem("kaala_cart",JSON.stringify(cart));localStorage.setItem("kaala_wishlist",JSON.stringify(wishlist))};
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const money=n=>"₹"+Number(n).toLocaleString("en-IN");
+function notify(s){let t=document.getElementById("toast");t.textContent=s;t.style.display="block";clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.style.display="none",2600)}
+function counts(){document.getElementById("cartCount").textContent=cart.reduce((a,x)=>a+x.qty,0);document.getElementById("wishCount").textContent=wishlist.length}
+function renderArt(){let q=(document.getElementById("artSearch")?.value||"").toLowerCase();let list=products.filter(p=>(filter==="All"||p.category===filter)&&(p.title+" "+p.artist+" "+p.category).toLowerCase().includes(q));let sort=document.getElementById("sort")?.value;if(sort==="low")list.sort((a,b)=>a.price-b.price);if(sort==="high")list.sort((a,b)=>b.price-a.price);document.getElementById("artCards").innerHTML=list.map(p=>`<article class="card"><div class="card-img"><img src="${esc(p.img)}" alt="${esc(p.title)}" loading="lazy"><button class="heart" onclick="wish(${p.id})">${wishlist.includes(p.id)?"♥":"♡"}</button></div><div class="card-body"><h3>${esc(p.title)}</h3><div class="meta"><span>${esc(p.artist)}</span><b class="price">${money(p.price)}</b></div><div class="card-actions"><button class="primary" onclick="addCart(${p.id})">Add to cart</button><button class="secondary" onclick="artDetails(${p.id})">Details</button></div></div></article>`).join("")||"<p class='sub'>No artwork found.</p>";counts()}
+function renderArtists(){document.getElementById("artistCards").innerHTML=artists.map(a=>`<article class="card"><div class="card-img"><img src="${a.img}" alt="${esc(a.name)}"></div><div class="card-body"><h3>${esc(a.name)}</h3><div class="meta"><span>${esc(a.type)}</span><span class="tag">Sample profile</span></div><button class="secondary" style="width:100%;margin-top:13px" onclick="notify('Artist profile preview — demo only.')">View profile</button></div></article>`).join("")}
+function setFilter(f,b){filter=f;document.querySelectorAll("#filters button").forEach(x=>x.classList.remove("active"));b.classList.add("active");renderArt()}
+function addCart(id){let x=cart.find(p=>p.id===id);x?x.qty++:cart.push({id,qty:1});save();counts();notify("Added to cart")}
+function wish(id){wishlist=wishlist.includes(id)?wishlist.filter(x=>x!==id):[...wishlist,id];save();renderArt();renderWishlist();notify("Wishlist updated")}
+function openDrawer(id){closeAll();document.getElementById("overlay").classList.add("show");document.getElementById(id).classList.add("show");id==="cart"?renderCart():renderWishlist()}
+function closeAll(){document.getElementById("overlay").classList.remove("show");document.querySelectorAll(".drawer").forEach(x=>x.classList.remove("show"));document.getElementById("modal").classList.remove("show")}
+function renderCart(){document.getElementById("cartItems").innerHTML=cart.map(x=>{let p=products.find(p=>p.id===x.id);return p?`<div class="cart-row"><img src="${esc(p.img)}"><div><b>${esc(p.title)}</b><p>${money(p.price)} × ${x.qty}</p><button class="secondary" onclick="removeCart(${p.id})">Remove</button></div></div>`:""}).join("")||"<p class='sub'>Your cart is empty.</p>";document.getElementById("total").textContent="Total: "+money(cart.reduce((s,x)=>s+(products.find(p=>p.id===x.id)?.price||0)*x.qty,0))}
+function removeCart(id){cart=cart.filter(x=>x.id!==id);save();renderCart();counts()}
+function renderWishlist(){document.getElementById("wishItems").innerHTML=wishlist.map(id=>{let p=products.find(p=>p.id===id);return p?`<div class="cart-row"><img src="${esc(p.img)}"><div><b>${esc(p.title)}</b><p>${money(p.price)}</p><button class="secondary" onclick="addCart(${id})">Add to cart</button> <button class="secondary" onclick="wish(${id})">Remove</button></div></div>`:""}).join("")||"<p class='sub'>No saved artworks.</p>"}
+function modal(html){closeAll();document.getElementById("modalContent").innerHTML=html;document.getElementById("modal").classList.add("show")}
+function login(){modal(`<h2>Welcome to Kaalaverse</h2><p class="sub">Demo login — not a secure production authentication system.</p><form onsubmit="event.preventDefault();saveLogin(this)"><label>Email</label><input name="email" type="email" required><label>Password</label><input name="password" type="password" minlength="6" required><label>Account type</label><select name="role"><option>Customer</option><option>Artist</option><option>Admin (demo)</option></select><button class="primary">Continue</button></form>`)}
+function saveLogin(f){localStorage.setItem("kaala_user",JSON.stringify({email:f.email.value,role:f.role.value}));closeAll();notify("Demo login successful");if(f.role.value==="Admin")adminDashboard()}
+function artistRegister(){modal(`<h2>Join Kaalaverse</h2><p class="sub">Create a creator profile request.</p><form onsubmit="event.preventDefault();saveRequest('creator',this)"><label>Full name</label><input name="name" required><label>Email</label><input name="email" type="email" required><label>Creator category</label><select name="category"><option>Visual Art</option><option>Music & Bands</option><option>Dance & Performance</option><option>Comedy & Entertainment</option><option>Photography</option><option>Workshop Instructor</option></select><label>Portfolio / social link</label><input name="link" type="url" placeholder="https://"><label>About your work</label><textarea name="bio"></textarea><button class="primary">Submit creator request</button></form>`)}
+function saveRequest(type,f){let arr=get("requests",[]);arr.push({type,name:f.name?.value||"",email:f.email?.value||"",category:f.category?.value||"",link:f.link?.value||"",bio:f.bio?.value||"",date:new Date().toISOString()});localStorage.setItem("kaala_requests",JSON.stringify(arr));closeAll();notify("Request saved in this browser demo")}
+function verificationRequest(){modal(`<h2>Verification request</h2><p class="sub">Select the verification type. Do not submit sensitive identity documents in this frontend demo.</p><form onsubmit="event.preventDefault();saveRequest('verification',this)"><label>Name / organisation</label><input name="name" required><label>Email</label><input name="email" type="email" required><label>Verification type</label><select name="category"><option>Creator identity</option><option>Artwork ownership</option><option>Performer credentials</option><option>Event organiser</option></select><label>Public portfolio or reference link</label><input name="link" type="url"><button class="primary">Submit request</button></form>`)}
+function subscribeDemo(plan,amount){
+ let list=get("subscriptions",[]);
+ list.push({plan,amount,date:new Date().toISOString(),status:"demo enquiry"});
+ localStorage.setItem("kaala_subscriptions",JSON.stringify(list));
+ modal(`<h2>${esc(plan)}</h2><p class="sub">Selected membership: <b>${money(amount)} / month</b></p><p>This is a frontend preview. No recurring charge or subscription has been created.</p><form onsubmit="event.preventDefault();saveSubscriptionContact(this,'${plan.replace("'", "\\'")}',${amount})"><label>Your name</label><input name="name" required><label>Email</label><input name="email" type="email" required><button class="primary">Save demo interest</button></form>`);
 }
-function safe(s){
- return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function saveSubscriptionContact(form,plan,amount){
+ let list=get("subscriptions",[]);
+ list.push({plan,amount,name:form.name.value,email:form.email.value,date:new Date().toISOString(),status:"interest"});
+ localStorage.setItem("kaala_subscriptions",JSON.stringify(list));closeAll();notify("Membership interest saved in this browser demo");
 }
-function money(n){return "₹"+Number(n).toLocaleString("en-IN")}
-function notify(m){
- let t=document.getElementById("toast");t.textContent=m;t.style.display="block";
- setTimeout(()=>t.style.display="none",2500);
-}
-function renderProducts(){
- let list=products.filter(p=>category==="All"||p.category===category);
- let s=document.getElementById("sort").value;
- if(s==="low")list.sort((a,b)=>a.price-b.price);
- if(s==="high")list.sort((a,b)=>b.price-a.price);
-
- document.getElementById("products").innerHTML=list.map(p=>`
- <article class="product">
-  <div class="product-img">
-   <img src="${safe(p.img)}" alt="${safe(p.title)}" loading="lazy">
-   <button class="heart" onclick="toggleWish(${p.id})">${wishlist.includes(p.id)?"♥":"♡"}</button>
-  </div>
-  <div class="product-info">
-   <h3>${safe(p.title)}</h3>
-   <div class="product-meta"><span>${safe(p.artist)}</span><b>${money(p.price)}</b></div>
-   <button class="add" onclick="addCart(${p.id})">ADD TO CART ＋</button>
-  </div>
- </article>`).join("")||"<p>No artwork found.</p>";
- updateCounts();
-}
-function filterArt(c,b){
- category=c;
- document.querySelectorAll(".filter").forEach(x=>x.classList.remove("active"));
- b.classList.add("active");renderProducts();
-}
-function updateCounts(){
- document.getElementById("cartCount").textContent=cart.reduce((a,x)=>a+x.qty,0);
- document.getElementById("wishCount").textContent=wishlist.length;
-}
-function addCart(id){
- let x=cart.find(x=>x.id===id);
- if(x)x.qty++;else cart.push({id,qty:1});
- save();updateCounts();notify("Added to cart");
-}
-function toggleWish(id){
- wishlist=wishlist.includes(id)?wishlist.filter(x=>x!==id):[...wishlist,id];
- save();renderProducts();renderWishlist();notify("Wishlist updated");
-}
-function openDrawer(name){
- closeAll();
- document.getElementById("overlay").classList.add("show");
- document.getElementById(name).classList.add("show");
- if(name==="cart")renderCart();
- if(name==="wishlist")renderWishlist();
-}
-function closeAll(){
- document.getElementById("overlay").classList.remove("show");
- document.querySelectorAll(".drawer").forEach(x=>x.classList.remove("show"));
- document.getElementById("modal").classList.remove("show");
-}
-function renderCart(){
- document.getElementById("cartItems").innerHTML=cart.map(x=>{
- let p=products.find(p=>p.id===x.id);if(!p)return "";
- return `<div class="cart-row"><img src="${safe(p.img)}"><div>
- <h4>${safe(p.title)}</h4><p>${money(p.price)} × ${x.qty}</p>
- <button onclick="removeCart(${p.id})">Remove</button></div></div>`;
- }).join("")||'<p class="empty">Your cart is empty.</p>';
- let total=cart.reduce((a,x)=>a+(products.find(p=>p.id===x.id)?.price||0)*x.qty,0);
- document.getElementById("total").textContent="Total: "+money(total);
-}
-function removeCart(id){
- cart=cart.filter(x=>x.id!==id);save();renderCart();updateCounts();
-}
-function renderWishlist(){
- document.getElementById("wishItems").innerHTML=wishlist.map(id=>{
- let p=products.find(p=>p.id===id);if(!p)return "";
- return `<div class="cart-row"><img src="${safe(p.img)}"><div>
- <h4>${safe(p.title)}</h4><p>${money(p.price)}</p>
- <button onclick="addCart(${p.id})">Add to cart</button>
- <button onclick="toggleWish(${p.id})">Remove</button></div></div>`;
- }).join("")||'<p class="empty">No saved artworks.</p>';
-}
-function showModal(html){
- closeAll();document.getElementById("modalContent").innerHTML=html;
- document.getElementById("modal").classList.add("show");
-}
-function login(){
- showModal(`<h2>Welcome to Atelier</h2><p>Demo account login</p>
- <form onsubmit="event.preventDefault();saveLogin(this)">
- <label>Email</label><input type="email" name="email" required>
- <label>Password</label><input type="password" name="password" minlength="6" required>
- <label>Account Type</label>
- <select name="role"><option>Customer</option><option>Artist</option><option>Admin</option></select>
- <button class="submit">Sign In / Register</button></form>`);
-}
-function saveLogin(f){
- let user={email:f.email.value,role:f.role.value};
- localStorage.setItem("atelier_user",JSON.stringify(user));
- closeAll();notify("Demo login successful");
- if(user.role==="Artist")artistDashboard();
- if(user.role==="Admin")adminDashboard();
-}
-function artistRegister(){
- showModal(`<h2>Become an Artist</h2>
- <form onsubmit="event.preventDefault();saveArtist(this)">
- <label>Full Name</label><input name="name" required>
- <label>Email</label><input type="email" name="email" required>
- <label>About your Art</label><textarea name="bio"></textarea>
- <button class="submit">Create Artist Profile</button></form>`);
-}
-function saveArtist(f){
- localStorage.setItem("atelier_artist",JSON.stringify({
- name:f.name.value,email:f.email.value,bio:f.bio.value
- }));
- closeAll();notify("Artist profile created");artistDashboard();
-}
-function artistDashboard(){
- showModal(`<h2>Artist Dashboard</h2><p>Your creative workspace.</p>
- <button class="submit" onclick="uploadArt()">＋ Upload Artwork</button>
- <button class="submit" onclick="myArtworks()">View My Artworks</button>`);
-}
-function myArtworks(){
- let a=load("atelier_artist",{});
- let mine=products.filter(p=>p.artist===a.name);
- showModal(`<h2>My Artworks</h2>${mine.map(p=>`<p>${safe(p.title)} — ${money(p.price)}</p>`).join("")||"<p>No artworks uploaded yet.</p>"}`);
-}
-function uploadArt(){
- showModal(`<h2>Upload Artwork</h2>
- <form id="uploadForm">
- <label>Artwork Title</label><input name="title" required>
- <label>Artist Name</label><input name="artist" required>
- <label>Category</label><select name="category">
- <option>Painting</option><option>Photography</option><option>Illustration</option><option>Sculpture</option></select>
- <label>Price (INR)</label><input type="number" name="price" min="1" required>
- <label>Artwork Image</label><input type="file" name="image" accept="image/*" required>
- <button class="submit">Publish Artwork</button></form>`);
- document.getElementById("uploadForm").onsubmit=e=>{
-  e.preventDefault();let f=e.target,file=f.image.files[0];
-  if(!file)return;
-  if(file.size>2*1024*1024){notify("Image must be below 2MB");return}
-  let reader=new FileReader();
-  reader.onload=()=>{
-   products.unshift({id:Date.now(),title:f.title.value,artist:f.artist.value,
-   category:f.category.value,price:Number(f.price.value),img:reader.result});
-   save();renderProducts();closeAll();notify("Artwork uploaded");
-  };
-  reader.readAsDataURL(file);
- };
-}
-function adminDashboard(){
- let orders=load("atelier_orders",[]);
- showModal(`<h2>Admin Dashboard</h2>
- <div class="admin-stat">Total Artworks: <b>${products.length}</b></div>
- <div class="admin-stat">Cart Items: <b>${cart.reduce((a,x)=>a+x.qty,0)}</b></div>
- <div class="admin-stat">Wishlist Items: <b>${wishlist.length}</b></div>
- <div class="admin-stat">Demo Orders: <b>${orders.length}</b></div>
- <button class="submit" onclick="uploadArt()">Add Artwork</button>
- <button class="submit" onclick="showOrders()">View Orders</button>
- <button class="submit" onclick="resetDemo()">Reset Demo Data</button>`);
-}
-function showOrders(){
- let orders=load("atelier_orders",[]);
- showModal(`<h2>Demo Orders</h2>${orders.map(o=>`<div class="admin-stat">${safe(o.name)} · ${money(o.total)}<br>${safe(o.email)}</div>`).join("")||"<p>No orders yet.</p>"}`);
-}
-function resetDemo(){
- if(!confirm("Reset all demo data?"))return;
- ["atelier_products","atelier_cart","atelier_wishlist","atelier_user","atelier_artist","atelier_orders"].forEach(k=>localStorage.removeItem(k));
- products=initialProducts;cart=[];wishlist=[];save();renderProducts();closeAll();notify("Demo data reset");
-}
-function checkout(){
- if(!cart.length){notify("Your cart is empty");return}
- let total=cart.reduce((a,x)=>a+(products.find(p=>p.id===x.id)?.price||0)*x.qty,0);
- showModal(`<h2>Checkout</h2><p>Order Total: <b>${money(total)}</b></p>
- <form onsubmit="event.preventDefault();placeOrder(this)">
- <label>Full Name</label><input name="name" required>
- <label>Email</label><input name="email" type="email" required>
- <label>Delivery Address</label><textarea name="address" required></textarea>
- <button class="submit">Save Demo Order</button></form>
- <p>Payment is manual UPI only. No payment is automatically verified.</p>`);
-}
-function placeOrder(f){
- let total=cart.reduce((a,x)=>a+(products.find(p=>p.id===x.id)?.price||0)*x.qty,0);
- let orders=load("atelier_orders",[]);
- orders.push({name:f.name.value,email:f.email.value,address:f.address.value,items:cart,total,date:new Date().toISOString()});
- localStorage.setItem("atelier_orders",JSON.stringify(orders));
- cart=[];save();updateCounts();closeAll();
- notify("Demo order saved. Please use the UPI QR to pay.");
- document.getElementById("payment").scrollIntoView({behavior:"smooth"});
-}
-function copyUPI(){
- navigator.clipboard.writeText("joecolaba-3@okicici").then(()=>notify("UPI ID copied")).catch(()=>notify("UPI ID: joecolaba-3@okicici"));
-}
-function searchArt(){
- showModal(`<h2>Search Artwork</h2>
- <input id="searchBox" placeholder="Search artist or artwork..." oninput="searchResults(this.value)">
- <div id="results"></div>`);
-}
-function searchResults(q){
- let list=products.filter(p=>(p.title+" "+p.artist+" "+p.category).toLowerCase().includes(q.toLowerCase()));
- document.getElementById("results").innerHTML=list.map(p=>`<p>${safe(p.title)} — ${money(p.price)}</p>`).join("")||"No results found.";
-}
-renderProducts();
+function bookingRequest(){modal(`<h2>Book an artist</h2><form onsubmit="event.preventDefault();saveRequest('booking',this)"><label>Your name</label><input name="name" required><label>Email</label><input name="email" type="email" required><label>Event type</label><select name="category"><option>Wedding</option><option>Corporate event</option><option>Private celebration</option><option>Festival</option><option>Other</option></select><label>Event date and location</label><input name="link" placeholder="Date, city / venue"><label>Requirements</label><textarea name="bio"></textarea><button class="primary">Send booking enquiry</button></form>`)}
+function eventRequest(){modal(`<h2>Submit a live event</h2><form onsubmit="event.preventDefault();saveRequest('event',this)"><label>Organiser name</label><input name="name" required><label>Email</label><input name="email" type="email" required><label>Event title / type</label><input name="category" required><label>Date and venue</label><input name="link" required><label>Event details</label><textarea name="bio"></textarea><button class="primary">Submit event</button></form>`)}
+function workshopRequest(){modal(`<h2>Workshop enquiry</h2><form onsubmit="event.preventDefault();saveRequest('workshop',this)"><label>Your name</label><input name="name" required><label>Email</label><input name="email" type="email" required><label>Interested topic</label><input name="category" required><label>Message</label><textarea name="bio"></textarea><button class="primary">Send enquiry</button></form>`)}
+function artDetails(id){let p=products.find(x=>x.id===id);if(p)modal(`<h2>${esc(p.title)}</h2><img src="${esc(p.img)}" style="width:100%;max-height:260px;object-fit:cover;border-radius:12px"><p class="sub">By ${esc(p.artist)} · ${esc(p.category)}</p><h3>${money(p.price)}</h3><button class="primary" onclick="addCart(${id});closeAll()">Add to cart</button>`)}
+function searchOpen(){document.getElementById("art").scrollIntoView({behavior:"smooth"});document.getElementById("artSearch").focus()}
+function toggleMenu(){document.getElementById("mobileMenu").classList.toggle("open")}
+function checkout(){if(!cart.length){notify("Your cart is empty");return}let total=cart.reduce((s,x)=>s+(products.find(p=>p.id===x.id)?.price||0)*x.qty,0);modal(`<h2>Checkout</h2><p class="sub">Order total: <b>${money(total)}</b></p><form onsubmit="event.preventDefault();placeOrder(this)"><label>Full name</label><input name="name" required><label>Email</label><input name="email" type="email" required><label>Delivery address</label><textarea name="address" required></textarea><button class="primary">Save demo order</button></form><p class="small">Manual UPI payment only. Payment is not automatically verified.</p>`)}
+function placeOrder(f){let orders=get("orders",[]);orders.push({name:f.name.value,email:f.email.value,address:f.address.value,items:cart,total:cart.reduce((s,x)=>s+(products.find(p=>p.id===x.id)?.price||0)*x.qty,0),date:new Date().toISOString()});localStorage.setItem("kaala_orders",JSON.stringify(orders));cart=[];save();counts();closeAll();notify("Demo order saved. Complete UPI payment separately.");document.getElementById("payment").scrollIntoView({behavior:"smooth"})}
+function copyUPI(){navigator.clipboard?.writeText("joecolaba-3@okicici").then(()=>notify("UPI ID copied")).catch(()=>notify("UPI ID: joecolaba-3@okicici"))}
+const policyDrafts={
+"Terms of Service":"By accessing Kaalaverse, users agree to provide accurate account information, respect other users and use the platform lawfully. Buyers are responsible for reviewing artwork descriptions, dimensions, delivery details and seller information before placing an order. Creators are responsible for the accuracy of listings and for having the rights and permissions needed to publish and sell their work. Kaalaverse may review, restrict or remove content that appears unlawful, misleading, infringing or unsafe. Orders, bookings and services are subject to the specific terms shown at checkout or agreed by the parties. The platform operator's legal name, address, contact details, governing law, dispute process and final liability terms must be inserted before launch.",
+"Privacy Policy":"Kaalaverse should collect only information needed to operate accounts, creator profiles, enquiries, orders, bookings and support. Explain the exact data collected, purposes, lawful basis, retention periods, service providers, cookies/analytics, security controls and user rights. Never request or store a UPI PIN, bank password or card security code. Identity documents for verification must be collected only through a secure backend workflow with restricted staff access, retention limits and deletion procedures. Add the operator's privacy contact and applicable grievance contact before launch.",
+"Artist Agreements":"Creators must submit original or properly licensed work, provide truthful descriptions and prices, maintain accurate availability and respond to customer enquiries. Creators retain ownership of their intellectual property and grant Kaalaverse only the limited licence needed to display, promote and process listings on the platform. The agreement must define commissions, payouts, taxes, delivery, returns, cancellations, content standards, verification, termination and dispute handling. Confirm the commercial terms and have the final agreement legally reviewed before onboarding creators.",
+"Refund Policy":"Publish clear refund eligibility for damaged, incorrect, missing, counterfeit or materially misdescribed items and for cancelled services or events. State the evidence required, request channel, review timeline, refund method and processing time. Explain which custom-made or digital items may have different treatment, subject to applicable consumer law. The platform must not promise a refund timeline until its payment and fulfilment operations can meet it. Insert the business support email and final timelines before launch.",
+"Cancellation Policy":"Set separate rules for buyer cancellations, creator cancellations, performer bookings, workshops and event organiser cancellations. State cut-off times, deposits, non-refundable charges if lawful, rescheduling options, no-show handling and how customers are notified. Define what happens when weather, venue issues, illness or other events outside a party's control prevent delivery. The final policy must match the actual booking contracts and payment workflow.",
+"Copyright Policy":"Users may upload only content they own or are authorised to use. A rights holder should be able to report allegedly infringing material with their contact details, identification of the work, the disputed URL/listing, a good-faith statement and any supporting evidence. Kaalaverse should acknowledge reports, temporarily restrict disputed content where appropriate, contact the uploader and provide a counter-notice and appeal process. Repeat infringement rules and the designated copyright contact must be added before launch.",
+"Content Moderation Guidelines":"Do not allow unlawful content, scams, impersonation, hate or harassment, threats, non-consensual intimate imagery, exploitation, deceptive listings, stolen artwork or content that infringes third-party rights. Provide report and appeal routes, define review priorities, preserve relevant records securely and apply proportionate actions such as warnings, removal, suspension or account termination. Publish response targets only when an operational moderation team can meet them. Add the platform's actual safety contact and escalation process before launch."
+};
+function policyOpen(name){modal(`<h2>${esc(name)}</h2><p class="sub">Kaalaverse policy draft — review and customise before public launch.</p><p>${esc(policyDrafts[name]||"Policy details to be confirmed by the platform operator.")}</p><p class="small">Important: This is a working business draft, not legal advice. Complete the operator identity, contact details, jurisdiction, exact timelines, fees and operational procedures, then obtain legal review before publishing.</p><button class="secondary" onclick="closeAll()">Close</button>`)}
+function adminDashboard(){let req=get("requests",[]),orders=get("orders",[]);modal(`<h2>Admin overview (demo)</h2><div class="policy-grid"><div class="policy">Artwork listings<br><b>${products.length}</b></div><div class="policy">Requests<br><b>${req.length}</b></div><div class="policy">Demo orders<br><b>${orders.length}</b></div></div><p class="small">This dashboard reads local browser data only. It is not shared with other users or devices.</p>`)}
+function renderAll(){renderArt();renderArtists();counts()}
+renderAll();
 </script>
 </body>
 </html>
