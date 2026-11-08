@@ -462,19 +462,37 @@ function renderWishlist() {
   wishlist.forEach(function(item, index) {
     const isObject = item !== null && typeof item === "object";
 
+    const legacyItems = {
+      "kaalaverse-photo-collection": {
+        title: "Photography Collection",
+        image: "assets/client-image-3.jpg",
+        category: "Photography",
+        link: "product-details.html?item=photography-collection"
+      },
+      "kaalaverse-wildlife-collection": {
+        title: "Wildlife & Nature Collection",
+        image: "assets/client-image-5.jpg",
+        category: "Wildlife & Nature",
+        link: "product-details.html?item=wildlife-nature-collection"
+      },
+      "kaalaverse-visual-art-collection": {
+        title: "Visual Art Collection",
+        image: "assets/client-image-2.jpg",
+        category: "Visual Art",
+        link: "product-details.html?item=visual-art-collection"
+      }
+    };
+    const legacy = !isObject ? legacyItems[String(item)] : null;
     const title = isObject
       ? (item.title || item.name || "Saved Artwork")
-      : String(item);
-
-    const image = isObject ? item.image : "";
-
+      : (legacy ? legacy.title : String(item));
+    const image = isObject ? (item.image || "") : (legacy ? legacy.image : "");
     const description = isObject
       ? (item.category || item.artist || "Kaalaverse Collection")
-      : "Saved collection";
-
+      : (legacy ? legacy.category : "Saved collection");
     const detailLink = isObject && item.link
       ? item.link
-      : "explore-art.html";
+      : (legacy ? legacy.link : "explore-art.html");
 
     const card = document.createElement("article");
     card.className = "card";
