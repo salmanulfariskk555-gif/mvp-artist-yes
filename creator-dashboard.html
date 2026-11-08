@@ -131,9 +131,10 @@ td{color:#514d46}
 <style id="kaalaverse-unified-nav">
 .kv-header{position:relative;z-index:60;background:#fff!important;border-bottom:1px solid #e8e1d7!important;box-shadow:0 3px 16px rgba(30,25,18,.045)}.kv-nav-inner{width:min(1440px,92%);min-height:76px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:22px}.kv-logo{flex:0 0 auto;color:#24211d!important;text-decoration:none!important;font:700 25px/1 Georgia,serif;letter-spacing:1.7px}.kv-logo span{color:#a77b43}.kv-nav-links{display:flex;align-items:center;justify-content:center;gap:clamp(10px,1.45vw,22px);flex-wrap:wrap}.kv-nav-links a,.kv-nav-actions a{color:#39342e!important;text-decoration:none!important;font:500 12px/1.4 Arial,sans-serif;white-space:nowrap}.kv-nav-links a:hover,.kv-nav-actions a:hover,.kv-nav-links a.kv-active{color:#a77b43!important}.kv-nav-links a.kv-active{font-weight:700}.kv-nav-actions{display:flex;align-items:center;gap:13px;flex:0 0 auto}.kv-nav-actions .kv-join{background:#29251f;color:#fff!important;padding:11px 14px}.kv-menu-btn{display:none;background:transparent!important;border:1px solid #ded7cc!important;color:#29251f!important;padding:8px 12px;font-size:20px;cursor:pointer}.kv-mobile-panel{display:none;width:92%;margin:0 auto;padding:0 0 16px;grid-template-columns:1fr 1fr;gap:0 14px}.kv-mobile-panel.kv-open{display:grid}.kv-mobile-panel a{padding:11px 5px;border-top:1px solid #eee8df;color:#39342e!important;text-decoration:none!important;font:13px Arial,sans-serif}@media(max-width:1050px){.kv-nav-inner{min-height:70px}.kv-nav-links{gap:10px}.kv-nav-links a{font-size:11px}.kv-nav-actions{gap:9px}.kv-nav-actions a{font-size:11px}}@media(max-width:820px){.kv-nav-inner{min-height:68px}.kv-nav-links,.kv-nav-actions{display:none}.kv-menu-btn{display:block}.kv-mobile-panel.kv-open{display:grid}}
 </style>
+<style id="kv-dashboard-nav-fix">.kv-dashboard-menu{grid-column:1/-1;margin-top:12px;padding:12px;border:1px solid #ded7cc;background:#29251f;color:#fff;cursor:pointer;font:13px Arial,sans-serif}@media(min-width:821px){.kv-dashboard-menu{display:none}}</style>
 </head>
 <body>
-<header class="kv-header"><div class="kv-nav-inner"><a class="kv-logo" href="index.html">KAALA<span>VERSE</span></a><nav class="kv-nav-links" aria-label="Main navigation"><a href="index.html">Home</a><a href="discover-artists.html">Discover Artists</a><a href="explore-art.html">Explore Art</a><a href="subscriptions.html">Memberships</a><a href="live-events.html">Live Events</a><a href="artist-booking.html">Book an Artist</a><a href="workshops.html">Workshops</a></nav><div class="kv-nav-actions"><a href="wishlist.html" class="">Wishlist</a><a href="cart.html" class="">Cart</a><a href="login.html" class="">Login</a><a href="join-kaalaverse.html" class="kv-join">Join Kaalaverse</a></div><button class="kv-menu-btn" type="button" aria-label="Toggle navigation" aria-expanded="false">☰</button></div><nav class="kv-mobile-panel" aria-label="Mobile navigation"><a href="index.html">Home</a><a href="discover-artists.html">Discover Artists</a><a href="explore-art.html">Explore Art</a><a href="subscriptions.html">Memberships</a><a href="live-events.html">Live Events</a><a href="artist-booking.html">Book an Artist</a><a href="workshops.html">Workshops</a><a href="wishlist.html">Wishlist</a><a href="cart.html">Cart</a><a href="login.html">Login</a><a href="join-kaalaverse.html">Join Kaalaverse</a></nav></header>
+<header class="kv-header"><div class="kv-nav-inner"><a class="kv-logo" href="index.html">KAALA<span>VERSE</span></a><nav class="kv-nav-links" aria-label="Main navigation"><a href="index.html">Home</a><a href="discover-artists.html">Discover Artists</a><a href="explore-art.html">Explore Art</a><a href="subscriptions.html">Memberships</a><a href="live-events.html">Live Events</a><a href="artist-booking.html">Book an Artist</a><a href="workshops.html">Workshops</a></nav><div class="kv-nav-actions"><a href="wishlist.html" class="">Wishlist</a><a href="cart.html" class="">Cart</a><a href="login.html" class="">Login</a><a href="join-kaalaverse.html" class="kv-join">Join Kaalaverse</a></div><button class="kv-menu-btn" type="button" aria-label="Toggle navigation" aria-expanded="false">☰</button></div><nav class="kv-mobile-panel" aria-label="Mobile navigation"><a href="index.html">Home</a><a href="discover-artists.html">Discover Artists</a><a href="explore-art.html">Explore Art</a><a href="subscriptions.html">Memberships</a><a href="live-events.html">Live Events</a><a href="artist-booking.html">Book an Artist</a><a href="workshops.html">Workshops</a><a href="wishlist.html">Wishlist</a><a href="cart.html">Cart</a><a href="login.html">Login</a><a href="join-kaalaverse.html">Join Kaalaverse</a><button type="button" class="kv-dashboard-menu" onclick="document.getElementById('sidebar').classList.toggle('open')">Open Dashboard Menu</button></nav></header>
 
 <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
 
@@ -177,16 +178,7 @@ td{color:#514d46}
 </aside>
 
 <main class="main">
-  <header class="topbar">
-    <div style="display:flex;align-items:center;gap:13px">
-      <button class="menu-btn" onclick="toggleMenu()">☰</button>
-      <div class="mobile-brand">kaalaverse</div>
-    </div>
-    <div class="top-actions">
-      <a href="index.html">View Website ↗</a>
-      <button onclick="showToast('Notifications will be available after backend integration.')">♧ Notifications</button>
-    </div>
-  </header>
+  
 
   <!-- OVERVIEW -->
   <section class="section active" id="overview">
