@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Explore artwork collections on Kaalaverse. View collection details, save favourites and send an enquiry.">
+<title>Artwork Details | Kaalaverse</title>
+<style>
+:root{--ink:#211e1a;--muted:#746d64;--paper:#f8f6f1;--card:#fff;--line:#e8e1d7;--gold:#a77b43;--dark:#29251f}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif;line-height:1.6}a{color:inherit;text-decoration:none}button,input,textarea{font:inherit}.topbar{background:#211e1a;color:#fff;text-align:center;padding:9px 16px;font-size:12px;letter-spacing:1.3px}.nav{display:flex;align-items:center;justify-content:space-between;gap:22px;padding:20px 6%;background:#fff;border-bottom:1px solid var(--line)}.brand{font-family:Georgia,serif;font-size:27px;letter-spacing:2px}.navlinks{display:flex;gap:20px;align-items:center;flex-wrap:wrap;font-size:13px}.navlinks a:hover,.crumb a:hover{color:var(--gold)}.wrap{max-width:1160px;margin:auto;padding:34px 22px 70px}.crumb{font-size:13px;color:var(--muted);margin-bottom:25px}.product{display:grid;grid-template-columns:1.05fr .95fr;gap:54px;align-items:start}.photo{background:#eee8df;border-radius:4px;overflow:hidden;min-height:440px}.photo img{width:100%;height:540px;object-fit:cover;display:block}.eyebrow{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:bold}.details h1{font:normal clamp(34px,5vw,52px)/1.12 Georgia,serif;margin:12px 0 17px}.desc{color:var(--muted);font-size:15px;max-width:520px}.rule{border:0;border-top:1px solid var(--line);margin:25px 0}.meta{display:grid;grid-template-columns:1fr 1fr;gap:18px}.meta span{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}.meta strong{font-size:14px;font-weight:500}.notice{font-size:13px;color:var(--muted);background:#f0ece5;padding:14px 16px;border-left:3px solid var(--gold);margin:24px 0}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}.btn{border:1px solid var(--dark);background:var(--dark);color:#fff;padding:13px 20px;cursor:pointer;letter-spacing:.3px}.btn.secondary{background:transparent;color:var(--dark)}.btn:hover{opacity:.85}.btn:disabled{opacity:.5;cursor:not-allowed}.section{margin-top:70px}.section h2{font:normal 30px Georgia,serif}.section p{color:var(--muted);max-width:720px}.footer{background:#211e1a;color:#eee;padding:35px 6%;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:13px}.footer a{color:#e6c99e}.modal{position:fixed;inset:0;background:#0009;display:none;align-items:center;justify-content:center;padding:18px;z-index:10}.modal.open{display:flex}.dialog{background:#fff;width:min(520px,100%);padding:28px;border-radius:5px;max-height:90vh;overflow:auto}.dialog h2{font:normal 28px Georgia,serif;margin-top:0}.dialog label{display:block;font-size:13px;margin:13px 0 5px}.dialog input,.dialog textarea{width:100%;padding:11px;border:1px solid var(--line);background:#fff}.dialog textarea{min-height:100px;resize:vertical}.dialog-actions{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}.status{font-size:13px;color:var(--muted);margin-top:12px}.mobilemenu{display:none}
+@media(max-width:760px){.nav{align-items:flex-start;flex-direction:column}.navlinks{gap:13px}.product{grid-template-columns:1fr;gap:28px}.photo{min-height:280px}.photo img{height:360px}.wrap{padding-top:25px}.meta{gap:12px}.footer{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="topbar">ART • CREATIVITY • EXPERIENCES</div>
+<header class="nav"><a class="brand" href="index.html">KAALAVERSE</a><nav class="navlinks" aria-label="Main navigation"><a href="index.html">Home</a><a href="discover-artists.html">Artists</a><a href="explore-art.html">Explore Art</a><a href="subscriptions.html">Memberships</a><a href="live-events.html">Events</a><a href="wishlist.html">Wishlist</a><a href="cart.html">Cart</a><a href="login.html">Login</a></nav></header>
+<main class="wrap">
+<div class="crumb"><a href="index.html">Home</a> / <a href="explore-art.html">Explore Art</a> / <span id="crumbTitle">Collection Details</span></div>
+<section class="product">
+<div class="photo"><img id="productImage" src="assets/client-image-3.jpg" alt="Artwork collection"></div>
+<div class="details">
+<div class="eyebrow" id="category">Kaalaverse Collection</div>
+<h1 id="title">Photography Collection</h1>
+<p class="desc" id="description">Explore visual storytelling from the Kaalaverse collection.</p>
+<hr class="rule">
+<div class="meta"><div><span>Collection type</span><strong id="type">Photography</strong></div><div><span>Availability</span><strong>Enquiry required</strong></div><div><span>Artist / Creator</span><strong>Details on request</strong></div><div><span>Price</span><strong>To be confirmed</strong></div></div>
+<div class="notice">Artwork details, edition information, availability and final pricing will be confirmed directly with the creator. No payment is collected on this demo page.</div>
+<div class="actions"><button class="btn" id="enquireBtn" type="button">Enquire about this collection</button><button class="btn secondary" id="wishBtn" type="button">♡ Save to Wishlist</button><button class="btn secondary" id="cartBtn" type="button">Add to Cart</button></div>
+<p class="status" id="pageStatus" aria-live="polite"></p>
+</div>
+</section>
+<section class="section"><h2>About this collection</h2><p id="aboutText">Kaalaverse brings together original creative work. Contact the team to request further information about the selected collection, creator, availability and purchase process.</p><p>Product information and prices are subject to confirmation by Kaalaverse and the respective creator.</p></section>
+</main>
+<footer class="footer"><div><strong>KAALAVERSE</strong><p>Discover creators. Shop original art. Experience creativity.</p></div><div><a href="terms.html">Terms</a> &nbsp; <a href="privacy.html">Privacy</a> &nbsp; <a href="refund-policy.html">Refund Policy</a></div><div>© <span id="year"></span> Kaalaverse</div></footer>
+<div class="modal" id="enquiryModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="dialog"><h2 id="modalTitle">Enquire about this collection</h2><p class="status">Fill in your details. This demo prepares an enquiry message for you to copy; it does not submit to a server.</p><form id="enquiryForm"><label for="name">Your name</label><input id="name" required maxlength="100"><label for="email">Email address</label><input id="email" type="email" required maxlength="150"><label for="phone">Phone (optional)</label><input id="phone" type="tel" maxlength="30"><label for="message">Message</label><textarea id="message" maxlength="1000" placeholder="Please share what you would like to know..."></textarea><div class="dialog-actions"><button class="btn" type="submit">Prepare enquiry</button><button class="btn secondary" type="button" id="closeModal">Close</button></div></form><p class="status" id="formStatus" aria-live="polite"></p></div></div>
+<script>
+const collections={
+ "photography-collection":{id:"kaalaverse-photo-collection",title:"Photography Collection",category:"Photography",image:"assets/client-image-3.jpg",description:"Explore visual storytelling from the Kaalaverse photography collection."},
+ "wildlife-nature-collection":{id:"kaalaverse-wildlife-collection",title:"Wildlife & Nature Collection",category:"Wildlife & Nature",image:"assets/client-image-5.jpg",description:"Discover nature-focused imagery from the client-provided collection."},
+ "visual-art-collection":{id:"kaalaverse-visual-art-collection",title:"Visual Art Collection",category:"Visual Art",image:"assets/client-image-2.jpg",description:"Explore the visual art category. Individual artwork details can be added when supplied."}
+};
+const params=new URLSearchParams(location.search);const itemKey=params.get("item")||"photography-collection";const item=collections[itemKey]||collections["photography-collection"];
+const $=id=>document.getElementById(id);
+$("title").textContent=item.title;$("crumbTitle").textContent=item.title;$("category").textContent=item.category;$("type").textContent=item.category;$("description").textContent=item.description;$("aboutText").textContent=item.description+" Contact Kaalaverse to request confirmed artwork details, creator information, availability and pricing.";
+$("productImage").src=item.image;$("productImage").alt=item.title;$("year").textContent=new Date().getFullYear();
+const WISH_KEY="kaalaverseWishlist",CART_KEY="kaalaverseCart";
+function read(key){try{const v=JSON.parse(localStorage.getItem(key)||"[]");return Array.isArray(v)?v:[]}catch{return[]}}
+function save(key,data){try{localStorage.setItem(key,JSON.stringify(data));return true}catch{return false}}
+function updateWish(){const saved=read(WISH_KEY).some(x=>x===item.id||(x&&x.id===item.id));$("wishBtn").textContent=saved?"♥ Saved to Wishlist":"♡ Save to Wishlist"}
+updateWish();
+$("wishBtn").addEventListener("click",()=>{let list=read(WISH_KEY);const exists=list.some(x=>x===item.id||(x&&x.id===item.id));list=exists?list.filter(x=>x!==item.id&&!(x&&x.id===item.id)):[...list,item.id];if(save(WISH_KEY,list)){updateWish();$("pageStatus").textContent=exists?"Removed from your wishlist.":"Saved to your wishlist."}else $("pageStatus").textContent="Could not update wishlist in this browser."});
+$("cartBtn").addEventListener("click",()=>{let cart=read(CART_KEY);const existing=cart.find(x=>x&&x.id===item.id);if(existing)existing.quantity=Math.max(1,Number(existing.quantity)||1)+1;else cart.push({id:item.id,title:item.title,image:item.image,category:item.category,quantity:1,price:null,link:"product-details.html?item="+encodeURIComponent(itemKey)});if(save(CART_KEY,cart)){$("pageStatus").textContent="Added to your cart. Price will be confirmed by the creator."; $("cartBtn").textContent="Added to Cart";}else $("pageStatus").textContent="Could not update cart in this browser."});
+const modal=$("enquiryModal");$("enquireBtn").addEventListener("click",()=>{modal.classList.add("open");$("name").focus()});$("closeModal").addEventListener("click",()=>modal.classList.remove("open"));modal.addEventListener("click",e=>{if(e.target===modal)modal.classList.remove("open")});
+$("enquiryForm").addEventListener("submit",async e=>{e.preventDefault();const msg="Kaalaverse Artwork Enquiry\nCollection: "+item.title+"\nName: "+$("name").value.trim()+"\nEmail: "+$("email").value.trim()+"\nPhone: "+$("phone").value.trim()+"\nMessage: "+$("message").value.trim();try{await navigator.clipboard.writeText(msg);$("formStatus").textContent="Enquiry message copied. Please send it to the Kaalaverse team through your preferred contact channel."}catch{$("formStatus").textContent="Copy was unavailable. Please copy the details manually: "+msg}});
+</script>
+</body>
+</html>
