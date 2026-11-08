@@ -1,0 +1,554 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Your saved artworks and favourite creators on Kaalaverse.">
+<title>My Wishlist | Kaalaverse</title>
+
+<style>
+:root {
+  --ink:#25231f;
+  --muted:#77736b;
+  --paper:#f8f7f3;
+  --white:#fff;
+  --line:#e8e4dc;
+  --gold:#a77b42;
+  --dark:#24221e;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.6;
+}
+
+a { text-decoration:none; color:inherit; }
+
+button { font:inherit; cursor:pointer; }
+
+.topbar {
+  background:var(--dark);
+  color:#eee9df;
+  text-align:center;
+  padding:9px;
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+
+header {
+  background:white;
+  border-bottom:1px solid var(--line);
+  position:sticky;
+  top:0;
+  z-index:20;
+}
+
+.nav {
+  max-width:1200px;
+  margin:auto;
+  padding:18px 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.logo {
+  font-family:Georgia,serif;
+  font-size:27px;
+  font-weight:bold;
+  letter-spacing:-1px;
+}
+
+.logo span { color:var(--gold); }
+
+.navlinks {
+  display:flex;
+  align-items:center;
+  gap:23px;
+  font-size:12px;
+  font-weight:600;
+}
+
+.navlinks a:hover { color:var(--gold); }
+
+.nav-cta {
+  border:1px solid var(--ink);
+  padding:9px 15px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+.menu-btn {
+  display:none;
+  background:white;
+  border:1px solid var(--line);
+  padding:8px 12px;
+}
+
+.hero {
+  background:#eeece5;
+  padding:65px 24px;
+  text-align:center;
+}
+
+.eyebrow {
+  color:var(--gold);
+  font-size:11px;
+  font-weight:bold;
+  letter-spacing:3px;
+  text-transform:uppercase;
+}
+
+h1 {
+  font-family:Georgia,serif;
+  font-size:clamp(38px,6vw,58px);
+  font-weight:400;
+  margin:12px 0;
+}
+
+.hero p {
+  color:var(--muted);
+  font-size:14px;
+}
+
+main {
+  max-width:1200px;
+  margin:55px auto 80px;
+  padding:0 24px;
+}
+
+.heading-row {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  flex-wrap:wrap;
+  margin-bottom:30px;
+}
+
+.heading-row h2 {
+  font-family:Georgia,serif;
+  font-size:28px;
+  font-weight:400;
+}
+
+.count {
+  color:var(--muted);
+  font-size:13px;
+}
+
+.grid {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:25px;
+}
+
+.card {
+  background:white;
+  border:1px solid var(--line);
+  overflow:hidden;
+  transition:.25s;
+}
+
+.card:hover {
+  transform:translateY(-4px);
+  box-shadow:0 12px 30px rgba(0,0,0,.06);
+}
+
+.card-image {
+  position:relative;
+  height:270px;
+  background:#eeece5;
+  overflow:hidden;
+}
+
+.card-image img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.card-body { padding:20px; }
+
+.card-body h3 {
+  font-family:Georgia,serif;
+  font-size:20px;
+  font-weight:400;
+  margin-bottom:5px;
+}
+
+.card-body p {
+  color:var(--muted);
+  font-size:12px;
+}
+
+.card-actions {
+  display:flex;
+  gap:10px;
+  margin-top:18px;
+}
+
+.view-btn,.remove-btn {
+  flex:1;
+  padding:11px 9px;
+  font-size:11px;
+  text-align:center;
+  text-transform:uppercase;
+  letter-spacing:.7px;
+}
+
+.view-btn {
+  background:var(--dark);
+  color:white;
+  border:1px solid var(--dark);
+}
+
+.remove-btn {
+  background:white;
+  color:#8b4a3d;
+  border:1px solid #d9c9c4;
+}
+
+.view-btn:hover { background:var(--gold); border-color:var(--gold); }
+.remove-btn:hover { background:#f8eeee; }
+
+.empty {
+  display:none;
+  background:white;
+  border:1px solid var(--line);
+  padding:65px 20px;
+  text-align:center;
+}
+
+.empty-icon {
+  font-size:42px;
+  margin-bottom:15px;
+}
+
+.empty h3 {
+  font-family:Georgia,serif;
+  font-size:27px;
+  font-weight:400;
+  margin-bottom:10px;
+}
+
+.empty p {
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:22px;
+}
+
+.primary-btn {
+  display:inline-block;
+  background:var(--dark);
+  color:white;
+  padding:13px 23px;
+  font-size:11px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+
+.primary-btn:hover { background:var(--gold); }
+
+footer {
+  background:var(--dark);
+  color:#e9e5dc;
+  padding:50px 24px 25px;
+}
+
+.footer-inner {
+  max-width:1120px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:30px;
+}
+
+.footer-brand { max-width:340px; }
+
+.footer-brand p {
+  color:#aaa59c;
+  font-size:12px;
+  margin-top:10px;
+}
+
+.footer-links {
+  display:flex;
+  flex-wrap:wrap;
+  gap:18px;
+  font-size:12px;
+  color:#d0cbc1;
+}
+
+.footer-links a:hover { color:#d9b77f; }
+
+.copyright {
+  max-width:1120px;
+  margin:30px auto 0;
+  padding-top:20px;
+  border-top:1px solid #48453f;
+  color:#99948b;
+  font-size:11px;
+}
+
+@media(max-width:850px) {
+  .navlinks {
+    display:none;
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    background:white;
+    padding:20px 25px;
+    border-bottom:1px solid var(--line);
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .navlinks.open { display:flex; }
+  .menu-btn { display:block; }
+  .grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+
+@media(max-width:550px) {
+  .grid { grid-template-columns:1fr; }
+  .card-image { height:260px; }
+  main { padding:0 15px; }
+  .heading-row { align-items:flex-start; flex-direction:column; }
+  .footer-inner { flex-direction:column; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+  Discover. Collect. Celebrate Creativity.
+</div>
+
+<header>
+  <div class="nav">
+    <a href="index.html" class="logo">kaala<span>verse</span></a>
+
+    <nav class="navlinks" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="discover-artists.html">Artists</a>
+      <a href="explore-art.html">Explore Art</a>
+      <a href="live-events.html">Events</a>
+      <a href="subscriptions.html">Memberships</a>
+      <a href="artist-booking.html">Book an Artist</a>
+      <a href="customer-dashboard.html">My Account</a>
+      <a href="login.html" class="nav-cta">Sign In</a>
+    </nav>
+
+    <button class="menu-btn" id="menuBtn" aria-expanded="false">
+      ☰ Menu
+    </button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">Your Personal Collection</div>
+  <h1>My Wishlist</h1>
+  <p>Keep the artworks and creative collections you love in one place.</p>
+</section>
+
+<main>
+  <div class="heading-row">
+    <div>
+      <h2>Saved Artworks</h2>
+      <p class="count" id="itemCount">Loading your collection...</p>
+    </div>
+
+    <a href="explore-art.html" class="primary-btn">
+      Explore More Art
+    </a>
+  </div>
+
+  <div class="grid" id="wishlistGrid"></div>
+
+  <div class="empty" id="emptyState">
+    <div class="empty-icon">♡</div>
+    <h3>Your Wishlist is Empty</h3>
+    <p>
+      You haven't saved any artworks yet.
+      Explore our collections and save your favourites here.
+    </p>
+    <a href="explore-art.html" class="primary-btn">
+      Discover Artwork
+    </a>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="logo">kaala<span>verse</span></a>
+      <p>
+        Discover creators. Shop original art. Subscribe to artists.
+        Book performers. Experience live entertainment.
+      </p>
+    </div>
+
+    <div class="footer-links">
+      <a href="terms.html">Terms</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="refund-policy.html">Refund Policy</a>
+      <a href="artist-agreement.html">Artist Agreement</a>
+      <a href="copyright-policy.html">Copyright</a>
+      <a href="content-moderation.html">Content Guidelines</a>
+    </div>
+  </div>
+
+  <div class="copyright">
+    © <span id="year"></span> Kaalaverse. All rights reserved.
+  </div>
+</footer>
+
+<script>
+const STORAGE_KEY = "kaalaverseWishlist";
+
+const grid = document.getElementById("wishlistGrid");
+const emptyState = document.getElementById("emptyState");
+const itemCount = document.getElementById("itemCount");
+
+function getWishlist() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    return Array.isArray(saved) ? saved : [];
+  } catch (error) {
+    return [];
+  }
+}
+
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, function(char) {
+    return {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    }[char];
+  });
+}
+
+function renderWishlist() {
+  const wishlist = getWishlist();
+
+  grid.innerHTML = "";
+
+  itemCount.textContent =
+    wishlist.length + (wishlist.length === 1 ? " saved item" : " saved items");
+
+  if (wishlist.length === 0) {
+    emptyState.style.display = "block";
+    grid.style.display = "none";
+    return;
+  }
+
+  emptyState.style.display = "none";
+  grid.style.display = "grid";
+
+  wishlist.forEach(function(item, index) {
+    const isObject = item !== null && typeof item === "object";
+
+    const title = isObject
+      ? (item.title || item.name || "Saved Artwork")
+      : String(item);
+
+    const image = isObject ? item.image : "";
+
+    const description = isObject
+      ? (item.category || item.artist || "Kaalaverse Collection")
+      : "Saved collection";
+
+    const detailLink = isObject && item.link
+      ? item.link
+      : "explore-art.html";
+
+    const card = document.createElement("article");
+    card.className = "card";
+
+    const imageHTML = image
+      ? '<img src="' + escapeHTML(image) + '" alt="' +
+        escapeHTML(title) + '" loading="lazy" onerror="this.style.display=\'none\'">'
+      : '<div style="height:100%;display:flex;align-items:center;justify-content:center;color:#77736b;font-size:13px;">Artwork Preview</div>';
+
+    card.innerHTML = `
+      <div class="card-image">
+        ${imageHTML}
+      </div>
+
+      <div class="card-body">
+        <h3>${escapeHTML(title)}</h3>
+        <p>${escapeHTML(description)}</p>
+
+        <div class="card-actions">
+          <a class="view-btn" href="${escapeHTML(detailLink)}">View Artwork</a>
+          <button class="remove-btn" type="button" data-index="${index}">
+            Remove
+          </button>
+        </div>
+      </div>
+    `;
+
+    grid.appendChild(card);
+  });
+
+  grid.querySelectorAll(".remove-btn").forEach(function(button) {
+    button.addEventListener("click", function() {
+      removeItem(Number(button.dataset.index));
+    });
+  });
+}
+
+function removeItem(index) {
+  const wishlist = getWishlist();
+
+  if (index < 0 || index >= wishlist.length) return;
+
+  wishlist.splice(index, 1);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(wishlist));
+
+  renderWishlist();
+}
+
+document.getElementById("menuBtn").addEventListener("click", function() {
+  const nav = document.getElementById("navLinks");
+  const isOpen = nav.classList.toggle("open");
+
+  this.setAttribute("aria-expanded", isOpen);
+  this.textContent = isOpen ? "✕ Close" : "☰ Menu";
+});
+
+document.querySelectorAll(".navlinks a").forEach(function(link) {
+  link.addEventListener("click", function() {
+    document.getElementById("navLinks").classList.remove("open");
+
+    const button = document.getElementById("menuBtn");
+    button.setAttribute("aria-expanded", "false");
+    button.textContent = "☰ Menu";
+  });
+});
+
+window.addEventListener("storage", function(event) {
+  if (event.key === STORAGE_KEY) renderWishlist();
+});
+
+document.getElementById("year").textContent = new Date().getFullYear();
+
+renderWishlist();
+</script>
+
+</body>
+</html>
