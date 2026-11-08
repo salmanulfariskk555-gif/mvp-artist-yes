@@ -162,7 +162,8 @@ footer{background:var(--dark);color:white;padding:48px 0 22px}
 <button class="filter" data-filter="visual-art">Visual Art</button>
 </div>
 
-<div class="toolbar-tools"><label class="price-filter-label" for="priceFilter">Price range</label><select class="sort" id="priceFilter" aria-label="Filter by indicative price"><option value="all">All prices</option><option value="500000-699999">₹5L – ₹7L</option><option value="700000-899999">₹7L – ₹9L</option><option value="900000-1000000">₹9L – ₹10L</option></select></div>\n<select class="sort" id="sortSelect" aria-label="Sort artwork">
+<div class="toolbar-tools"><label class="price-filter-label" for="priceFilter">Price range</label><select class="sort" id="priceFilter" aria-label="Filter by indicative price"><option value="all">All prices</option><option value="500000-699999">₹5L – ₹7L</option><option value="700000-899999">₹7L – ₹9L</option><option value="900000-1000000">₹9L – ₹10L</option></select></div>
+<select class="sort" id="sortSelect" aria-label="Sort artwork">
 <option value="default">Sort: Featured</option>
 <option value="az">Category: A–Z</option>
 </select>
@@ -181,7 +182,7 @@ footer{background:var(--dark);color:white;padding:48px 0 22px}
 <p>Explore visual storytelling from the Kaalaverse photography collection.</p>
 <div class="art-price"><small>Artist-provided price</small>₹5,50,000</div>
 <div class="card-actions">
-<a href="product-details.html?item=photography-collection">View Details</a>
+<a href="product-details.html?item=photography-collection">View Details</a><a href="https://wa.me/919567497943?text=Hello%20Kaalaverse%2C%20I%20would%20like%20to%20enquire%20about%20the%20Photography%20Collection.%20Please%20share%20availability%20and%20purchase%20details." target="_blank" rel="noopener">WhatsApp Enquiry</a>
 <button type="button" data-enquire="Photography Collection">Enquire</button>
 </div>
 </div>
@@ -198,7 +199,7 @@ footer{background:var(--dark);color:white;padding:48px 0 22px}
 <p>Discover nature-focused imagery from the client-provided collection.</p>
 <div class="art-price"><small>Artist-provided price</small>₹7,25,000</div>
 <div class="card-actions">
-<a href="product-details.html?item=wildlife-nature-collection">View Details</a><a href="artist-profile.html">Artist Profile</a>
+<a href="product-details.html?item=wildlife-nature-collection">View Details</a><a href="https://wa.me/919567497943?text=Hello%20Kaalaverse%2C%20I%20would%20like%20to%20enquire%20about%20the%20Wildlife%20%26%20Nature%20Collection.%20Please%20share%20availability%20and%20purchase%20details." target="_blank" rel="noopener">WhatsApp Enquiry</a><a href="artist-profile.html">Artist Profile</a>
 <button type="button" data-enquire="Wildlife & Nature Collection">Enquire</button>
 </div>
 </div>
@@ -215,7 +216,7 @@ footer{background:var(--dark);color:white;padding:48px 0 22px}
 <p>Explore the visual art category. Individual artwork details can be added when supplied.</p>
 <div class="art-price"><small>Artist-provided price</small>₹9,50,000</div>
 <div class="card-actions">
-<a href="product-details.html?item=visual-art-collection">View Details</a>
+<a href="product-details.html?item=visual-art-collection">View Details</a><a href="https://wa.me/919567497943?text=Hello%20Kaalaverse%2C%20I%20would%20like%20to%20enquire%20about%20the%20Visual%20Art%20Collection.%20Please%20share%20availability%20and%20purchase%20details." target="_blank" rel="noopener">WhatsApp Enquiry</a>
 <button type="button" data-enquire="Visual Art Collection">Enquire</button>
 </div>
 </div>
@@ -315,12 +316,16 @@ let activeCategory='all';
 
 function updateCards(){
  const query=$('#artSearch').value.trim().toLowerCase();
- let cards=$$('.art-card');
+ const priceRange=$('#priceFilter').value;
+ let cards=$('.art-card');
 
  cards.forEach(card=>{
   const categoryMatch=activeCategory==='all'||card.dataset.category===activeCategory;
   const text=(card.dataset.search+' '+card.innerText).toLowerCase();
-  card.hidden=!(categoryMatch&&text.includes(query));
+  const price=Number(card.dataset.price||0);
+  const bounds=priceRange==='all'?null:priceRange.split('-').map(Number);
+  const priceMatch=!bounds||(price>=bounds[0]&&price<=bounds[1]);
+  card.hidden=!(categoryMatch&&text.includes(query)&&priceMatch);
  });
 
  const visible=cards.filter(card=>!card.hidden);
@@ -352,7 +357,9 @@ $('#filters').addEventListener('click',event=>{
  updateCards();
 });
 
-$('#sortSelect').addEventListener('change',updateCards);\n$('#priceFilter').addEventListener('change',updateCards);
+$('#sortSelect').addEventListener('change',updateCards);
+$('#priceFilter').addEventListener('change',updateCards);
+$('#priceFilter').addEventListener('change',updateCards);
 
 $('#resetFilters').addEventListener('click',()=>{
  $('#artSearch').value='';
@@ -363,6 +370,7 @@ $('#resetFilters').addEventListener('click',()=>{
  });
 
  $('#sortSelect').value='default';
+ $('#priceFilter').value='all';
  updateCards();
 });
 
