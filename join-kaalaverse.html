@@ -1051,5 +1051,6 @@ document.getElementById("year").textContent = new Date().getFullYear();
 </script>
 
 <script id="kaalaverse-unified-nav-js">(function(){const h=document.querySelector('.kv-header');if(!h)return;const b=h.querySelector('.kv-menu-btn');const p=h.querySelector('.kv-mobile-panel');if(b&&p){b.addEventListener('click',function(){const open=p.classList.toggle('kv-open');b.setAttribute('aria-expanded',String(open));b.textContent=open?'✕':'☰';});}})();</script>
+<script id="kaalaverse-unified-nav-js">(function(){const h=document.querySelector('.kv-header');if(!h)return;const b=h.querySelector('.kv-menu-btn'),p=h.querySelector('.kv-mobile-panel');if(b&&p)b.addEventListener('click',function(){const open=p.classList.toggle('kv-open');b.setAttribute('aria-expanded',String(open));b.textContent=open?'✕':'☰';});})();</script>
 </body>
 </html>
