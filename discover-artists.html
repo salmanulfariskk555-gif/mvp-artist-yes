@@ -548,23 +548,16 @@ filterButtons.forEach(button => {
 });
 
 function filterArtists(){
-
- const searchValue =
- document.getElementById("artistSearch").value.toLowerCase().trim();
-
+ const searchValue = document.getElementById("artistSearch").value.toLowerCase().trim();
  const cards = document.querySelectorAll(".artist-card");
  let visibleCount = 0;
 
  cards.forEach(card => {
-
-  const category = card.dataset.category;
-  const name = card.dataset.name;
-
-  const matchesCategory =
-   selectedCategory === "all" || category === selectedCategory;
-
-  const matchesSearch =
-   name.includes(searchValue);
+  const category = (card.dataset.category || "").toLowerCase();
+  const name = (card.dataset.name || "").toLowerCase();
+  const searchableText = (name + " " + category + " " + card.innerText).toLowerCase();
+  const matchesCategory = selectedCategory === "all" || category === selectedCategory;
+  const matchesSearch = searchableText.includes(searchValue);
 
   if(matchesCategory && matchesSearch){
    card.style.display = "";
@@ -572,15 +565,16 @@ function filterArtists(){
   }else{
    card.style.display = "none";
   }
-
  });
 
- document.getElementById("emptyState").style.display =
-  visibleCount === 0 ? "block" : "none";
+ document.getElementById("emptyState").style.display = visibleCount === 0 ? "block" : "none";
 }
 
-document.getElementById("artistSearch")
-.addEventListener("input", filterArtists);
+const artistSearchInput = document.getElementById("artistSearch");
+const initialSearch = new URLSearchParams(window.location.search).get("search") || "";
+artistSearchInput.value = initialSearch;
+artistSearchInput.addEventListener("input", filterArtists);
+filterArtists();
 
 document.getElementById("year").textContent =
  new Date().getFullYear();
