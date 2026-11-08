@@ -1,0 +1,661 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Discover live performances, art events and cultural experiences on Kaalaverse.">
+<title>Live Events | Kaalaverse</title>
+
+<style>
+:root {
+  --dark:#191815;
+  --gold:#a77b45;
+  --cream:#f8f5ef;
+  --muted:#77736c;
+  --border:#e8e1d6;
+  --white:#fff;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--cream);color:var(--dark);line-height:1.6}
+a{text-decoration:none;color:inherit}
+button,input,select,textarea{font:inherit}
+.container{width:min(1160px,90%);margin:auto}
+
+header{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.navbar{min-height:78px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo{font-size:25px;font-weight:800;letter-spacing:2px}
+.logo span{color:var(--gold)}
+.nav-links{display:flex;align-items:center;gap:22px}
+.nav-links a{font-size:13px;color:#514d46}
+.nav-links a:hover,.nav-links a.active{color:var(--gold)}
+.nav-actions{display:flex;align-items:center;gap:16px}
+.nav-actions a{font-size:13px}
+.join-btn,.primary-btn{display:inline-block;background:var(--dark);color:#fff;padding:12px 22px;border:1px solid var(--dark);cursor:pointer;transition:.2s}
+.join-btn:hover,.primary-btn:hover{background:var(--gold);border-color:var(--gold)}
+.menu-toggle{display:none;background:none;border:0;font-size:25px;cursor:pointer}
+
+.hero{
+ min-height:470px;display:flex;align-items:center;color:white;
+ background:linear-gradient(90deg,rgba(15,14,12,.88),rgba(15,14,12,.35)),
+ url("assets/client-image-4.jpg") center/cover;
+}
+.hero-content{max-width:680px;padding:80px 0}
+.eyebrow{color:var(--gold);font-size:11px;font-weight:bold;letter-spacing:3px;text-transform:uppercase;margin-bottom:16px}
+.hero .eyebrow{color:#d3b17d}
+.hero h1{font-family:Georgia,serif;font-size:clamp(42px,6vw,68px);line-height:1.1;font-weight:400;margin-bottom:20px}
+.hero p{max-width:530px;color:#e6e0d7;font-size:15px;margin-bottom:28px}
+
+.section{padding:80px 0}
+.section-heading{text-align:center;max-width:650px;margin:0 auto 38px}
+.section-heading h2{font-family:Georgia,serif;font-size:clamp(30px,4vw,43px);font-weight:400;margin-bottom:12px}
+.section-heading p{font-size:14px;color:var(--muted)}
+
+.featured-event{display:grid;grid-template-columns:1.1fr 1fr;background:#fff;border:1px solid var(--border)}
+.featured-image img{width:100%;height:100%;min-height:380px;object-fit:cover;display:block}
+.featured-content{padding:45px;display:flex;flex-direction:column;justify-content:center}
+.event-tag{display:inline-block;color:var(--gold);font-size:11px;letter-spacing:2px;font-weight:bold;margin-bottom:15px}
+.featured-content h2{font-family:Georgia,serif;font-weight:400;font-size:35px;line-height:1.2;margin-bottom:16px}
+.featured-content p{color:var(--muted);font-size:14px;margin-bottom:20px}
+.event-meta{font-size:13px;color:#615c53;margin-bottom:9px}
+.event-meta strong{color:var(--dark)}
+.featured-content .primary-btn{align-self:flex-start;margin-top:18px}
+
+.filter-area{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:15px;margin-bottom:30px}
+.filters{display:flex;flex-wrap:wrap;gap:9px}
+.filter-btn{background:white;border:1px solid var(--border);padding:9px 17px;font-size:12px;cursor:pointer}
+.filter-btn.active,.filter-btn:hover{background:var(--dark);color:white;border-color:var(--dark)}
+.search-box{padding:11px 14px;border:1px solid var(--border);background:white;min-width:220px;outline:none}
+.search-box:focus{border-color:var(--gold)}
+
+.event-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.event-card{background:white;border:1px solid var(--border);overflow:hidden;display:flex;flex-direction:column}
+.event-card.hidden{display:none}
+.event-card img{width:100%;height:220px;object-fit:cover;display:block}
+.event-info{padding:22px;display:flex;flex-direction:column;flex:1}
+.event-category{font-size:10px;color:var(--gold);letter-spacing:2px;font-weight:bold;text-transform:uppercase}
+.event-info h3{font-family:Georgia,serif;font-size:23px;font-weight:400;margin:9px 0}
+.event-info p{font-size:13px;color:var(--muted);margin-bottom:15px}
+.event-details{font-size:12px;color:#5e594f;margin-top:auto}
+.event-details div{margin:6px 0}
+.event-action{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:18px}
+.event-action button{background:var(--dark);color:white;border:0;padding:10px 14px;font-size:12px;cursor:pointer}
+.event-action button:hover{background:var(--gold)}
+.event-action span{font-size:11px;color:var(--muted)}
+.empty-state{display:none;text-align:center;color:var(--muted);padding:35px}
+
+.experience{background:#eee8dd}
+.experience-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.experience-card{background:white;padding:30px;border:1px solid var(--border)}
+.experience-icon{font-size:28px;margin-bottom:14px}
+.experience-card h3{font-family:Georgia,serif;font-size:22px;font-weight:400;margin-bottom:8px}
+.experience-card p{font-size:13px;color:var(--muted)}
+
+.organiser{background:var(--dark);color:white;padding:75px 0;text-align:center}
+.organiser h2{font-family:Georgia,serif;font-size:clamp(30px,4vw,43px);font-weight:400;margin-bottom:12px}
+.organiser p{color:#c5bfb4;max-width:600px;margin:0 auto 25px;font-size:14px}
+.organiser .primary-btn{background:var(--gold);border-color:var(--gold)}
+
+.faq-list{max-width:800px;margin:auto}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-question{width:100%;background:none;border:0;padding:20px 0;text-align:left;display:flex;justify-content:space-between;cursor:pointer;font-weight:bold}
+.faq-question span{color:var(--gold);font-size:20px}
+.faq-answer{display:none;color:var(--muted);font-size:13px;padding:0 25px 20px 0}
+.faq-item.open .faq-answer{display:block}
+
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;padding:20px;z-index:500}
+.modal.show{display:flex}
+.modal-box{background:white;width:min(500px,100%);padding:32px;position:relative;max-height:90vh;overflow:auto}
+.modal-box h2{font-family:Georgia,serif;font-weight:400;font-size:29px;margin-bottom:7px}
+.modal-box>p{font-size:13px;color:var(--muted);margin-bottom:20px}
+.close-modal{position:absolute;right:15px;top:10px;border:0;background:none;font-size:26px;cursor:pointer}
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:12px;margin-bottom:6px}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:12px;border:1px solid var(--border);outline:none;background:white}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--gold)}
+.form-group textarea{min-height:85px;resize:vertical}
+.submit-btn{width:100%;padding:13px;background:var(--dark);color:white;border:0;cursor:pointer}
+.submit-btn:hover{background:var(--gold)}
+.form-message{font-size:12px;color:var(--gold);margin-top:12px}
+
+footer{background:#171613;color:white;padding:50px 0 23px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:35px;margin-bottom:35px}
+.footer-brand p{color:#aaa49a;font-size:13px;max-width:350px;margin-top:14px}
+footer h4{font-size:13px;color:#d3b17d;margin-bottom:14px}
+.footer-links{display:flex;flex-direction:column;gap:9px}
+.footer-links a{font-size:12px;color:#aaa49a}
+.footer-links a:hover{color:white}
+.copyright{border-top:1px solid #39362f;padding-top:20px;text-align:center;color:#888278;font-size:11px}
+
+@media(max-width:950px){
+ .nav-links{gap:12px}
+ .nav-links a{font-size:11px}
+ .event-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:760px){
+ .navbar{min-height:70px}
+ .menu-toggle{display:block}
+ .nav-links{display:none;position:absolute;top:70px;left:0;width:100%;background:white;padding:22px 5%;flex-direction:column;align-items:flex-start;border-bottom:1px solid var(--border)}
+ .nav-links.open{display:flex}
+ .nav-actions{display:none}
+ .featured-event{grid-template-columns:1fr}
+ .featured-image img{height:280px;min-height:0}
+ .featured-content{padding:28px}
+ .event-grid,.experience-grid{grid-template-columns:1fr}
+ .section{padding:60px 0}
+ .footer-grid{grid-template-columns:1fr 1fr}
+ .footer-brand{grid-column:1/-1}
+}
+@media(max-width:450px){
+ .filter-area{align-items:stretch}
+ .search-box{width:100%}
+ .footer-grid{grid-template-columns:1fr}
+ .footer-brand{grid-column:auto}
+ .featured-content h2{font-size:29px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <div class="container navbar">
+  <a href="index.html" class="logo">KAALA<span>VERSE</span></a>
+  <button class="menu-toggle" id="menuToggle" aria-label="Open menu">☰</button>
+
+  <nav class="nav-links" id="navLinks">
+   <a href="index.html">Home</a>
+   <a href="discover-artists.html">Discover Artists</a>
+   <a href="explore-art.html">Explore Art</a>
+   <a href="live-events.html" class="active">Live Events</a>
+   <a href="artist-booking.html">Book an Artist</a>
+   <a href="subscriptions.html">Memberships</a>
+  </nav>
+
+  <div class="nav-actions">
+   <a href="login.html">Login</a>
+   <a href="register.html" class="join-btn">Join Us</a>
+  </div>
+ </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+ <div class="container">
+  <div class="hero-content">
+   <div class="eyebrow">LIVE EXPERIENCES · KAALAVERSE</div>
+   <h1>Where Art Comes Alive.</h1>
+   <p>
+    Discover live performances, cultural gatherings, music,
+    creative showcases and unforgettable artistic experiences.
+   </p>
+   <a href="#upcoming-events" class="primary-btn">Explore Events</a>
+  </div>
+ </div>
+</section>
+
+<!-- FEATURED EVENT -->
+<section class="section">
+ <div class="container">
+  <div class="section-heading">
+   <div class="eyebrow">FEATURED EXPERIENCE</div>
+   <h2>Discover Something Extraordinary</h2>
+   <p>Explore creative experiences and events presented through Kaalaverse.</p>
+  </div>
+
+  <div class="featured-event">
+   <div class="featured-image">
+    <img src="assets/client-image-4.jpg" alt="Featured creative event">
+   </div>
+   <div class="featured-content">
+    <div class="event-tag">KAALAVERSE EVENT SHOWCASE</div>
+    <h2>Experience the World of Art & Performance</h2>
+    <p>
+     Discover performances, exhibitions and creative gatherings.
+     Event schedules and ticket information will be published
+     when organisers confirm their event details.
+    </p>
+    <div class="event-meta"><strong>Event type:</strong> Art, Culture & Performance</div>
+    <div class="event-meta"><strong>Location:</strong> To be announced</div>
+    <div class="event-meta"><strong>Date:</strong> To be announced</div>
+    <button class="primary-btn enquiry-trigger" data-event="Featured Event Showcase">
+     Event Enquiry
+    </button>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- UPCOMING EVENTS -->
+<section class="section" id="upcoming-events">
+ <div class="container">
+  <div class="section-heading">
+   <div class="eyebrow">EXPLORE THE CALENDAR</div>
+   <h2>Discover Live Events</h2>
+   <p>
+    Explore event categories and enquire about experiences
+    that interest you.
+   </p>
+  </div>
+
+  <div class="filter-area">
+   <div class="filters">
+    <button class="filter-btn active" data-filter="all">All Events</button>
+    <button class="filter-btn" data-filter="music">Music</button>
+    <button class="filter-btn" data-filter="art">Art & Culture</button>
+    <button class="filter-btn" data-filter="performance">Performance</button>
+    <button class="filter-btn" data-filter="workshop">Workshops</button>
+   </div>
+   <input class="search-box" id="eventSearch" type="search" placeholder="Search events...">
+  </div>
+
+  <!--
+    These are category showcase cards, not confirmed scheduled events.
+    Replace them with organiser-approved event details before publishing.
+  -->
+  <div class="event-grid" id="eventGrid">
+
+   <article class="event-card" data-category="music" data-search="music concert live">
+    <img src="assets/client-image-4.jpg" alt="Music event category">
+    <div class="event-info">
+     <div class="event-category">MUSIC</div>
+     <h3>Live Music Experiences</h3>
+     <p>Discover live music performances and musical experiences from artists.</p>
+     <div class="event-details">
+      <div>◷ Schedule: To be announced</div>
+      <div>⌖ Venue: To be announced</div>
+     </div>
+     <div class="event-action">
+      <span>Event details on enquiry</span>
+      <button class="enquiry-trigger" data-event="Live Music Experiences">Enquire</button>
+     </div>
+    </div>
+   </article>
+
+   <article class="event-card" data-category="art" data-search="art exhibition photography visual">
+    <img src="assets/client-image-3.jpg" alt="Art exhibition category">
+    <div class="event-info">
+     <div class="event-category">ART & CULTURE</div>
+     <h3>Art & Photography Exhibitions</h3>
+     <p>Explore visual art, photography collections and creative exhibitions.</p>
+     <div class="event-details">
+      <div>◷ Schedule: To be announced</div>
+      <div>⌖ Venue: To be announced</div>
+     </div>
+     <div class="event-action">
+      <span>Event details on enquiry</span>
+      <button class="enquiry-trigger" data-event="Art & Photography Exhibitions">Enquire</button>
+     </div>
+    </div>
+   </article>
+
+   <article class="event-card" data-category="performance" data-search="dance theatre stage performance">
+    <img src="assets/client-image-5.jpg" alt="Performance category">
+    <div class="event-info">
+     <div class="event-category">PERFORMANCE</div>
+     <h3>Live Stage Performances</h3>
+     <p>Discover dance, theatre and other live stage performances.</p>
+     <div class="event-details">
+      <div>◷ Schedule: To be announced</div>
+      <div>⌖ Venue: To be announced</div>
+     </div>
+     <div class="event-action">
+      <span>Event details on enquiry</span>
+      <button class="enquiry-trigger" data-event="Live Stage Performances">Enquire</button>
+     </div>
+    </div>
+   </article>
+
+   <article class="event-card" data-category="workshop" data-search="creative workshop learning class">
+    <img src="assets/client-image-2.jpg" alt="Creative workshop category">
+    <div class="event-info">
+     <div class="event-category">WORKSHOPS</div>
+     <h3>Creative Learning Sessions</h3>
+     <p>Explore learning opportunities and sessions led by creative professionals.</p>
+     <div class="event-details">
+      <div>◷ Schedule: To be announced</div>
+      <div>⌖ Venue: To be announced</div>
+     </div>
+     <div class="event-action">
+      <span>Event details on enquiry</span>
+      <button class="enquiry-trigger" data-event="Creative Learning Sessions">Enquire</button>
+     </div>
+    </div>
+   </article>
+
+   <article class="event-card" data-category="art" data-search="artist showcase creative community">
+    <img src="assets/client-image-3.jpg" alt="Artist showcase category">
+    <div class="event-info">
+     <div class="event-category">ART & CULTURE</div>
+     <h3>Artist Showcases</h3>
+     <p>Discover creators and explore their artistic journeys and work.</p>
+     <div class="event-details">
+      <div>◷ Schedule: To be announced</div>
+      <div>⌖ Venue: To be announced</div>
+     </div>
+     <div class="event-action">
+      <span>Event details on enquiry</span>
+      <button class="enquiry-trigger" data-event="Artist Showcases">Enquire</button>
+     </div>
+    </div>
+   </article>
+
+   <article class="event-card" data-category="performance" data-search="cultural festival entertainment">
+    <img src="assets/client-image-5.jpg" alt="Cultural experience category">
+    <div class="event-info">
+     <div class="event-category">PERFORMANCE</div>
+     <h3>Cultural Experiences</h3>
+     <p>Explore cultural gatherings, artistic celebrations and entertainment.</p>
+     <div class="event-details">
+      <div>◷ Schedule: To be announced</div>
+      <div>⌖ Venue: To be announced</div>
+     </div>
+     <div class="event-action">
+      <span>Event details on enquiry</span>
+      <button class="enquiry-trigger" data-event="Cultural Experiences">Enquire</button>
+     </div>
+    </div>
+   </article>
+
+  </div>
+
+  <div class="empty-state" id="emptyState">
+   No matching event categories found. Try another search.
+  </div>
+ </div>
+</section>
+
+<!-- EXPERIENCE TYPES -->
+<section class="section experience">
+ <div class="container">
+  <div class="section-heading">
+   <div class="eyebrow">THE KAALAVERSE EXPERIENCE</div>
+   <h2>Explore Different Experiences</h2>
+   <p>Discover creative events and connect with the artistic community.</p>
+  </div>
+
+  <div class="experience-grid">
+   <div class="experience-card">
+    <div class="experience-icon">♫</div>
+    <h3>Music & Entertainment</h3>
+    <p>Explore concerts, musical performances and entertainment events.</p>
+   </div>
+   <div class="experience-card">
+    <div class="experience-icon">✦</div>
+    <h3>Art & Exhibitions</h3>
+    <p>Discover art exhibitions, photography showcases and visual creativity.</p>
+   </div>
+   <div class="experience-card">
+    <div class="experience-icon">◇</div>
+    <h3>Creative Workshops</h3>
+    <p>Find workshops, learning sessions and opportunities to develop new skills.</p>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- ORGANISER CTA -->
+<section class="organiser">
+ <div class="container">
+  <div class="eyebrow">FOR EVENT ORGANISERS</div>
+  <h2>Bring Your Event to Kaalaverse</h2>
+  <p>
+   Are you an event organiser, performer or creative professional?
+   Showcase your event and connect with audiences through Kaalaverse.
+  </p>
+  <a href="register.html" class="primary-btn">Join as an Organiser</a>
+ </div>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+ <div class="container">
+  <div class="section-heading">
+   <div class="eyebrow">HELP & INFORMATION</div>
+   <h2>Frequently Asked Questions</h2>
+   <p>Some useful information about events and ticket enquiries.</p>
+  </div>
+
+  <div class="faq-list">
+   <div class="faq-item">
+    <button class="faq-question">How can I discover upcoming events?<span>+</span></button>
+    <div class="faq-answer">Browse the event categories on this page. Confirmed event dates and venues should be published once organisers provide the details.</div>
+   </div>
+
+   <div class="faq-item">
+    <button class="faq-question">How can I enquire about an event?<span>+</span></button>
+    <div class="faq-answer">Select the Enquire button on an event card and submit your contact details. The page prepares an enquiry message for you to send.</div>
+   </div>
+
+   <div class="faq-item">
+    <button class="faq-question">Can I purchase event tickets here?<span>+</span></button>
+    <div class="faq-answer">Online ticket booking and payment will be available after the ticketing backend and payment gateway are integrated.</div>
+   </div>
+
+   <div class="faq-item">
+    <button class="faq-question">Can organisers list their own events?<span>+</span></button>
+    <div class="faq-answer">The platform is designed to support event organisers. Event submission, verification and publishing require the organiser dashboard and backend.</div>
+   </div>
+
+   <div class="faq-item">
+    <button class="faq-question">Will I receive a digital ticket or QR code?<span>+</span></button>
+    <div class="faq-answer">Digital tickets and QR-based event entry validation require backend ticket generation and scanning functionality.</div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+ <div class="container">
+  <div class="footer-grid">
+   <div class="footer-brand">
+    <a href="index.html" class="logo">KAALA<span>VERSE</span></a>
+    <p>Discover creators. Shop original art. Subscribe to artists. Book performers. Experience live entertainment.</p>
+   </div>
+   <div>
+    <h4>Explore</h4>
+    <div class="footer-links">
+     <a href="discover-artists.html">Discover Artists</a>
+     <a href="explore-art.html">Explore Art</a>
+     <a href="subscriptions.html">Memberships</a>
+     <a href="workshops.html">Workshops</a>
+    </div>
+   </div>
+   <div>
+    <h4>Platform</h4>
+    <div class="footer-links">
+     <a href="artist-booking.html">Book an Artist</a>
+     <a href="live-events.html">Live Events</a>
+     <a href="login.html">Login</a>
+     <a href="register.html">Join Kaalaverse</a>
+    </div>
+   </div>
+  </div>
+  <div class="copyright">© <span id="year"></span> Kaalaverse. All Rights Reserved.</div>
+ </div>
+</footer>
+
+<!-- EVENT ENQUIRY MODAL -->
+<div class="modal" id="eventModal">
+ <div class="modal-box">
+  <button class="close-modal" id="closeModal" aria-label="Close">&times;</button>
+  <h2>Event Enquiry</h2>
+  <p>Enter your details to prepare an enquiry about this event.</p>
+
+  <form id="eventForm">
+   <div class="form-group">
+    <label for="eventName">Your Name</label>
+    <input id="eventName" type="text" required placeholder="Enter your name">
+   </div>
+   <div class="form-group">
+    <label for="eventEmail">Email Address</label>
+    <input id="eventEmail" type="email" required placeholder="Enter your email">
+   </div>
+   <div class="form-group">
+    <label for="eventPhone">Phone Number</label>
+    <input id="eventPhone" type="tel" placeholder="Enter your phone number">
+   </div>
+   <div class="form-group">
+    <label for="selectedEvent">Selected Event</label>
+    <input id="selectedEvent" type="text" readonly>
+   </div>
+   <div class="form-group">
+    <label for="eventMessage">Message</label>
+    <textarea id="eventMessage" placeholder="Write your enquiry..."></textarea>
+   </div>
+   <button type="submit" class="submit-btn">Prepare Enquiry Message</button>
+   <p class="form-message" id="formMessage" aria-live="polite"></p>
+  </form>
+ </div>
+</div>
+
+<script>
+/* MOBILE NAVIGATION */
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+
+menuToggle.addEventListener("click", function(){
+ navLinks.classList.toggle("open");
+ menuToggle.textContent = navLinks.classList.contains("open") ? "×" : "☰";
+});
+
+navLinks.querySelectorAll("a").forEach(link=>{
+ link.addEventListener("click",()=>{
+  navLinks.classList.remove("open");
+  menuToggle.textContent = "☰";
+ });
+});
+
+/* EVENT FILTERS AND SEARCH */
+const filterButtons = document.querySelectorAll(".filter-btn");
+const eventCards = document.querySelectorAll(".event-card");
+const eventSearch = document.getElementById("eventSearch");
+const emptyState = document.getElementById("emptyState");
+
+let activeFilter = "all";
+
+function filterEvents(){
+ const query = eventSearch.value.toLowerCase().trim();
+ let visibleCount = 0;
+
+ eventCards.forEach(card=>{
+  const category = card.dataset.category;
+  const searchText = card.dataset.search + " " + card.textContent;
+  const categoryMatch = activeFilter === "all" || category === activeFilter;
+  const searchMatch = searchText.toLowerCase().includes(query);
+  const visible = categoryMatch && searchMatch;
+
+  card.classList.toggle("hidden",!visible);
+  if(visible) visibleCount++;
+ });
+
+ emptyState.style.display = visibleCount === 0 ? "block" : "none";
+}
+
+filterButtons.forEach(button=>{
+ button.addEventListener("click",()=>{
+  filterButtons.forEach(btn=>btn.classList.remove("active"));
+  button.classList.add("active");
+  activeFilter = button.dataset.filter;
+  filterEvents();
+ });
+});
+
+eventSearch.addEventListener("input",filterEvents);
+
+/* EVENT ENQUIRY MODAL */
+const modal = document.getElementById("eventModal");
+const closeModal = document.getElementById("closeModal");
+const selectedEvent = document.getElementById("selectedEvent");
+const formMessage = document.getElementById("formMessage");
+
+document.querySelectorAll(".enquiry-trigger").forEach(button=>{
+ button.addEventListener("click",()=>{
+  selectedEvent.value = button.dataset.event;
+  formMessage.textContent = "";
+  modal.classList.add("show");
+ });
+});
+
+function hideModal(){
+ modal.classList.remove("show");
+}
+
+closeModal.addEventListener("click",hideModal);
+
+modal.addEventListener("click",event=>{
+ if(event.target === modal) hideModal();
+});
+
+document.addEventListener("keydown",event=>{
+ if(event.key === "Escape") hideModal();
+});
+
+/* ENQUIRY FORM */
+document.getElementById("eventForm").addEventListener("submit",async function(event){
+ event.preventDefault();
+
+ const name = document.getElementById("eventName").value.trim();
+ const email = document.getElementById("eventEmail").value.trim();
+ const phone = document.getElementById("eventPhone").value.trim();
+ const eventName = selectedEvent.value;
+ const message = document.getElementById("eventMessage").value.trim();
+
+ const enquiry = [
+  "KAALAVERSE EVENT ENQUIRY",
+  "------------------------",
+  "Name: " + name,
+  "Email: " + email,
+  "Phone: " + (phone || "Not provided"),
+  "Event: " + eventName,
+  "Message: " + (message || "No additional message")
+ ].join("\n");
+
+ try{
+  if(navigator.clipboard && window.isSecureContext){
+   await navigator.clipboard.writeText(enquiry);
+   formMessage.textContent = "Enquiry copied! You can now paste and send the message.";
+  }else{
+   const temp = document.createElement("textarea");
+   temp.value = enquiry;
+   temp.style.position = "fixed";
+   temp.style.opacity = "0";
+   document.body.appendChild(temp);
+   temp.select();
+   const copied = document.execCommand("copy");
+   temp.remove();
+
+   formMessage.textContent = copied
+    ? "Enquiry copied! You can now paste and send the message."
+    : "Copy was not available. Please copy your details manually.";
+  }
+ }catch(error){
+  formMessage.textContent = "Could not copy automatically. Please try again.";
+ }
+});
+
+/* FAQ ACCORDION */
+document.querySelectorAll(".faq-question").forEach(question=>{
+ question.addEventListener("click",()=>{
+  const item = question.parentElement;
+  const wasOpen = item.classList.contains("open");
+
+  document.querySelectorAll(".faq-item").forEach(other=>{
+   other.classList.remove("open");
+   other.querySelector(".faq-question span").textContent = "+";
+  });
+
+  if(!wasOpen){
+   item.classList.add("open");
+   question.querySelector("span").textContent = "−";
+  }
+ });
+});
+
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
