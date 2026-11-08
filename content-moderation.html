@@ -1,0 +1,707 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kaalaverse Content Moderation Guidelines for creators, artists, artwork, events and community safety.">
+  <title>Content Moderation Guidelines | Kaalaverse</title>
+
+  <style>
+    :root {
+      --ink: #25231f;
+      --muted: #77736b;
+      --paper: #f8f7f3;
+      --white: #fff;
+      --line: #e8e4dc;
+      --gold: #a77b42;
+      --dark: #24221e;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.75;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .topbar {
+      background: var(--dark);
+      color: #eee9df;
+      text-align: center;
+      padding: 9px 15px;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    header {
+      background: rgba(255,255,255,.97);
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav {
+      max-width: 1200px;
+      margin: auto;
+      padding: 19px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      font-family: Georgia, serif;
+      font-size: 27px;
+      font-weight: bold;
+      letter-spacing: -1px;
+    }
+
+    .logo span { color: var(--gold); }
+
+    .navlinks {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .navlinks a:hover { color: var(--gold); }
+
+    .nav-cta {
+      border: 1px solid var(--ink);
+      padding: 10px 16px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 11px;
+    }
+
+    .menu-btn {
+      display: none;
+      background: white;
+      border: 1px solid var(--line);
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+
+    .hero {
+      background: #eeece5;
+      padding: 78px 24px 72px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    h1 {
+      font-family: Georgia, serif;
+      font-weight: 400;
+      font-size: clamp(38px, 6vw, 65px);
+      line-height: 1.12;
+      margin: 17px 0;
+    }
+
+    .hero p {
+      max-width: 670px;
+      margin: auto;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .layout {
+      max-width: 1120px;
+      margin: 65px auto;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 55px;
+      align-items: start;
+    }
+
+    .sidebar {
+      background: white;
+      border: 1px solid var(--line);
+      padding: 25px;
+      position: sticky;
+      top: 105px;
+    }
+
+    .sidebar h3 {
+      font-family: Georgia, serif;
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    .sidebar a {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      padding: 9px 0;
+      border-bottom: 1px solid #f0eee9;
+    }
+
+    .sidebar a:hover { color: var(--gold); }
+
+    .content {
+      background: white;
+      border: 1px solid var(--line);
+      padding: clamp(25px, 5vw, 55px);
+    }
+
+    .notice {
+      background: #f8f4eb;
+      border-left: 3px solid var(--gold);
+      padding: 18px 20px;
+      margin-bottom: 35px;
+      font-size: 13px;
+      color: #615846;
+    }
+
+    .section {
+      padding-bottom: 29px;
+      margin-bottom: 29px;
+      border-bottom: 1px solid var(--line);
+      scroll-margin-top: 110px;
+    }
+
+    .section:last-child {
+      border-bottom: 0;
+      margin-bottom: 0;
+    }
+
+    h2 {
+      font-family: Georgia, serif;
+      font-size: 25px;
+      font-weight: 400;
+      margin-bottom: 13px;
+    }
+
+    .section p {
+      font-size: 13px;
+      color: #625f58;
+      margin: 10px 0;
+    }
+
+    .section ul {
+      padding-left: 22px;
+      color: #625f58;
+      font-size: 13px;
+      margin: 12px 0;
+    }
+
+    .section li { margin: 7px 0; }
+
+    .contact-card {
+      background: var(--dark);
+      color: white;
+      padding: 28px;
+      margin-top: 20px;
+    }
+
+    .contact-card h3 {
+      font-family: Georgia, serif;
+      font-size: 23px;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+
+    .contact-card p {
+      color: #d2cdc3;
+      font-size: 13px;
+    }
+
+    .contact-card a {
+      color: #d9b77f;
+      text-decoration: underline;
+    }
+
+    footer {
+      background: var(--dark);
+      color: #e9e5dc;
+      padding: 55px 24px 25px;
+    }
+
+    .footer-inner {
+      max-width: 1120px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 35px;
+      flex-wrap: wrap;
+    }
+
+    .footer-brand { max-width: 340px; }
+
+    .footer-brand .logo { margin-bottom: 12px; }
+
+    .footer-brand p {
+      color: #aaa59c;
+      font-size: 12px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      align-items: flex-start;
+      font-size: 12px;
+      color: #d0cbc1;
+    }
+
+    .footer-links a:hover { color: #d9b77f; }
+
+    .copyright {
+      max-width: 1120px;
+      margin: 35px auto 0;
+      padding-top: 20px;
+      border-top: 1px solid #48453f;
+      color: #99948b;
+      font-size: 11px;
+    }
+
+    @media(max-width: 850px) {
+      .navlinks {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        padding: 20px 25px;
+        border-bottom: 1px solid var(--line);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 17px;
+      }
+
+      .navlinks.open { display: flex; }
+      .menu-btn { display: block; }
+
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 25px;
+        margin: 35px auto;
+      }
+
+      .sidebar { position: static; }
+
+      .sidebar nav {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0 15px;
+      }
+    }
+
+    @media(max-width: 480px) {
+      .hero { padding: 55px 20px; }
+      .layout { padding: 0 14px; }
+      .sidebar nav { grid-template-columns: 1fr; }
+      .content { padding: 23px 19px; }
+      .footer-inner { flex-direction: column; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="topbar">
+    A creative marketplace built around originality
+  </div>
+
+  <header>
+    <div class="nav">
+      <a href="index.html" class="logo">kaala<span>verse</span></a>
+
+      <nav class="navlinks" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="discover-artists.html">Artists</a>
+        <a href="explore-art.html">Explore Art</a>
+        <a href="live-events.html">Events</a>
+        <a href="subscriptions.html">Memberships</a>
+        <a href="artist-booking.html">Book an Artist</a>
+        <a href="login.html" class="nav-cta">Sign In</a>
+      </nav>
+
+      <button class="menu-btn" id="menuBtn" aria-label="Open navigation" aria-expanded="false">
+        ☰ Menu
+      </button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="eyebrow">Community Standards</div>
+    <h1>Content Moderation Guidelines</h1>
+    <p>
+      Creating a safe, respectful and inspiring environment for artists,
+      creators, collectors, performers and the Kaalaverse community.
+    </p>
+  </section>
+
+  <main class="layout">
+
+    <aside class="sidebar">
+      <h3>On this page</h3>
+      <nav>
+        <a href="#purpose">1. Purpose</a>
+        <a href="#principles">2. Our Principles</a>
+        <a href="#allowed">3. Allowed Content</a>
+        <a href="#prohibited">4. Prohibited Content</a>
+        <a href="#copyright">5. Copyright</a>
+        <a href="#safety">6. Safety & Respect</a>
+        <a href="#verification">7. Creator Verification</a>
+        <a href="#reporting">8. Reporting Content</a>
+        <a href="#review">9. Review Process</a>
+        <a href="#actions">10. Enforcement</a>
+        <a href="#appeals">11. Appeals</a>
+        <a href="#contact">12. Contact</a>
+      </nav>
+    </aside>
+
+    <article class="content">
+
+      <div class="notice">
+        <strong>Policy draft:</strong> These guidelines are intended as a
+        starting point for Kaalaverse. Final moderation rules, reporting
+        procedures, response timelines and enforcement responsibilities
+        should be approved by the platform's management and legal advisor
+        before publication.
+      </div>
+
+      <section class="section" id="purpose">
+        <h2>1. Purpose of These Guidelines</h2>
+        <p>
+          Kaalaverse is a creative marketplace where artists and creators can
+          showcase original work, sell artwork, share exclusive content,
+          organise events, conduct workshops and connect with audiences.
+        </p>
+        <p>
+          These guidelines explain the standards expected from everyone
+          using the platform and how content that may violate those standards
+          can be reported and reviewed.
+        </p>
+        <p>
+          They apply to creator profiles, artwork listings, images, videos,
+          audio, comments, reviews, event information, workshop material
+          and other user-submitted content.
+        </p>
+      </section>
+
+      <section class="section" id="principles">
+        <h2>2. Our Community Principles</h2>
+        <p>We aim to maintain a community that values:</p>
+        <ul>
+          <li>Originality and creative expression.</li>
+          <li>Respect for artists, creators and customers.</li>
+          <li>Honest representation of artwork and services.</li>
+          <li>Protection of intellectual property rights.</li>
+          <li>Safe and responsible participation.</li>
+          <li>Fair treatment and transparent marketplace practices.</li>
+        </ul>
+      </section>
+
+      <section class="section" id="allowed">
+        <h2>3. Content That Is Generally Allowed</h2>
+        <p>
+          Subject to applicable law and other platform policies, Kaalaverse
+          welcomes creative and professional content such as:
+        </p>
+        <ul>
+          <li>Original paintings, illustrations and digital artwork.</li>
+          <li>Photography, wildlife photography and nature collections.</li>
+          <li>Music, dance, theatre and performance-related content.</li>
+          <li>Educational tutorials, workshops and creative demonstrations.</li>
+          <li>Artist portfolios and professional biographies.</li>
+          <li>Legitimate event announcements and booking information.</li>
+          <li>Respectful comments, feedback and genuine customer reviews.</li>
+        </ul>
+        <p>
+          Content may still be reviewed if it raises concerns under another
+          Kaalaverse policy or applicable law.
+        </p>
+      </section>
+
+      <section class="section" id="prohibited">
+        <h2>4. Prohibited Content and Activities</h2>
+        <p>Users must not upload, publish, sell or distribute content that:</p>
+        <ul>
+          <li>Is illegal or promotes unlawful activity.</li>
+          <li>Infringes copyright, trademarks or other intellectual property rights.</li>
+          <li>Contains threats, targeted harassment or abusive behaviour.</li>
+          <li>Promotes violence or encourages harm to others.</li>
+          <li>Contains fraudulent listings, misleading claims or impersonation.</li>
+          <li>Uses fake reviews, manipulated ratings or deceptive testimonials.</li>
+          <li>Contains malware, phishing links or harmful files.</li>
+          <li>Exposes private or confidential information without authorisation.</li>
+          <li>Exploits, endangers or sexually abuses children.</li>
+          <li>Promotes discrimination or hateful abuse against individuals or groups.</li>
+          <li>Attempts to manipulate marketplace transactions or platform systems.</li>
+        </ul>
+        <p>
+          Kaalaverse may restrict other content where necessary to protect
+          users, creators, the platform or comply with applicable law.
+        </p>
+      </section>
+
+      <section class="section" id="copyright">
+        <h2>5. Copyright and Intellectual Property</h2>
+        <p>
+          Creators must upload only work they own or are authorised to use.
+          Uploading another person's artwork, photographs, videos or music
+          without appropriate permission is not permitted.
+        </p>
+        <p>
+          Users must not copy, redistribute, modify or commercially exploit
+          protected creator content beyond the rights granted to them.
+        </p>
+        <p>
+          Copyright complaints should be submitted through the process
+          described in our
+          <a href="copyright-policy.html" style="color:#a77b42;text-decoration:underline;">
+            Copyright Policy
+          </a>.
+        </p>
+      </section>
+
+      <section class="section" id="safety">
+        <h2>6. Safety, Privacy and Respect</h2>
+        <p>All users are expected to:</p>
+        <ul>
+          <li>Communicate respectfully with other community members.</li>
+          <li>Avoid harassment, intimidation and threats.</li>
+          <li>Respect personal boundaries and privacy.</li>
+          <li>Obtain permission before publishing another person's private
+              information or identifiable material where required.</li>
+          <li>Use appropriate and accurate descriptions for artwork,
+              services and events.</li>
+          <li>Avoid misleading customers about availability, quality,
+              ownership or delivery.</li>
+        </ul>
+        <p>
+          Content involving sensitive subjects or potentially harmful
+          material may require additional review and appropriate restrictions.
+        </p>
+      </section>
+
+      <section class="section" id="verification">
+        <h2>7. Creator and Artist Verification</h2>
+        <p>
+          Kaalaverse may introduce verification procedures to help establish
+          the identity and authenticity of creators, artists, performers
+          and event organisers.
+        </p>
+        <p>Depending on the creator category, verification may request:</p>
+        <ul>
+          <li>Identity and contact information.</li>
+          <li>Evidence of ownership or authorship of submitted artwork.</li>
+          <li>Professional portfolio or previous work samples.</li>
+          <li>Relevant performer or organiser credentials.</li>
+          <li>Additional documents reasonably required for verification.</li>
+        </ul>
+        <p>
+          Verification status does not guarantee the quality, value or
+          future conduct of a creator. The actual verification process
+          must be implemented and managed by Kaalaverse.
+        </p>
+      </section>
+
+      <section class="section" id="reporting">
+        <h2>8. Reporting Inappropriate Content</h2>
+        <p>
+          Users should be able to report content they believe violates
+          these guidelines through the platform's designated reporting
+          channel once that feature is implemented.
+        </p>
+        <p>A report should ideally include:</p>
+        <ul>
+          <li>The URL or location of the content.</li>
+          <li>The username or profile involved.</li>
+          <li>A description of the concern.</li>
+          <li>Relevant screenshots or supporting information, where appropriate.</li>
+          <li>Contact details if a response is requested.</li>
+        </ul>
+        <p>
+          Reports should be made honestly and should not be used to harass
+          creators or unfairly target other users.
+        </p>
+      </section>
+
+      <section class="section" id="review">
+        <h2>9. Content Review Process</h2>
+        <p>
+          Kaalaverse may review reported or flagged content based on the
+          available information and the seriousness of the concern.
+        </p>
+        <p>A review may involve:</p>
+        <ul>
+          <li>Checking the reported content and related account information.</li>
+          <li>Requesting clarification or supporting documents.</li>
+          <li>Contacting the creator or account holder where appropriate.</li>
+          <li>Assessing whether the content violates platform policies
+              or applicable law.</li>
+          <li>Taking proportionate action where a violation is identified.</li>
+        </ul>
+        <p>
+          Review timelines and escalation procedures will be defined by
+          Kaalaverse as part of its operational moderation process.
+        </p>
+      </section>
+
+      <section class="section" id="actions">
+        <h2>10. Moderation Actions</h2>
+        <p>
+          Depending on the nature and seriousness of a violation,
+          Kaalaverse may take one or more of the following actions:
+        </p>
+        <ul>
+          <li>Issue a warning or request corrective action.</li>
+          <li>Restrict the visibility of content.</li>
+          <li>Remove a listing, post, image, video or other material.</li>
+          <li>Temporarily restrict certain account features.</li>
+          <li>Suspend creator or customer accounts.</li>
+          <li>Terminate accounts in serious or repeated cases.</li>
+          <li>Refer matters to appropriate authorities where legally required.</li>
+        </ul>
+        <p>
+          The action taken will depend on the circumstances, applicable law,
+          available evidence and relevant platform policies.
+        </p>
+      </section>
+
+      <section class="section" id="appeals">
+        <h2>11. Appeals and Disputes</h2>
+        <p>
+          Users who believe moderation action was taken incorrectly may
+          contact Kaalaverse and request a review.
+        </p>
+        <p>An appeal should include:</p>
+        <ul>
+          <li>The account or content involved.</li>
+          <li>The moderation decision being challenged.</li>
+          <li>An explanation of why the decision may be incorrect.</li>
+          <li>Relevant supporting information or documents.</li>
+        </ul>
+        <p>
+          Kaalaverse may review the appeal and communicate its decision
+          through the contact details provided by the user.
+        </p>
+        <p>
+          Appeal availability, response timelines and escalation procedures
+          must be confirmed in the final operational policy.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>12. Policy Updates</h2>
+        <p>
+          Kaalaverse may update these guidelines to reflect changes in
+          platform services, community requirements, technology and
+          applicable legal obligations.
+        </p>
+        <p>
+          Updated guidelines will be published on this page. Users should
+          review the latest version periodically.
+        </p>
+      </section>
+
+      <section class="section" id="contact">
+        <h2>13. Contact and Moderation Enquiries</h2>
+        <p>
+          For content-related concerns, moderation questions or policy
+          enquiries, contact the official Kaalaverse support team.
+        </p>
+
+        <div class="contact-card">
+          <h3>Community & Content Support</h3>
+          <p>
+            Kaalaverse Support Team<br>
+            Email:
+            <a href="mailto:support@kaalaverse.com">support@kaalaverse.com</a>
+          </p>
+          <p style="margin-top:12px;">
+            Replace this placeholder with the verified and monitored
+            official support email before publishing.
+          </p>
+        </div>
+      </section>
+
+      <p style="font-size:11px;color:#999;margin-top:25px;">
+        Draft guidelines. Final moderation procedures, contact details
+        and effective date must be confirmed before publication.
+      </p>
+
+    </article>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+
+      <div class="footer-brand">
+        <a href="index.html" class="logo">kaala<span>verse</span></a>
+        <p>
+          Discover creators. Shop original art. Subscribe to artists.
+          Book performers. Experience live entertainment.
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <a href="terms.html">Terms of Service</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="refund-policy.html">Refund Policy</a>
+        <a href="artist-agreement.html">Artist Agreement</a>
+        <a href="copyright-policy.html">Copyright Policy</a>
+        <a href="content-moderation.html">Content Guidelines</a>
+        <a href="index.html">Home</a>
+      </div>
+
+    </div>
+
+    <div class="copyright">
+      © <span id="year"></span> Kaalaverse. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    const menuBtn = document.getElementById("menuBtn");
+    const navLinks = document.getElementById("navLinks");
+
+    menuBtn.addEventListener("click", function () {
+      const isOpen = navLinks.classList.toggle("open");
+      menuBtn.setAttribute("aria-expanded", isOpen);
+      menuBtn.textContent = isOpen ? "✕ Close" : "☰ Menu";
+    });
+
+    document.querySelectorAll(".navlinks a").forEach(function(link) {
+      link.addEventListener("click", function() {
+        navLinks.classList.remove("open");
+        menuBtn.setAttribute("aria-expanded", "false");
+        menuBtn.textContent = "☰ Menu";
+      });
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>
