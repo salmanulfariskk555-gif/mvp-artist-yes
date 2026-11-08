@@ -36,7 +36,7 @@
 <main class="wrap">
 <div class="crumb"><a href="index.html">Home</a> / <a href="explore-art.html">Explore Art</a> / <span id="crumbTitle">Collection Details</span></div>
 <section class="product">
-<div class="photo"><img id="productImage" src="assets/client-image-3.jpg" alt="Artwork collection"></div>
+<div class="photo"><img id="productImage" src="assets/wildlife-hornbill-wide.jpg" alt="Artwork collection"></div>
 <div class="details">
 <div class="eyebrow" id="category">Kaalaverse Collection</div>
 <h1 id="title">Photography Collection</h1>
@@ -54,9 +54,9 @@
 <div class="modal" id="enquiryModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="dialog"><h2 id="modalTitle">Enquire about this collection</h2><p class="status">Fill in your details. This demo prepares an enquiry message for you to copy; it does not submit to a server.</p><form id="enquiryForm"><label for="name">Your name</label><input id="name" required maxlength="100"><label for="email">Email address</label><input id="email" type="email" required maxlength="150"><label for="phone">Phone (optional)</label><input id="phone" type="tel" maxlength="30"><label for="message">Message</label><textarea id="message" maxlength="1000" placeholder="Please share what you would like to know..."></textarea><div class="dialog-actions"><button class="btn" type="submit">Prepare enquiry</button><button class="btn secondary" type="button" id="closeModal">Close</button></div></form><p class="status" id="formStatus" aria-live="polite"></p></div></div>
 <script>
 const collections={
- "photography-collection":{id:"kaalaverse-photo-collection",title:"Photography Collection",category:"Photography",image:"assets/client-image-3.jpg",description:"Explore visual storytelling from the Kaalaverse photography collection."},
- "wildlife-nature-collection":{id:"kaalaverse-wildlife-collection",title:"Wildlife & Nature Collection",category:"Wildlife & Nature",image:"assets/client-image-5.jpg",description:"Discover nature-focused imagery from the client-provided collection."},
- "visual-art-collection":{id:"kaalaverse-visual-art-collection",title:"Visual Art Collection",category:"Visual Art",image:"assets/client-image-2.jpg",description:"Explore the visual art category. Individual artwork details can be added when supplied."}
+ "photography-collection":{id:"kaalaverse-photo-collection",title:"Photography Collection",category:"Photography",image:"assets/wildlife-hornbill-wide.jpg",description:"Explore visual storytelling from the Kaalaverse photography collection."},
+ "wildlife-nature-collection":{id:"kaalaverse-wildlife-collection",title:"Wildlife & Nature Collection",category:"Wildlife & Nature",image:"assets/wildlife-tiger-deer.jpg",description:"Discover nature-focused imagery from the client-provided collection."},
+ "visual-art-collection":{id:"kaalaverse-visual-art-collection",title:"Visual Art Collection",category:"Visual Art",image:"assets/wildlife-green-snake.jpg",description:"Explore the visual art category. Individual artwork details can be added when supplied."}
 };
 const params=new URLSearchParams(location.search);const itemKey=params.get("item")||"photography-collection";const item=collections[itemKey]||collections["photography-collection"];
 const $=id=>document.getElementById(id);
