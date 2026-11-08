@@ -318,7 +318,7 @@ let activeCategory='all';
 function updateCards(){
  const query=$('#artSearch').value.trim().toLowerCase();
  const priceRange=$('#priceFilter').value;
- let cards=$('.art-card');
+ const cards=$('.art-card');
 
  cards.forEach(card=>{
   const categoryMatch=activeCategory==='all'||card.dataset.category===activeCategory;
