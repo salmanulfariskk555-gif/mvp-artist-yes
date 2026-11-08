@@ -1,0 +1,827 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Discover and book talented artists, performers, musicians and creative professionals through Kaalaverse.">
+<title>Book an Artist | Kaalaverse</title>
+
+<style>
+:root{
+ --dark:#191815;
+ --gold:#a77b45;
+ --gold-light:#d3b17d;
+ --cream:#f8f5ef;
+ --white:#fff;
+ --muted:#77736c;
+ --border:#e8e1d6;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--cream);color:var(--dark);line-height:1.6}
+a{text-decoration:none;color:inherit}
+button,input,select,textarea{font:inherit}
+.container{width:min(1160px,90%);margin:auto}
+
+header{background:white;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.navbar{min-height:78px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo{font-size:25px;font-weight:800;letter-spacing:2px}
+.logo span{color:var(--gold)}
+.nav-links{display:flex;align-items:center;gap:19px}
+.nav-links a{font-size:13px;color:#514d46}
+.nav-links a:hover,.nav-links a.active{color:var(--gold)}
+.nav-actions{display:flex;align-items:center;gap:16px}
+.nav-actions a{font-size:13px}
+.join-btn,.primary-btn{display:inline-block;background:var(--dark);color:white;padding:12px 22px;border:1px solid var(--dark);cursor:pointer;transition:.2s}
+.join-btn:hover,.primary-btn:hover{background:var(--gold);border-color:var(--gold)}
+.menu-toggle{display:none;background:none;border:0;font-size:25px;cursor:pointer}
+
+.hero{
+ min-height:470px;display:flex;align-items:center;color:white;
+ background:linear-gradient(90deg,rgba(17,15,12,.88),rgba(17,15,12,.35)),
+ url("assets/client-image-4.jpg") center/cover;
+}
+.hero-content{max-width:690px;padding:80px 0}
+.eyebrow{font-size:11px;color:var(--gold);letter-spacing:3px;font-weight:bold;text-transform:uppercase;margin-bottom:16px}
+.hero .eyebrow{color:var(--gold-light)}
+.hero h1{font-family:Georgia,serif;font-size:clamp(42px,6vw,68px);font-weight:400;line-height:1.1;margin-bottom:20px}
+.hero p{font-size:15px;color:#e5dfd5;max-width:550px;margin-bottom:28px}
+
+.section{padding:80px 0}
+.section-heading{text-align:center;max-width:660px;margin:0 auto 40px}
+.section-heading h2{font-family:Georgia,serif;font-size:clamp(30px,4vw,43px);font-weight:400;margin-bottom:12px}
+.section-heading p{font-size:14px;color:var(--muted)}
+
+.intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:55px;align-items:center}
+.intro-image img{width:100%;height:410px;object-fit:cover;display:block}
+.intro-content h2{font-family:Georgia,serif;font-size:39px;line-height:1.2;font-weight:400;margin-bottom:18px}
+.intro-content p{font-size:14px;color:var(--muted);margin-bottom:15px}
+.intro-list{list-style:none;margin-top:20px}
+.intro-list li{padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}
+.intro-list li:before{content:"✓";color:var(--gold);font-weight:bold;margin-right:10px}
+
+.category-section{background:#eee8dd}
+.category-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.category-card{background:white;border:1px solid var(--border);padding:24px 16px;text-align:center;cursor:pointer;transition:.2s}
+.category-card:hover{transform:translateY(-4px);border-color:var(--gold)}
+.category-card .icon{font-size:28px;margin-bottom:10px}
+.category-card h3{font-family:Georgia,serif;font-size:20px;font-weight:400;margin-bottom:5px}
+.category-card p{font-size:12px;color:var(--muted)}
+
+.filter-area{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;margin-bottom:30px}
+.filters{display:flex;gap:9px;flex-wrap:wrap}
+.filter-btn{padding:9px 15px;border:1px solid var(--border);background:white;font-size:12px;cursor:pointer}
+.filter-btn.active,.filter-btn:hover{background:var(--dark);color:white;border-color:var(--dark)}
+.search-box{padding:11px 14px;border:1px solid var(--border);background:white;outline:none;min-width:220px}
+.search-box:focus{border-color:var(--gold)}
+
+.artist-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.artist-card{background:white;border:1px solid var(--border);overflow:hidden;display:flex;flex-direction:column}
+.artist-card.hidden{display:none}
+.artist-card img{width:100%;height:245px;object-fit:cover;display:block}
+.artist-info{padding:22px;display:flex;flex-direction:column;flex:1}
+.artist-category{font-size:10px;color:var(--gold);font-weight:bold;letter-spacing:2px}
+.artist-info h3{font-family:Georgia,serif;font-size:23px;font-weight:400;margin:8px 0}
+.artist-info p{font-size:13px;color:var(--muted);margin-bottom:14px}
+.artist-meta{font-size:12px;color:#625d54;margin-top:auto}
+.artist-meta div{margin:5px 0}
+.artist-actions{display:flex;gap:9px;margin-top:18px}
+.artist-actions button{flex:1;padding:10px 8px;border:1px solid var(--dark);font-size:12px;cursor:pointer}
+.book-btn{background:var(--dark);color:white}
+.book-btn:hover{background:var(--gold);border-color:var(--gold)}
+.profile-btn{background:white;color:var(--dark)}
+.profile-btn:hover{border-color:var(--gold);color:var(--gold)}
+.empty-state{display:none;text-align:center;color:var(--muted);padding:35px}
+
+.process-section{background:var(--dark);color:white}
+.process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.process-card{background:#25231f;padding:25px}
+.process-number{font-family:Georgia,serif;font-size:34px;color:var(--gold-light)}
+.process-card h3{font-family:Georgia,serif;font-size:21px;font-weight:400;margin:10px 0}
+.process-card p{font-size:12px;color:#c5bfb4}
+
+.booking-section{background:#eee8dd}
+.booking-layout{display:grid;grid-template-columns:.8fr 1.2fr;gap:45px;align-items:start}
+.booking-info h2{font-family:Georgia,serif;font-size:39px;font-weight:400;line-height:1.2;margin-bottom:17px}
+.booking-info p{font-size:14px;color:var(--muted);margin-bottom:20px}
+.booking-note{background:white;border:1px solid var(--border);padding:20px;margin-top:25px}
+.booking-note strong{display:block;font-size:13px;margin-bottom:7px}
+.booking-note p{font-size:12px;margin:0}
+
+.booking-form{background:white;border:1px solid var(--border);padding:32px}
+.booking-form h3{font-family:Georgia,serif;font-size:27px;font-weight:400;margin-bottom:8px}
+.booking-form>p{font-size:12px;color:var(--muted);margin-bottom:22px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group{margin-bottom:15px}
+.form-group label{display:block;font-size:12px;margin-bottom:6px}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:12px;border:1px solid var(--border);outline:none;background:white}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--gold)}
+.form-group textarea{min-height:100px;resize:vertical}
+.submit-btn{width:100%;padding:14px;background:var(--dark);color:white;border:0;cursor:pointer}
+.submit-btn:hover{background:var(--gold)}
+.form-message{font-size:12px;color:var(--gold);margin-top:12px}
+
+.artist-cta{padding:75px 0;text-align:center;background:#e9e1d5}
+.artist-cta h2{font-family:Georgia,serif;font-size:clamp(30px,4vw,43px);font-weight:400;margin-bottom:12px}
+.artist-cta p{max-width:600px;margin:0 auto 25px;font-size:14px;color:var(--muted)}
+
+.faq-list{max-width:800px;margin:auto}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-question{width:100%;background:none;border:0;padding:21px 0;display:flex;justify-content:space-between;text-align:left;font-weight:bold;cursor:pointer}
+.faq-question span{color:var(--gold);font-size:20px}
+.faq-answer{display:none;padding:0 25px 20px 0;font-size:13px;color:var(--muted)}
+.faq-item.open .faq-answer{display:block}
+
+footer{background:#171613;color:white;padding:50px 0 23px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:35px;margin-bottom:35px}
+.footer-brand p{font-size:13px;color:#aaa49a;max-width:360px;margin-top:14px}
+footer h4{font-size:13px;color:var(--gold-light);margin-bottom:14px}
+.footer-links{display:flex;flex-direction:column;gap:9px}
+.footer-links a{font-size:12px;color:#aaa49a}
+.footer-links a:hover{color:white}
+.copyright{border-top:1px solid #39362f;padding-top:20px;text-align:center;font-size:11px;color:#888278}
+
+@media(max-width:950px){
+ .nav-links{gap:11px}
+ .nav-links a{font-size:11px}
+ .artist-grid{grid-template-columns:repeat(2,1fr)}
+ .category-grid{grid-template-columns:repeat(2,1fr)}
+ .process-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:760px){
+ .navbar{min-height:70px}
+ .menu-toggle{display:block}
+ .nav-links{display:none;position:absolute;top:70px;left:0;width:100%;background:white;padding:22px 5%;flex-direction:column;align-items:flex-start;border-bottom:1px solid var(--border)}
+ .nav-links.open{display:flex}
+ .nav-actions{display:none}
+ .intro-grid,.booking-layout{grid-template-columns:1fr;gap:30px}
+ .intro-image img{height:300px}
+ .artist-grid{grid-template-columns:1fr}
+ .process-grid{grid-template-columns:1fr 1fr}
+ .section{padding:60px 0}
+ .footer-grid{grid-template-columns:1fr 1fr}
+ .footer-brand{grid-column:1/-1}
+}
+@media(max-width:480px){
+ .category-grid{grid-template-columns:1fr 1fr;gap:10px}
+ .category-card{padding:19px 10px}
+ .filter-area{align-items:stretch}
+ .search-box{width:100%}
+ .process-grid,.form-row{grid-template-columns:1fr}
+ .booking-form{padding:23px 18px}
+ .footer-grid{grid-template-columns:1fr}
+ .footer-brand{grid-column:auto}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <div class="container navbar">
+  <a href="index.html" class="logo">KAALA<span>VERSE</span></a>
+  <button class="menu-toggle" id="menuToggle" aria-label="Open menu">☰</button>
+
+  <nav class="nav-links" id="navLinks">
+   <a href="index.html">Home</a>
+   <a href="discover-artists.html">Discover Artists</a>
+   <a href="explore-art.html">Explore Art</a>
+   <a href="live-events.html">Live Events</a>
+   <a href="artist-booking.html" class="active">Book an Artist</a>
+   <a href="subscriptions.html">Memberships</a>
+   <a href="workshops.html">Workshops</a>
+  </nav>
+
+  <div class="nav-actions">
+   <a href="login.html">Login</a>
+   <a href="register.html" class="join-btn">Join Us</a>
+  </div>
+ </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+ <div class="container">
+  <div class="hero-content">
+   <div class="eyebrow">ARTISTS · PERFORMERS · EXPERIENCES</div>
+   <h1>Bring Your Event to Life With the Right Artist.</h1>
+   <p>
+    Discover creative talent and connect with artists,
+    performers and professionals for your special occasions.
+   </p>
+   <a href="#artist-categories" class="primary-btn">Explore Artists</a>
+  </div>
+ </div>
+</section>
+
+<!-- INTRO -->
+<section class="section">
+ <div class="container intro-grid">
+  <div class="intro-image">
+   <img src="assets/client-image-4.jpg" alt="Live artist performance">
+  </div>
+  <div class="intro-content">
+   <div class="eyebrow">BOOK THROUGH KAALAVERSE</div>
+   <h2>Make Every Occasion Memorable.</h2>
+   <p>
+    Find artists and creative professionals for celebrations,
+    cultural programmes, private functions, corporate events
+    and special occasions.
+   </p>
+   <p>
+    Explore different artist categories, share your event
+    requirements and connect with suitable talent.
+   </p>
+   <ul class="intro-list">
+    <li>Discover artists across creative disciplines</li>
+    <li>Submit your event and booking requirements</li>
+    <li>Share your preferred date and location</li>
+    <li>Discuss availability and booking arrangements</li>
+   </ul>
+  </div>
+ </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="section category-section" id="artist-categories">
+ <div class="container">
+  <div class="section-heading">
+   <div class="eyebrow">FIND THE RIGHT TALENT</div>
+   <h2>Explore Artist Categories</h2>
+   <p>Choose a creative category for your event.</p>
+  </div>
+
+  <div class="category-grid">
+   <div class="category-card" data-category-select="music">
+    <div class="icon">♫</div>
+    <h3>Singers & Musicians</h3>
+    <p>Vocalists, instrumentalists and musical performers.</p>
+   </div>
+   <div class="category-card" data-category-select="dance">
+    <div class="icon">✧</div>
+    <h3>Dancers</h3>
+    <p>Solo dancers, dance groups and choreographers.</p>
+   </div>
+   <div class="category-card" data-category-select="performance">
+    <div class="icon">🎭</div>
+    <h3>Performers</h3>
+    <p>Stage performers, entertainers and theatre artists.</p>
+   </div>
+   <div class="category-card" data-category-select="photography">
+    <div class="icon">📷</div>
+    <h3>Photographers</h3>
+    <p>Photography and visual documentation professionals.</p>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- ARTIST DIRECTORY -->
+<section class="section" id="artists">
+ <div class="container">
+  <div class="section-heading">
+   <div class="eyebrow">DISCOVER CREATIVE TALENT</div>
+   <h2>Find an Artist</h2>
+   <p>
+    Explore artist categories and submit a booking enquiry.
+    Contact and availability details are confirmed separately.
+   </p>
+  </div>
+
+  <div class="filter-area">
+   <div class="filters">
+    <button class="filter-btn active" data-filter="all">All Artists</button>
+    <button class="filter-btn" data-filter="music">Music</button>
+    <button class="filter-btn" data-filter="dance">Dance</button>
+    <button class="filter-btn" data-filter="performance">Performance</button>
+    <button class="filter-btn" data-filter="photography">Photography</button>
+   </div>
+   <input type="search" id="artistSearch" class="search-box" placeholder="Search artist categories...">
+  </div>
+
+  <!-- Category showcase cards, not confirmed artist listings -->
+  <div class="artist-grid" id="artistGrid">
+
+   <article class="artist-card" data-category="music" data-search="singer vocalist musician music">
+    <img src="assets/client-image-4.jpg" alt="Singer and musician category">
+    <div class="artist-info">
+     <div class="artist-category">MUSIC</div>
+     <h3>Singers & Musicians</h3>
+     <p>Explore vocalists, instrumentalists and musical performers for your occasion.</p>
+     <div class="artist-meta">
+      <div>◈ Booking: Enquiry required</div>
+      <div>⌖ Location: Confirm with artist</div>
+     </div>
+     <div class="artist-actions">
+      <button class="book-btn booking-trigger" data-artist="Singers & Musicians">Book / Enquire</button>
+      <button class="profile-btn booking-trigger" data-artist="Singers & Musicians">Details</button>
+     </div>
+    </div>
+   </article>
+
+   <article class="artist-card" data-category="dance" data-search="dancer dance choreographer group">
+    <img src="assets/client-image-5.jpg" alt="Dance artist category">
+    <div class="artist-info">
+     <div class="artist-category">DANCE</div>
+     <h3>Dancers & Dance Groups</h3>
+     <p>Discover solo dancers, dance groups and choreographers.</p>
+     <div class="artist-meta">
+      <div>◈ Booking: Enquiry required</div>
+      <div>⌖ Location: Confirm with artist</div>
+     </div>
+     <div class="artist-actions">
+      <button class="book-btn booking-trigger" data-artist="Dancers & Dance Groups">Book / Enquire</button>
+      <button class="profile-btn booking-trigger" data-artist="Dancers & Dance Groups">Details</button>
+     </div>
+    </div>
+   </article>
+
+   <article class="artist-card" data-category="performance" data-search="stage theatre entertainer performance">
+    <img src="assets/client-image-4.jpg" alt="Stage performer category">
+    <div class="artist-info">
+     <div class="artist-category">PERFORMANCE</div>
+     <h3>Stage Performers</h3>
+     <p>Explore stage entertainers, theatre artists and live performers.</p>
+     <div class="artist-meta">
+      <div>◈ Booking: Enquiry required</div>
+      <div>⌖ Location: Confirm with artist</div>
+     </div>
+     <div class="artist-actions">
+      <button class="book-btn booking-trigger" data-artist="Stage Performers">Book / Enquire</button>
+      <button class="profile-btn booking-trigger" data-artist="Stage Performers">Details</button>
+     </div>
+    </div>
+   </article>
+
+   <article class="artist-card" data-category="photography" data-search="photographer photography wildlife nature">
+    <img src="assets/client-image-3.jpg" alt="Photography artist category">
+    <div class="artist-info">
+     <div class="artist-category">PHOTOGRAPHY</div>
+     <h3>Photographers</h3>
+     <p>Discover photography professionals for events and creative projects.</p>
+     <div class="artist-meta">
+      <div>◈ Booking: Enquiry required</div>
+      <div>⌖ Location: Confirm with artist</div>
+     </div>
+     <div class="artist-actions">
+      <button class="book-btn booking-trigger" data-artist="Photographers">Book / Enquire</button>
+      <button class="profile-btn booking-trigger" data-artist="Photographers">Details</button>
+     </div>
+    </div>
+   </article>
+
+   <article class="artist-card" data-category="performance" data-search="emcee anchor host presenter">
+    <img src="assets/client-image-2.jpg" alt="Event host category">
+    <div class="artist-info">
+     <div class="artist-category">EVENT HOSTING</div>
+     <h3>Anchors & Hosts</h3>
+     <p>Explore event presenters, hosts and emcees for your programmes.</p>
+     <div class="artist-meta">
+      <div>◈ Booking: Enquiry required</div>
+      <div>⌖ Location: Confirm with artist</div>
+     </div>
+     <div class="artist-actions">
+      <button class="book-btn booking-trigger" data-artist="Anchors & Hosts">Book / Enquire</button>
+      <button class="profile-btn booking-trigger" data-artist="Anchors & Hosts">Details</button>
+     </div>
+    </div>
+   </article>
+
+   <article class="artist-card" data-category="performance" data-search="magician entertainer special act">
+    <img src="assets/client-image-5.jpg" alt="Special entertainer category">
+    <div class="artist-info">
+     <div class="artist-category">ENTERTAINMENT</div>
+     <h3>Special Performers</h3>
+     <p>Enquire about unique acts and entertainment experiences.</p>
+     <div class="artist-meta">
+      <div>◈ Booking: Enquiry required</div>
+      <div>⌖ Location: Confirm with artist</div>
+     </div>
+     <div class="artist-actions">
+      <button class="book-btn booking-trigger" data-artist="Special Performers">Book / Enquire</button>
+      <button class="profile-btn booking-trigger" data-artist="Special Performers">Details</button>
+     </div>
+    </div>
+   </article>
+
+  </div>
+
+  <div class="empty-state" id="emptyState">No matching artist categories found.</div>
+ </div>
+</section>
+
+<!-- BOOKING PROCESS -->
+<section class="section process-section">
+ <div class="container">
+  <div class="section-heading">
+   <div class="eyebrow">SIMPLE BOOKING JOURNEY</div>
+   <h2>How Artist Booking Works</h2>
+   <p style="color:#c5bfb4">A simple process to start your artist booking enquiry.</p>
+  </div>
+
+  <div class="process-grid">
+   <div class="process-card">
+    <div class="process-number">01</div>
+    <h3>Discover</h3>
+    <p>Explore artist categories and find the type of talent you need.</p>
+   </div>
+   <div class="process-card">
+    <div class="process-number">02</div>
+    <h3>Send Enquiry</h3>
+    <p>Share your event date, venue, requirements and contact details.</p>
+   </div>
+   <div class="process-card">
+    <div class="process-number">03</div>
+    <h3>Confirm Details</h3>
+    <p>Discuss availability, performance details and booking terms.</p>
+   </div>
+   <div class="process-card">
+    <div class="process-number">04</div>
+    <h3>Complete Booking</h3>
+    <p>Finalise your agreement and payment through the confirmed process.</p>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- BOOKING ENQUIRY -->
+<section class="section booking-section" id="booking-enquiry">
+ <div class="container booking-layout">
+
+  <div class="booking-info">
+   <div class="eyebrow">START YOUR BOOKING</div>
+   <h2>Tell Us About Your Event.</h2>
+   <p>
+    Share a few details about your event and the kind of artist
+    you are looking for. This enquiry form helps organise
+    your booking requirements.
+   </p>
+
+   <div class="booking-note">
+    <strong>Booking information</strong>
+    <p>
+     Artist availability, performance fees, travel arrangements
+     and final booking confirmation must be agreed with the
+     artist or organiser.
+    </p>
+   </div>
+
+   <div class="booking-note">
+    <strong>Important</strong>
+    <p>
+     Submitting this form prepares an enquiry message.
+     It does not confirm an artist booking or collect payment.
+    </p>
+   </div>
+  </div>
+
+  <form class="booking-form" id="bookingForm">
+   <h3>Artist Booking Enquiry</h3>
+   <p>Fill in your event requirements below.</p>
+
+   <div class="form-row">
+    <div class="form-group">
+     <label for="customerName">Your Name *</label>
+     <input type="text" id="customerName" required placeholder="Full name">
+    </div>
+    <div class="form-group">
+     <label for="customerEmail">Email Address *</label>
+     <input type="email" id="customerEmail" required placeholder="Email address">
+    </div>
+   </div>
+
+   <div class="form-row">
+    <div class="form-group">
+     <label for="customerPhone">Phone Number *</label>
+     <input type="tel" id="customerPhone" required placeholder="Phone number">
+    </div>
+    <div class="form-group">
+     <label for="eventType">Event Type *</label>
+     <select id="eventType" required>
+      <option value="">Select event type</option>
+      <option>Wedding</option>
+      <option>Corporate Event</option>
+      <option>Private Function</option>
+      <option>Birthday Celebration</option>
+      <option>College / School Event</option>
+      <option>Cultural Programme</option>
+      <option>Festival</option>
+      <option>Other</option>
+     </select>
+    </div>
+   </div>
+
+   <div class="form-group">
+    <label for="artistType">Artist Category *</label>
+    <select id="artistType" required>
+     <option value="">Select artist category</option>
+     <option>Singers & Musicians</option>
+     <option>Dancers & Dance Groups</option>
+     <option>Stage Performers</option>
+     <option>Photographers</option>
+     <option>Anchors & Hosts</option>
+     <option>Special Performers</option>
+     <option>Other</option>
+    </select>
+   </div>
+
+   <div class="form-row">
+    <div class="form-group">
+     <label for="eventDate">Preferred Event Date *</label>
+     <input type="date" id="eventDate" required>
+    </div>
+    <div class="form-group">
+     <label for="guestCount">Expected Audience</label>
+     <select id="guestCount">
+      <option value="Not specified">Select audience size</option>
+      <option>Below 50</option>
+      <option>50–100</option>
+      <option>100–300</option>
+      <option>300–500</option>
+      <option>500–1000</option>
+      <option>Above 1000</option>
+     </select>
+    </div>
+   </div>
+
+   <div class="form-group">
+    <label for="eventLocation">Event Location *</label>
+    <input type="text" id="eventLocation" required placeholder="City, venue or location">
+   </div>
+
+   <div class="form-group">
+    <label for="budget">Approximate Budget</label>
+    <select id="budget">
+     <option value="Not specified">Prefer not to specify</option>
+     <option>Below ₹10,000</option>
+     <option>₹10,000 – ₹25,000</option>
+     <option>₹25,000 – ₹50,000</option>
+     <option>₹50,000 – ₹1,00,000</option>
+     <option>₹1,00,000 – ₹2,00,000</option>
+     <option>Above ₹2,00,000</option>
+     <option>Open to discussion</option>
+    </select>
+   </div>
+
+   <div class="form-group">
+    <label for="eventRequirements">Additional Requirements</label>
+    <textarea id="eventRequirements" placeholder="Tell us more about your event and artist requirements..."></textarea>
+   </div>
+
+   <button type="submit" class="submit-btn">Prepare Booking Enquiry</button>
+   <p class="form-message" id="formMessage" aria-live="polite"></p>
+  </form>
+
+ </div>
+</section>
+
+<!-- ARTIST CTA -->
+<section class="artist-cta">
+ <div class="container">
+  <div class="eyebrow">FOR ARTISTS & PERFORMERS</div>
+  <h2>Are You an Artist?</h2>
+  <p>
+   Join Kaalaverse, showcase your talent and connect with
+   people looking to book creative professionals.
+  </p>
+  <a href="register.html" class="primary-btn">Join as an Artist</a>
+ </div>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+ <div class="container">
+  <div class="section-heading">
+   <div class="eyebrow">HELP & INFORMATION</div>
+   <h2>Frequently Asked Questions</h2>
+   <p>Common questions about artist bookings.</p>
+  </div>
+
+  <div class="faq-list">
+   <div class="faq-item">
+    <button class="faq-question">How can I book an artist?<span>+</span></button>
+    <div class="faq-answer">Select an artist category or use the booking enquiry form. Share your event details and requirements to start the booking process.</div>
+   </div>
+
+   <div class="faq-item">
+    <button class="faq-question">How much does artist booking cost?<span>+</span></button>
+    <div class="faq-answer">Fees depend on the artist, event type, duration, location and other requirements. The final fee must be confirmed with the artist or organiser.</div>
+   </div>
+
+   <div class="faq-item">
+    <button class="faq-question">Can I book an artist for a wedding?<span>+</span></button>
+    <div class="faq-answer">You can submit a wedding booking enquiry and specify the type of artist or performance you need.</div>
+   </div>
+
+   <div class="faq-item">
+    <button class="faq-question">How do I know if an artist is available?<span>+</span></button>
+    <div class="faq-answer">Availability needs to be checked and confirmed with the artist. The current frontend page does not access a live artist availability calendar.</div>
+   </div>
+
+   <div class="faq-item">
+    <button class="faq-question">Can I pay online for a booking?<span>+</span></button>
+    <div class="faq-answer">Online booking payments and confirmation will require backend integration and a supported payment gateway.</div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+ <div class="container">
+  <div class="footer-grid">
+   <div class="footer-brand">
+    <a href="index.html" class="logo">KAALA<span>VERSE</span></a>
+    <p>Discover creators. Shop original art. Subscribe to artists. Book performers. Experience live entertainment.</p>
+   </div>
+   <div>
+    <h4>Explore</h4>
+    <div class="footer-links">
+     <a href="discover-artists.html">Discover Artists</a>
+     <a href="explore-art.html">Explore Art</a>
+     <a href="live-events.html">Live Events</a>
+     <a href="workshops.html">Workshops</a>
+    </div>
+   </div>
+   <div>
+    <h4>Platform</h4>
+    <div class="footer-links">
+     <a href="subscriptions.html">Memberships</a>
+     <a href="artist-booking.html">Book an Artist</a>
+     <a href="login.html">Login</a>
+     <a href="register.html">Join Kaalaverse</a>
+    </div>
+   </div>
+  </div>
+  <div class="copyright">© <span id="year"></span> Kaalaverse. All Rights Reserved.</div>
+ </div>
+</footer>
+
+<script>
+/* MOBILE MENU */
+const menuToggle=document.getElementById("menuToggle");
+const navLinks=document.getElementById("navLinks");
+
+menuToggle.addEventListener("click",()=>{
+ navLinks.classList.toggle("open");
+ menuToggle.textContent=navLinks.classList.contains("open")?"×":"☰";
+});
+
+navLinks.querySelectorAll("a").forEach(link=>{
+ link.addEventListener("click",()=>{
+  navLinks.classList.remove("open");
+  menuToggle.textContent="☰";
+ });
+});
+
+/* ARTIST FILTER AND SEARCH */
+const filterButtons=document.querySelectorAll(".filter-btn");
+const artistCards=document.querySelectorAll(".artist-card");
+const searchInput=document.getElementById("artistSearch");
+const emptyState=document.getElementById("emptyState");
+let activeFilter="all";
+
+function filterArtists(){
+ const query=searchInput.value.toLowerCase().trim();
+ let visibleCount=0;
+
+ artistCards.forEach(card=>{
+  const categoryMatch=activeFilter==="all" || card.dataset.category===activeFilter;
+  const searchMatch=(card.dataset.search+" "+card.textContent).toLowerCase().includes(query);
+  const visible=categoryMatch && searchMatch;
+
+  card.classList.toggle("hidden",!visible);
+  if(visible) visibleCount++;
+ });
+
+ emptyState.style.display=visibleCount===0?"block":"none";
+}
+
+filterButtons.forEach(button=>{
+ button.addEventListener("click",()=>{
+  filterButtons.forEach(btn=>btn.classList.remove("active"));
+  button.classList.add("active");
+  activeFilter=button.dataset.filter;
+  filterArtists();
+ });
+});
+
+searchInput.addEventListener("input",filterArtists);
+
+/* CATEGORY SHORTCUTS */
+document.querySelectorAll("[data-category-select]").forEach(card=>{
+ card.addEventListener("click",()=>{
+  activeFilter=card.dataset.categorySelect;
+  filterButtons.forEach(button=>{
+   button.classList.toggle("active",button.dataset.filter===activeFilter);
+  });
+  filterArtists();
+  document.getElementById("artists").scrollIntoView({behavior:"smooth"});
+ });
+});
+
+/* BOOKING BUTTONS */
+const artistType=document.getElementById("artistType");
+
+document.querySelectorAll(".booking-trigger").forEach(button=>{
+ button.addEventListener("click",()=>{
+  const artist=button.dataset.artist;
+  const matchingOption=Array.from(artistType.options).find(option=>option.text===artist);
+
+  if(matchingOption){
+   artistType.value=matchingOption.value;
+  }else{
+   artistType.value="Other";
+  }
+
+  document.getElementById("booking-enquiry").scrollIntoView({behavior:"smooth"});
+ });
+});
+
+/* SET MINIMUM BOOKING DATE TO TODAY */
+const eventDate=document.getElementById("eventDate");
+const today=new Date();
+const localToday=new Date(today.getTime()-today.getTimezoneOffset()*60000)
+ .toISOString().split("T")[0];
+eventDate.min=localToday;
+
+/* BOOKING ENQUIRY FORM */
+document.getElementById("bookingForm").addEventListener("submit",async function(event){
+ event.preventDefault();
+
+ const name=document.getElementById("customerName").value.trim();
+ const email=document.getElementById("customerEmail").value.trim();
+ const phone=document.getElementById("customerPhone").value.trim();
+ const eventType=document.getElementById("eventType").value;
+ const artist=document.getElementById("artistType").value;
+ const date=document.getElementById("eventDate").value;
+ const audience=document.getElementById("guestCount").value;
+ const location=document.getElementById("eventLocation").value.trim();
+ const budget=document.getElementById("budget").value;
+ const requirements=document.getElementById("eventRequirements").value.trim();
+
+ const enquiry=[
+  "KAALAVERSE ARTIST BOOKING ENQUIRY",
+  "--------------------------------",
+  "Name: "+name,
+  "Email: "+email,
+  "Phone: "+phone,
+  "Event Type: "+eventType,
+  "Artist Category: "+artist,
+  "Preferred Date: "+date,
+  "Expected Audience: "+audience,
+  "Event Location: "+location,
+  "Approximate Budget: "+budget,
+  "Additional Requirements: "+(requirements||"Not specified")
+ ].join("\n");
+
+ const formMessage=document.getElementById("formMessage");
+
+ try{
+  if(navigator.clipboard && window.isSecureContext){
+   await navigator.clipboard.writeText(enquiry);
+   formMessage.textContent="Booking enquiry copied! You can now paste and send it to Kaalaverse.";
+  }else{
+   const temp=document.createElement("textarea");
+   temp.value=enquiry;
+   temp.style.position="fixed";
+   temp.style.opacity="0";
+   document.body.appendChild(temp);
+   temp.select();
+   const copied=document.execCommand("copy");
+   temp.remove();
+
+   formMessage.textContent=copied
+    ?"Booking enquiry copied! You can now paste and send it to Kaalaverse."
+    :"Copy unavailable. Please copy your enquiry manually.";
+  }
+ }catch(error){
+  formMessage.textContent="Could not copy automatically. Please try again.";
+ }
+});
+
+/* FAQ ACCORDION */
+document.querySelectorAll(".faq-question").forEach(question=>{
+ question.addEventListener("click",()=>{
+  const item=question.parentElement;
+  const wasOpen=item.classList.contains("open");
+
+  document.querySelectorAll(".faq-item").forEach(other=>{
+   other.classList.remove("open");
+   other.querySelector(".faq-question span").textContent="+";
+  });
+
+  if(!wasOpen){
+   item.classList.add("open");
+   question.querySelector("span").textContent="−";
+  }
+ });
+});
+
+/* FOOTER YEAR */
+document.getElementById("year").textContent=new Date().getFullYear();
+</script>
+
+</body>
+</html>
