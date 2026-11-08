@@ -1,0 +1,503 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard | Kaalaverse</title>
+<style>
+:root{
+  --bg:#f6f5f1;--white:#fff;--dark:#24231f;--gold:#a77b42;
+  --gold-light:#f3eadb;--muted:#89847b;--line:#e9e5dd;
+  --green:#47785b;--red:#a34e43;--blue:#4b668e;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--dark)}
+a{text-decoration:none;color:inherit}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.layout{min-height:100vh}
+.sidebar{position:fixed;left:0;top:76px;bottom:0;width:250px;background:var(--dark);color:white;padding:26px 19px;overflow-y:auto;z-index:20}
+.brand{font-family:Georgia,serif;font-size:27px;letter-spacing:1px}
+.brand span{color:#d5b17e}
+.brand-sub{font-size:9px;letter-spacing:3px;color:#aaa49a;margin-top:6px;margin-bottom:34px}
+.admin-info{display:flex;align-items:center;gap:11px;padding:14px 0 22px;border-bottom:1px solid #46423b}
+.admin-avatar{width:41px;height:41px;border-radius:50%;display:grid;place-items:center;background:#c19a67;color:#29231b;font-family:Georgia,serif;font-size:19px}
+.admin-info strong{font-size:12px;display:block;margin-bottom:5px}
+.admin-info small{font-size:10px;color:#bdb6aa}
+.nav-label{font-size:9px;letter-spacing:2px;color:#9d968b;margin:23px 10px 9px}
+.nav a{display:flex;align-items:center;gap:12px;padding:12px;border-radius:7px;color:#d0cbc1;font-size:12px;margin:3px 0}
+.nav a:hover,.nav a.active{background:#423a30;color:#e6c69a}
+.nav-icon{width:19px;text-align:center;font-size:15px}
+.main{margin-left:250px;padding:27px 35px 50px}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;gap:12px}
+.topbar-left{display:flex;align-items:center;gap:12px}
+.mobile-brand{display:none;font-family:Georgia,serif;font-size:23px}
+.menu-btn{display:none;border:1px solid var(--line);background:white;padding:9px 12px;border-radius:7px}
+.top-right{display:flex;gap:10px;align-items:center}
+.top-right button,.top-right a{background:white;border:1px solid var(--line);border-radius:7px;padding:10px 13px;font-size:11px}
+.page-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:15px;margin-bottom:23px}
+.eyebrow{font-size:10px;letter-spacing:2px;color:var(--gold);font-weight:bold;margin-bottom:9px}
+h1{font-family:Georgia,serif;font-size:33px;font-weight:normal}
+.page-heading p{font-size:12px;color:var(--muted);margin-top:8px}
+.preview-tag{background:#f0ede6;border-radius:20px;padding:9px 13px;font-size:10px;color:#746c60;white-space:nowrap}
+.notice{background:#fff8eb;border:1px solid #ead9b8;color:#78613d;padding:13px 16px;border-radius:8px;font-size:11px;line-height:1.7;margin-bottom:22px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:20px}
+.stat{background:white;border:1px solid var(--line);border-radius:10px;padding:18px}
+.stat-top{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted)}
+.stat-icon{width:31px;height:31px;background:var(--gold-light);color:var(--gold);border-radius:7px;display:grid;place-items:center}
+.stat-number{font-family:Georgia,serif;font-size:29px;margin:14px 0 5px}
+.stat small{font-size:10px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:1.4fr 1fr;gap:16px}
+.panel{background:white;border:1px solid var(--line);border-radius:10px;padding:20px;margin-bottom:17px;min-width:0}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:17px}
+.panel h2{font-family:Georgia,serif;font-size:19px;font-weight:normal}
+.panel-head small{font-size:10px;color:var(--muted)}
+.section{display:none}
+.section.active{display:block}
+.section-heading{margin-bottom:22px}
+.section-heading h1{font-size:31px}
+.section-heading p{font-size:12px;color:var(--muted);margin-top:8px}
+.chart{height:170px;display:flex;align-items:flex-end;justify-content:space-around;border-bottom:1px solid var(--line);padding:8px 4px 0}
+.chart-col{height:100%;flex:1;display:flex;align-items:center;justify-content:flex-end;flex-direction:column;gap:7px}
+.chart-bar{width:25px;background:#c9ae85;border-radius:5px 5px 0 0;min-height:3px}
+.chart-col:nth-child(even) .chart-bar{background:#a77b42}
+.chart-col small{font-size:9px;color:var(--muted);padding-bottom:7px}
+.chart-note{font-size:10px;color:var(--muted);margin-top:12px}
+.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.quick{background:white;border:1px solid var(--line);border-radius:8px;padding:14px;text-align:left}
+.quick:hover{border-color:var(--gold)}
+.quick span{display:block;font-size:19px;margin-bottom:9px}
+.quick strong{font-size:11px;display:block;margin-bottom:5px}
+.quick small{font-size:9px;color:var(--muted)}
+.table-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:590px}
+th,td{text-align:left;border-bottom:1px solid var(--line);padding:13px 10px;font-size:11px}
+th{color:var(--muted);font-weight:normal}
+td{color:#514d46}
+.status{font-size:9px;padding:6px 9px;border-radius:20px;display:inline-block;background:#f1eee7;color:#756b5c}
+.status.pending{background:#fff4dc;color:#8b682c}
+.status.approved{background:#e9f3eb;color:#47785b}
+.status.rejected{background:#faeae8;color:#a34e43}
+.status.review{background:#eaf0fa;color:#4b668e}
+.action-btn{border:1px solid var(--line);background:white;padding:7px 9px;border-radius:5px;font-size:10px;margin:2px}
+.action-btn:hover{border-color:var(--gold);color:var(--gold)}
+.primary{border:0;background:var(--dark);color:white;padding:10px 14px;border-radius:6px;font-size:11px}
+.primary:hover{background:var(--gold)}
+.secondary{border:1px solid var(--line);background:white;padding:10px 14px;border-radius:6px;font-size:11px}
+.danger{color:var(--red)}
+.empty{text-align:center;padding:35px 12px;color:var(--muted)}
+.empty-icon{font-size:27px;margin-bottom:11px}
+.empty strong{display:block;color:var(--dark);font-size:12px;margin-bottom:7px}
+.empty p{font-size:10px;line-height:1.7}
+.filters{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:15px}
+.filters input,.filters select{border:1px solid var(--line);background:white;padding:10px;border-radius:6px;font-size:11px;outline:none}
+.filters input{flex:1;min-width:170px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.field{margin-bottom:13px}
+.field.full{grid-column:1/-1}
+.field label{display:block;font-size:10px;color:#716b62;margin-bottom:7px}
+.field input,.field textarea,.field select{width:100%;border:1px solid var(--line);border-radius:6px;padding:11px;font-size:11px;outline:none;background:white}
+.field textarea{min-height:95px;resize:vertical}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--gold)}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+.info-card{border:1px solid var(--line);border-radius:8px;padding:16px}
+.info-card span{font-size:20px;display:block;margin-bottom:11px}
+.info-card strong{font-size:12px;display:block;margin-bottom:7px}
+.info-card p{font-size:10px;color:var(--muted);line-height:1.6}
+.footer-note{font-size:10px;color:var(--muted);line-height:1.7;margin-top:13px}
+.toast{display:none;position:fixed;right:20px;bottom:20px;background:#292720;color:white;padding:13px 17px;border-radius:7px;font-size:11px;z-index:60;box-shadow:0 5px 20px #0002}
+.overlay{display:none;position:fixed;inset:0;background:#0007;z-index:15}
+@media(max-width:1050px){
+ .stats{grid-template-columns:repeat(2,1fr)}
+ .grid{grid-template-columns:1fr}
+ .cards{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:700px){
+ .sidebar{transform:translateX(-100%);transition:.25s}
+ .sidebar.open{transform:translateX(0)}
+ .overlay.show{display:block}
+ .main{margin-left:0;padding:18px 15px 40px}
+ .menu-btn{display:block}
+ .mobile-brand{display:block}
+ .topbar{margin-bottom:22px}
+ .top-right a{display:none}
+ .page-heading{align-items:flex-start;flex-direction:column}
+ h1{font-size:28px}
+ .stats{gap:9px}
+ .stat{padding:13px}
+ .stat-number{font-size:25px}
+ .panel{padding:15px}
+ .cards{grid-template-columns:1fr}
+ .form-grid{grid-template-columns:1fr}
+ .field.full{grid-column:auto}
+}
+</style>
+<style id="kaalaverse-unified-nav">
+.kv-header{position:relative;z-index:60;background:#fff!important;border-bottom:1px solid #e8e1d7!important;box-shadow:0 3px 16px rgba(30,25,18,.045)}.kv-nav-inner{width:min(1440px,92%);min-height:76px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:22px}.kv-logo{flex:0 0 auto;color:#24211d!important;text-decoration:none!important;font:700 25px/1 Georgia,serif;letter-spacing:1.7px}.kv-logo span{color:#a77b43}.kv-nav-links{display:flex;align-items:center;justify-content:center;gap:clamp(10px,1.45vw,22px);flex-wrap:wrap}.kv-nav-links a,.kv-nav-actions a{color:#39342e!important;text-decoration:none!important;font:500 12px/1.4 Arial,sans-serif;white-space:nowrap}.kv-nav-links a:hover,.kv-nav-actions a:hover,.kv-nav-links a.kv-active{color:#a77b43!important}.kv-nav-links a.kv-active{font-weight:700}.kv-nav-actions{display:flex;align-items:center;gap:13px;flex:0 0 auto}.kv-nav-actions .kv-join{background:#29251f;color:#fff!important;padding:11px 14px}.kv-menu-btn{display:none;background:transparent!important;border:1px solid #ded7cc!important;color:#29251f!important;padding:8px 12px;font-size:20px;cursor:pointer}.kv-mobile-panel{display:none;width:92%;margin:0 auto;padding:0 0 16px;grid-template-columns:1fr 1fr;gap:0 14px}.kv-mobile-panel.kv-open{display:grid}.kv-mobile-panel a{padding:11px 5px;border-top:1px solid #eee8df;color:#39342e!important;text-decoration:none!important;font:13px Arial,sans-serif}@media(max-width:1050px){.kv-nav-inner{min-height:70px}.kv-nav-links{gap:10px}.kv-nav-links a{font-size:11px}.kv-nav-actions{gap:9px}.kv-nav-actions a{font-size:11px}}@media(max-width:820px){.kv-nav-inner{min-height:68px}.kv-nav-links,.kv-nav-actions{display:none}.kv-menu-btn{display:block}.kv-mobile-panel.kv-open{display:grid}}
+</style>
+<style id="kv-dashboard-nav-fix">.kv-dashboard-menu{grid-column:1/-1;margin-top:12px;padding:12px;border:1px solid #ded7cc;background:#29251f;color:#fff;cursor:pointer;font:13px Arial,sans-serif}@media(min-width:821px){.kv-dashboard-menu{display:none}}</style>
+</head>
+<body>
+<header class="kv-header"><div class="kv-nav-inner"><a class="kv-logo" href="/">KAALA<span>VERSE</span></a><nav class="kv-nav-links" aria-label="Main navigation"><a href="/">Home</a><a href="/discover-artists/">Discover Artists</a><a href="/explore-art/">Explore Art</a><a href="/subscriptions/">Memberships</a><a href="/live-events/">Live Events</a><a href="/artist-booking/">Book an Artist</a><a href="/workshops/">Workshops</a></nav><div class="kv-nav-actions"><a href="/wishlist/" class="">Wishlist</a><a href="/cart/" class="">Cart</a><a href="/login/" class="">Login</a><a href="/join-kaalaverse/" class="kv-join">Join Kaalaverse</a></div><button class="kv-menu-btn" type="button" aria-label="Toggle navigation" aria-expanded="false">☰</button></div><nav class="kv-mobile-panel" aria-label="Mobile navigation"><a href="/">Home</a><a href="/discover-artists/">Discover Artists</a><a href="/explore-art/">Explore Art</a><a href="/subscriptions/">Memberships</a><a href="/live-events/">Live Events</a><a href="/artist-booking/">Book an Artist</a><a href="/workshops/">Workshops</a><a href="/wishlist/">Wishlist</a><a href="/cart/">Cart</a><a href="/login/">Login</a><a href="/join-kaalaverse/">Join Kaalaverse</a><button type="button" class="kv-dashboard-menu" onclick="document.getElementById('sidebar').classList.toggle('open')">Open Dashboard Menu</button></nav></header>
+
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="brand">kaala<span>verse</span></div>
+  <div class="brand-sub">ADMINISTRATION PANEL</div>
+
+  <div class="admin-info">
+    <div class="admin-avatar">A</div>
+    <div><strong>Administrator</strong><small>Platform Management</small></div>
+  </div>
+
+  <div class="nav-label">MAIN</div>
+  <nav class="nav">
+    <a href="#" class="active" data-section="overview">▦ &nbsp; Dashboard</a>
+    <a href="#" data-section="creators">♧ &nbsp; Creators</a>
+    <a href="#" data-section="verification">✓ &nbsp; Verification</a>
+    <a href="#" data-section="artworks">◇ &nbsp; Artwork Approval</a>
+  </nav>
+
+  <div class="nav-label">OPERATIONS</div>
+  <nav class="nav">
+    <a href="#" data-section="orders">▣ &nbsp; Orders</a>
+    <a href="#" data-section="bookings">◷ &nbsp; Bookings</a>
+    <a href="#" data-section="events">◈ &nbsp; Events</a>
+    <a href="#" data-section="memberships">♙ &nbsp; Memberships</a>
+  </nav>
+
+  <div class="nav-label">MANAGEMENT</div>
+  <nav class="nav">
+    <a href="#" data-section="reports">▤ &nbsp; Reports</a>
+    <a href="#" data-section="settings">⚙ &nbsp; Settings</a>
+  </nav>
+
+  <div class="nav-label">WEBSITE</div>
+  <nav class="nav">
+    <a href="/">⌂ &nbsp; Visit Website</a>
+    <a href="/login/" onclick="return confirm('Leave the admin preview?')">↪ &nbsp; Logout</a>
+  </nav>
+</aside>
+
+<main class="main">
+  
+
+  <!-- DASHBOARD -->
+  <section class="section active" id="overview">
+    <div class="page-heading">
+      <div>
+        <div class="eyebrow">PLATFORM CONTROL CENTRE</div>
+        <h1>Admin Dashboard</h1>
+        <p>Manage creators, artwork, bookings and the Kaalaverse platform.</p>
+      </div>
+      <span class="preview-tag">Frontend preview</span>
+    </div>
+
+    <div class="notice">
+      <strong>Important:</strong> This is an admin interface preview. The numbers are zero placeholders, not actual platform statistics. Secure admin login, database records, approval workflows and payment controls require backend integration.
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-top">Total Creators <span class="stat-icon">♧</span></div><div class="stat-number">0</div><small>Registered creator accounts</small></div>
+      <div class="stat"><div class="stat-top">Pending Verification <span class="stat-icon">✓</span></div><div class="stat-number">0</div><small>Applications to review</small></div>
+      <div class="stat"><div class="stat-top">Artwork Listings <span class="stat-icon">◇</span></div><div class="stat-number">0</div><small>Marketplace listings</small></div>
+      <div class="stat"><div class="stat-top">Total Orders <span class="stat-icon">▣</span></div><div class="stat-number">0</div><small>Customer purchases</small></div>
+    </div>
+
+    <div class="grid">
+      <div class="panel">
+        <div class="panel-head"><h2>Platform Activity</h2><small>Monthly overview</small></div>
+        <div class="chart">
+          <div class="chart-col"><div class="chart-bar" style="height:3px"></div><small>Jan</small></div>
+          <div class="chart-col"><div class="chart-bar" style="height:3px"></div><small>Feb</small></div>
+          <div class="chart-col"><div class="chart-bar" style="height:3px"></div><small>Mar</small></div>
+          <div class="chart-col"><div class="chart-bar" style="height:3px"></div><small>Apr</small></div>
+          <div class="chart-col"><div class="chart-bar" style="height:3px"></div><small>May</small></div>
+          <div class="chart-col"><div class="chart-bar" style="height:3px"></div><small>Jun</small></div>
+        </div>
+        <div class="chart-note">Activity data will appear after database integration.</div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><h2>Quick Management</h2><small>Admin shortcuts</small></div>
+        <div class="quick-grid">
+          <button class="quick" onclick="openSection('verification')"><span>✓</span><strong>Review Verification</strong><small>Creator identity checks</small></button>
+          <button class="quick" onclick="openSection('artworks')"><span>◇</span><strong>Artwork Approval</strong><small>Review new listings</small></button>
+          <button class="quick" onclick="openSection('events')"><span>◈</span><strong>Manage Events</strong><small>Event administration</small></button>
+          <button class="quick" onclick="openSection('reports')"><span>▤</span><strong>View Reports</strong><small>Platform performance</small></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><h2>Recent Platform Activity</h2><small>Latest records</small></div>
+      <div class="empty"><div class="empty-icon">◷</div><strong>No activity records</strong><p>Creator registrations, customer orders, booking requests and other platform activity will appear here when connected to the backend.</p></div>
+    </div>
+  </section>
+
+  <!-- CREATORS -->
+  <section class="section" id="creators">
+    <div class="section-heading"><div class="eyebrow">CREATOR MANAGEMENT</div><h1>Creators</h1><p>Manage artist and creator accounts across the platform.</p></div>
+    <div class="panel">
+      <div class="panel-head"><h2>Creator Directory</h2><small>Registered accounts</small></div>
+      <div class="filters">
+        <input id="creatorSearch" placeholder="Search creator name..." oninput="filterTable('creatorTable','creatorSearch')">
+        <select onchange="filterTable('creatorTable','creatorSearch',this.value)">
+          <option value="">All statuses</option><option>Pending</option><option>Verified</option><option>Suspended</option>
+        </select>
+      </div>
+      <div class="empty"><div class="empty-icon">♧</div><strong>No creator records</strong><p>Registered creators will appear here after the user registration system and database are connected.</p></div>
+    </div>
+  </section>
+
+  <!-- VERIFICATION -->
+  <section class="section" id="verification">
+    <div class="section-heading"><div class="eyebrow">TRUST & SAFETY</div><h1>Creator Verification</h1><p>Review creator identity, portfolio and ownership evidence.</p></div>
+    <div class="notice">Verification must be completed by authorised administrators using securely stored documents. Do not approve a creator based on a frontend form alone.</div>
+    <div class="panel">
+      <div class="panel-head"><h2>Verification Applications</h2><small>Pending review</small></div>
+      <div class="filters">
+        <input placeholder="Search application..." oninput="notify('Search will work when verification records are connected.')">
+        <select onchange="notify('Status filtering will be available after backend integration.')">
+          <option>All categories</option><option>Photographer</option><option>Visual Artist</option><option>Performer</option><option>Event Organiser</option>
+        </select>
+      </div>
+      <div class="empty"><div class="empty-icon">✓</div><strong>No verification applications</strong><p>Creator verification requests will appear here when submitted through the platform.</p></div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><h2>Verification Checklist</h2></div>
+      <div class="cards">
+        <div class="info-card"><span>▣</span><strong>Identity Verification</strong><p>Review identity evidence and confirm account ownership through a secure process.</p></div>
+        <div class="info-card"><span>◇</span><strong>Artwork Ownership</strong><p>Review portfolio evidence and confirm the creator has rights to list the artwork.</p></div>
+        <div class="info-card"><span>◈</span><strong>Performer Credentials</strong><p>Review relevant professional details and supporting credentials where applicable.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARTWORKS -->
+  <section class="section" id="artworks">
+    <div class="section-heading"><div class="eyebrow">MARKETPLACE CONTROL</div><h1>Artwork Approval</h1><p>Review artwork listings before they become publicly available.</p></div>
+    <div class="panel">
+      <div class="panel-head"><h2>Artwork Submissions</h2><small>Review queue</small></div>
+      <div class="filters">
+        <input placeholder="Search artwork..." oninput="notify('Artwork search requires backend data.')">
+        <select onchange="notify('Artwork filters require backend data.')">
+          <option>All categories</option><option>Photography</option><option>Painting</option><option>Sculpture</option><option>Digital Art</option>
+        </select>
+      </div>
+      <div class="empty"><div class="empty-icon">◇</div><strong>No artwork submissions</strong><p>Creator artwork submissions will appear here for review and approval.</p></div>
+    </div>
+    <div class="panel">
+      <h2 style="margin-bottom:12px">Artwork Review Guidelines</h2>
+      <p class="footer-note">Review originality, image quality, accurate descriptions, ownership rights, pricing information and marketplace policy compliance before publishing a listing.</p>
+    </div>
+  </section>
+
+  <!-- ORDERS -->
+  <section class="section" id="orders">
+    <div class="section-heading"><div class="eyebrow">COMMERCE OPERATIONS</div><h1>Orders</h1><p>Monitor marketplace transactions and order fulfilment.</p></div>
+    <div class="panel">
+      <div class="panel-head"><h2>All Customer Orders</h2><small>Order management</small></div>
+      <div class="filters">
+        <input placeholder="Search order ID or customer..." oninput="notify('Order search requires backend data.')">
+        <select onchange="notify('Order status filtering requires backend data.')"><option>All order statuses</option><option>Pending</option><option>Paid</option><option>Shipped</option><option>Completed</option><option>Refunded</option></select>
+      </div>
+      <div class="empty"><div class="empty-icon">▣</div><strong>No order records</strong><p>Customer orders and transaction records will appear here after checkout integration.</p></div>
+    </div>
+  </section>
+
+  <!-- BOOKINGS -->
+  <section class="section" id="bookings">
+    <div class="section-heading"><div class="eyebrow">ARTIST SERVICES</div><h1>Bookings</h1><p>Manage artist booking enquiries and confirmed engagements.</p></div>
+    <div class="panel">
+      <div class="panel-head"><h2>Booking Requests</h2><small>Booking administration</small></div>
+      <div class="filters">
+        <input placeholder="Search booking..." oninput="notify('Booking search requires backend data.')">
+        <select onchange="notify('Booking filters require backend data.')"><option>All booking statuses</option><option>New</option><option>Under Review</option><option>Confirmed</option><option>Cancelled</option></select>
+      </div>
+      <div class="empty"><div class="empty-icon">◷</div><strong>No booking requests</strong><p>Artist booking enquiries will appear here when the booking engine is connected.</p></div>
+    </div>
+  </section>
+
+  <!-- EVENTS -->
+  <section class="section" id="events">
+    <div class="section-heading"><div class="eyebrow">LIVE EXPERIENCES</div><h1>Event Management</h1><p>Prepare and manage events, workshops and ticketed experiences.</p></div>
+    <div class="panel">
+      <div class="panel-head"><h2>Create Event Draft</h2><small>Frontend preview</small></div>
+      <form id="eventForm">
+        <div class="form-grid">
+          <div class="field"><label>Event Name *</label><input id="eventName" required placeholder="Enter event name"></div>
+          <div class="field"><label>Event Category</label><select id="eventCategory"><option>Live Performance</option><option>Workshop</option><option>Exhibition</option><option>Artist Talk</option><option>Other</option></select></div>
+          <div class="field"><label>Event Date</label><input id="eventDate" type="date"></div>
+          <div class="field"><label>Venue / Location</label><input id="eventVenue" placeholder="Enter venue"></div>
+          <div class="field full"><label>Event Description *</label><textarea id="eventDescription" required placeholder="Describe the event..."></textarea></div>
+        </div>
+        <button class="primary" type="submit">Save Event Draft</button>
+      </form>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><h2>Saved Event Drafts</h2><small id="eventCount">0 drafts</small></div>
+      <div id="eventList" class="empty"><div class="empty-icon">◈</div><strong>No event drafts</strong><p>Events you prepare will appear here.</p></div>
+    </div>
+    <p class="footer-note">Publishing events, ticket payments, QR code generation, entry scanning and ticket refunds require backend services.</p>
+  </section>
+
+  <!-- MEMBERSHIPS -->
+  <section class="section" id="memberships">
+    <div class="section-heading"><div class="eyebrow">SUBSCRIPTION MANAGEMENT</div><h1>Memberships</h1><p>Oversee creator subscription plans and membership activity.</p></div>
+    <div class="stats">
+      <div class="stat"><div class="stat-top">Active Memberships</div><div class="stat-number">0</div><small>Subscriber records</small></div>
+      <div class="stat"><div class="stat-top">Subscription Revenue</div><div class="stat-number">₹0</div><small>Revenue records</small></div>
+      <div class="stat"><div class="stat-top">Cancelled Plans</div><div class="stat-number">0</div><small>Cancellation records</small></div>
+      <div class="stat"><div class="stat-top">Pending Payments</div><div class="stat-number">0</div><small>Payment records</small></div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><h2>Membership Records</h2></div>
+      <div class="empty"><div class="empty-icon">♙</div><strong>No membership records</strong><p>Subscription plans, subscribers and recurring payment status will appear after backend integration.</p></div>
+    </div>
+  </section>
+
+  <!-- REPORTS -->
+  <section class="section" id="reports">
+    <div class="section-heading"><div class="eyebrow">PLATFORM INSIGHTS</div><h1>Reports & Analytics</h1><p>Monitor platform performance and business activity.</p></div>
+    <div class="cards">
+      <div class="info-card"><span>♧</span><strong>Creator Performance</strong><p>Creator registrations, verification rates and active creator accounts.</p></div>
+      <div class="info-card"><span>◇</span><strong>Marketplace Performance</strong><p>Artwork listings, sales, orders and product categories.</p></div>
+      <div class="info-card"><span>₹</span><strong>Financial Reports</strong><p>Revenue, commissions, refunds, fees and payouts.</p></div>
+      <div class="info-card"><span>◈</span><strong>Event Performance</strong><p>Event registrations, ticket sales and attendance.</p></div>
+      <div class="info-card"><span>♙</span><strong>Membership Analytics</strong><p>Subscriptions, recurring revenue and cancellations.</p></div>
+      <div class="info-card"><span>◷</span><strong>Booking Analytics</strong><p>Booking enquiries, confirmations and cancellations.</p></div>
+    </div>
+    <div class="panel" style="margin-top:17px">
+      <div class="empty"><div class="empty-icon">▤</div><strong>Analytics not connected</strong><p>Reports will populate when the platform database and transaction systems are integrated.</p></div>
+    </div>
+  </section>
+
+  <!-- SETTINGS -->
+  <section class="section" id="settings">
+    <div class="section-heading"><div class="eyebrow">PLATFORM CONFIGURATION</div><h1>Settings</h1><p>Platform policies, security and administrative configuration.</p></div>
+    <div class="panel">
+      <h2 style="margin-bottom:15px">Platform Policies</h2>
+      <div class="cards">
+        <div class="info-card"><span>▤</span><strong>Terms of Service</strong><p>Platform terms and conditions.</p><button class="action-btn" onclick="notify('Terms page can be linked after policy content is finalised.')">Configure</button></div>
+        <div class="info-card"><span>◉</span><strong>Privacy Policy</strong><p>User data and privacy practices.</p><button class="action-btn" onclick="notify('Privacy policy configuration is not connected.')">Configure</button></div>
+        <div class="info-card"><span>₹</span><strong>Refund Policy</strong><p>Refund and cancellation rules.</p><button class="action-btn" onclick="notify('Refund policy configuration is not connected.')">Configure</button></div>
+        <div class="info-card"><span>◇</span><strong>Copyright Policy</strong><p>Artwork rights and infringement handling.</p><button class="action-btn" onclick="notify('Copyright policy configuration is not connected.')">Configure</button></div>
+        <div class="info-card"><span>♧</span><strong>Artist Agreement</strong><p>Creator terms and platform responsibilities.</p><button class="action-btn" onclick="notify('Artist agreement configuration is not connected.')">Configure</button></div>
+        <div class="info-card"><span>⚑</span><strong>Moderation Guidelines</strong><p>Content moderation and dispute handling.</p><button class="action-btn" onclick="notify('Moderation configuration is not connected.')">Configure</button></div>
+      </div>
+    </div>
+    <div class="panel">
+      <h2 style="margin-bottom:12px">Security Notice</h2>
+      <p class="footer-note">A production admin dashboard must have secure administrator authentication, role-based access control, audit logs, protected document storage and server-side validation. Hiding this page or using JavaScript alone does not secure administrative functions.</p>
+    </div>
+  </section>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const sidebar=document.getElementById('sidebar');
+const overlay=document.getElementById('overlay');
+
+function toggleMenu(){
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('show');
+}
+
+function notify(message){
+  const toast=document.getElementById('toast');
+  toast.textContent=message;
+  toast.style.display='block';
+  clearTimeout(window.notifyTimer);
+  window.notifyTimer=setTimeout(()=>toast.style.display='none',2800);
+}
+
+function openSection(id){
+  document.querySelectorAll('.section').forEach(section=>section.classList.remove('active'));
+  const target=document.getElementById(id);
+  if(target) target.classList.add('active');
+
+  document.querySelectorAll('.nav a[data-section]').forEach(link=>{
+    link.classList.toggle('active',link.dataset.section===id);
+  });
+
+  sidebar.classList.remove('open');
+  overlay.classList.remove('show');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+document.querySelectorAll('.nav a[data-section]').forEach(link=>{
+  link.addEventListener('click',event=>{
+    event.preventDefault();
+    openSection(link.dataset.section);
+  });
+});
+
+// Event draft storage - local browser only
+const eventStorageKey='kaalaverseAdminEventDrafts';
+
+function getEvents(){
+  try{return JSON.parse(localStorage.getItem(eventStorageKey)||'[]')}catch(error){return []}
+}
+
+function escapeHTML(value){
+  return String(value??'').replace(/[&<>"']/g,char=>({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[char]));
+}
+
+function renderEvents(){
+  const events=getEvents();
+  const container=document.getElementById('eventList');
+  document.getElementById('eventCount').textContent=events.length+' drafts';
+
+  if(!events.length){
+    container.className='empty';
+    container.innerHTML='<div class="empty-icon">◈</div><strong>No event drafts</strong><p>Events you prepare will appear here.</p>';
+    return;
+  }
+
+  container.className='cards';
+  container.innerHTML=events.map(event=>`
+    <article class="info-card">
+      <span>◈</span>
+      <strong>${escapeHTML(event.name)}</strong>
+      <p>${escapeHTML(event.category)}<br>${escapeHTML(event.date||'Date not set')}<br>${escapeHTML(event.venue||'Venue not set')}</p>
+      <p style="margin-top:8px">${escapeHTML(event.description)}</p>
+      <span class="status pending">Draft · Not published</span>
+    </article>
+  `).join('');
+}
+
+document.getElementById('eventForm').addEventListener('submit',event=>{
+  event.preventDefault();
+
+  const newEvent={
+    name:document.getElementById('eventName').value.trim(),
+    category:document.getElementById('eventCategory').value,
+    date:document.getElementById('eventDate').value,
+    venue:document.getElementById('eventVenue').value.trim(),
+    description:document.getElementById('eventDescription').value.trim()
+  };
+
+  const events=getEvents();
+  events.unshift(newEvent);
+  localStorage.setItem(eventStorageKey,JSON.stringify(events));
+  event.target.reset();
+  renderEvents();
+  notify('Event draft saved in this browser.');
+});
+
+// Search helper placeholder
+function filterTable(tableId,inputId,statusValue=''){
+  notify('Search and filtering will work when real records are connected.');
+}
+
+renderEvents();
+</script>
+<script id="kaalaverse-unified-nav-js">(function(){const h=document.querySelector('.kv-header');if(!h)return;const b=h.querySelector('.kv-menu-btn'),p=h.querySelector('.kv-mobile-panel');if(b&&p)b.addEventListener('click',function(){const open=p.classList.toggle('kv-open');b.setAttribute('aria-expanded',String(open));b.textContent=open?'✕':'☰';});})();</script>
+</body>
+</html>
