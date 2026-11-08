@@ -356,6 +356,54 @@ main {
   color:#615846;
 }
 
+.payment-details {
+  margin:20px 0;
+  padding:18px;
+  background:#fbfaf7;
+  border:1px solid var(--line);
+}
+.payment-details h3 {
+  font-family:Georgia,serif;
+  font-size:20px;
+  font-weight:400;
+  margin-bottom:7px;
+}
+.payment-intro,.payment-warning {
+  color:var(--muted);
+  font-size:11px;
+  margin:8px 0 13px;
+}
+.payment-row {
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+  padding:9px 0;
+  border-bottom:1px solid var(--line);
+  font-size:11px;
+}
+.payment-row span { color:var(--muted); }
+.payment-row strong { text-align:right; overflow-wrap:anywhere; }
+.copy-btn {
+  width:100%;
+  margin-top:10px;
+  padding:10px;
+  border:1px solid var(--dark);
+  background:var(--dark);
+  color:white;
+  font-size:10px;
+  letter-spacing:.5px;
+}
+.copy-btn.secondary { background:white; color:var(--dark); }
+.payment-warning {
+  margin-top:14px;
+  padding:10px;
+  background:#f8f0e5;
+  color:#6b5030;
+  line-height:1.6;
+}
+.copy-status { min-height:16px; font-size:11px; color:#47734c; margin-top:7px; }
+
 footer {
   background:var(--dark);
   color:#e9e5dc;
@@ -496,17 +544,31 @@ footer {
       </div>
 
       <p class="summary-note">
-        Final pricing, shipping charges, taxes and payment details
-        will be confirmed during the actual checkout process.
+        Please confirm the final artwork price and delivery charges with Kaalaverse
+        before making a bank transfer.
       </p>
 
+      <section class="payment-details" aria-labelledby="paymentTitle">
+        <h3 id="paymentTitle">Bank Transfer Details</h3>
+        <p class="payment-intro">Customers purchasing artwork can transfer the confirmed amount to this account.</p>
+        <div class="payment-row"><span>Account Holder</span><strong>Joseph Peter Malite Palathingal</strong></div>
+        <div class="payment-row"><span>Bank</span><strong>State Bank of India (SBI)</strong></div>
+        <div class="payment-row"><span>Branch</span><strong>Kaloor</strong></div>
+        <div class="payment-row"><span>Account Number</span><strong>45205832159</strong></div>
+        <div class="payment-row"><span>IFSC Code</span><strong>SBIN0008621</strong></div>
+        <div class="payment-row"><span>Contact</span><strong>9645593467</strong></div>
+        <button class="copy-btn" type="button" data-copy="45205832159">Copy Account Number</button>
+        <button class="copy-btn secondary" type="button" data-copy="SBIN0008621">Copy IFSC Code</button>
+        <p class="payment-warning">Important: Contact us to confirm the final amount before transferring. After payment, share the transaction reference/receipt with us. Your order will be confirmed only after the payment is manually verified. This website does not currently verify bank transfers automatically.</p>
+        <p class="copy-status" id="copyStatus" aria-live="polite"></p>
+      </section>
+
       <button class="checkout-btn" id="checkoutBtn">
-        Proceed to Checkout
+        Payment Instructions
       </button>
 
       <div class="checkout-message" id="checkoutMessage">
-        Online checkout is not yet connected. A secure payment gateway
-        and backend order system are required before orders can be placed.
+        Bank transfer details are shown above. Please contact us before paying to confirm artwork availability, final price and delivery charges.
       </div>
 
       <a href="/explore-art/" class="continue-link">
@@ -740,6 +802,19 @@ cartList.addEventListener("click", function(event) {
 
 document.getElementById("checkoutBtn").addEventListener("click", function() {
   document.getElementById("checkoutMessage").style.display = "block";
+});
+
+document.querySelectorAll(".copy-btn[data-copy]").forEach(function(button) {
+  button.addEventListener("click", async function() {
+    const value = button.dataset.copy;
+    const status = document.getElementById("copyStatus");
+    try {
+      await navigator.clipboard.writeText(value);
+      status.textContent = "Copied successfully.";
+    } catch (error) {
+      status.textContent = "Copy not available. Please copy the details manually.";
+    }
+  });
 });
 
 document.getElementById("menuBtn").addEventListener("click", function() {
