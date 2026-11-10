@@ -266,6 +266,83 @@ body{overflow-x:hidden}
 
 
 .artwork-photo{display:block;aspect-ratio:4/3;overflow:hidden;background:#e9e5dc}.artwork-photo img{display:block;width:100%;height:100%;object-fit:cover}
+
+/* Featured artwork store cards — keep each artwork in its own product tile */
+#artwork-marketplace{background:#fbfaf7}
+#artwork-marketplace .section-head{align-items:end;margin-bottom:30px}
+#artwork-marketplace .section-sub{max-width:560px}
+#artwork-marketplace .artwork-grid{
+ display:grid!important;
+ grid-template-columns:repeat(4,minmax(0,1fr))!important;
+ align-items:stretch;gap:20px!important;width:100%;
+}
+#artwork-marketplace .artwork-card{
+ display:flex;flex-direction:column;min-width:0;overflow:hidden;
+ background:#fff;border:1px solid #e9e4dc;border-radius:3px;
+ box-shadow:0 7px 24px rgba(30,25,18,.055);
+ transition:transform .22s ease,box-shadow .22s ease;
+}
+#artwork-marketplace .artwork-card:hover{
+ transform:translateY(-4px);box-shadow:0 13px 30px rgba(30,25,18,.11);
+}
+#artwork-marketplace .artwork-photo{
+ display:block;position:relative;width:100%;height:auto!important;
+ aspect-ratio:4/5;overflow:hidden;background:#e9e5dc;
+}
+#artwork-marketplace .artwork-photo img{
+ display:block;width:100%!important;height:100%!important;
+ max-width:none;object-fit:cover;object-position:center;
+ transition:transform .5s ease;
+}
+#artwork-marketplace .artwork-card:hover .artwork-photo img{transform:scale(1.035)}
+#artwork-marketplace .artwork-photo span{
+ position:absolute;left:12px;bottom:12px;padding:7px 10px;
+ background:#fff;color:#29251f;font:700 9px Arial,sans-serif;
+ letter-spacing:1px;text-transform:uppercase;
+}
+#artwork-marketplace .artwork-info{
+ display:flex;flex:1;flex-direction:column;align-items:stretch;
+ gap:11px;padding:18px!important;min-width:0;
+}
+#artwork-marketplace .artwork-info small{
+ display:block;color:#a66d43;font-size:9px;letter-spacing:1.4px;
+ text-transform:uppercase;font-weight:700;margin-bottom:7px;
+}
+#artwork-marketplace .artwork-info h3{
+ margin:0;font:500 22px/1.2 Georgia,serif;overflow-wrap:anywhere;
+}
+#artwork-marketplace .artwork-info strong{
+ display:block;font-size:18px;font-weight:700;color:#171713;
+ font-variant-numeric:tabular-nums;
+}
+#artwork-marketplace .artwork-buy{
+ display:flex;align-items:center;justify-content:center;
+ width:100%;min-height:45px;margin-top:auto;padding:12px;
+ background:#24231f;color:#fff;border:1px solid #24231f;
+ font:700 10px Arial,sans-serif;letter-spacing:.8px;text-transform:uppercase;
+ transition:background .2s ease;
+}
+#artwork-marketplace .artwork-buy:hover{background:#a66d43;border-color:#a66d43}
+#artwork-marketplace .artwork-disclaimer{
+ grid-column:1/-1;margin:5px 0 0;color:#77766f;
+ font-size:11px;line-height:1.7;
+}
+@media(max-width:1050px){
+ #artwork-marketplace .artwork-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+}
+@media(max-width:760px){
+ #artwork-marketplace .artwork-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px!important}
+ #artwork-marketplace .artwork-info{padding:14px!important}
+ #artwork-marketplace .artwork-info h3{font-size:18px}
+ #artwork-marketplace .artwork-info strong{font-size:16px}
+}
+@media(max-width:460px){
+ #artwork-marketplace .artwork-grid{grid-template-columns:1fr!important;gap:16px!important}
+ #artwork-marketplace .artwork-photo{aspect-ratio:5/4}
+ #artwork-marketplace .artwork-info{padding:16px!important}
+ #artwork-marketplace .artwork-info h3{font-size:21px}
+}
+
 </style>
 <style id="kaalaverse-unified-nav">
 .kv-header{position:relative;z-index:50;background:#fff!important;border-bottom:1px solid #e8e1d7!important;box-shadow:0 3px 16px rgba(30,25,18,.045)}
