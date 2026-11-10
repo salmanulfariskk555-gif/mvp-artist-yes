@@ -211,6 +211,59 @@ footer{background:#24231f;color:#f4f0e9;padding:55px 0 25px}
   .photo-story img { aspect-ratio: 5 / 4; }
   .hero h1 { font-size: clamp(2rem, 11vw, 2.8rem); }
 }
+
+/* Final responsive layout fixes */
+img{max-width:100%;height:auto}
+body{overflow-x:hidden}
+.wrap{width:min(1240px,calc(100% - 48px))}
+.artwork-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px}
+.artwork-card{min-width:0;overflow:hidden}
+.artwork-photo{display:block;position:relative;aspect-ratio:4/5;overflow:hidden}
+.artwork-photo img{width:100%;height:100%;object-fit:cover}
+.artwork-info{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:start;padding:16px}
+.artwork-info h3{overflow-wrap:anywhere}
+.artwork-buy{grid-column:1/-1;display:flex;justify-content:center;align-items:center;min-height:44px}
+.category-grid,.experience-grid,.trust-grid{min-width:0}
+@media(max-width:1050px){
+ .artwork-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .hero-copy{padding:56px}
+}
+@media(max-width:760px){
+ .wrap{width:calc(100% - 32px)}
+ .artwork-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+ .artwork-info{grid-template-columns:1fr;gap:8px;padding:13px}
+ .artwork-info strong{font-size:15px}
+ .artwork-buy{grid-column:auto;width:100%;font-size:11px}
+ .hero-panel{min-height:470px}
+ .hero-copy{padding:30px 24px}
+ .art-strip{grid-template-columns:1fr}
+ .art-image{height:auto;aspect-ratio:16/10}
+ .category-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .category:last-child{grid-column:1/-1}
+ .experience-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .trust-grid{grid-template-columns:1fr}
+ .footer-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .kv-nav-inner{gap:12px;padding-inline:16px}
+ .kv-logo{font-size:21px}
+}
+@media(max-width:480px){
+ .wrap{width:calc(100% - 24px)}
+ .artwork-grid,.category-grid,.experience-grid{grid-template-columns:1fr}
+ .category:last-child{grid-column:auto}
+ .artwork-photo{aspect-ratio:5/4}
+ .hero-panel{min-height:420px}
+ .hero-copy{padding:24px 18px}
+ .hero h1{font-size:clamp(36px,10vw,48px)}
+ .actions .btn{width:100%}
+ .footer-grid{grid-template-columns:1fr}
+ .footer-brand{grid-column:auto}
+ .copyright{gap:8px}
+ .section{padding:42px 0}
+ .section-head{gap:12px}
+ .kv-nav-actions .optional{display:none}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
 </style>
 <style id="kaalaverse-unified-nav">
 .kv-header{position:relative;z-index:50;background:#fff!important;border-bottom:1px solid #e8e1d7!important;box-shadow:0 3px 16px rgba(30,25,18,.045)}
