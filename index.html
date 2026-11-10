@@ -178,6 +178,39 @@ footer{background:#24231f;color:#f4f0e9;padding:55px 0 25px}
 }
 
 .photo-story-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.photo-story{position:relative;overflow:hidden;background:#e8e5de;min-height:260px;aspect-ratio:4/3}.photo-story img{width:100%;height:100%;object-fit:cover;transition:transform .55s ease}.photo-story:hover img{transform:scale(1.045)}.photo-story figcaption{position:absolute;inset:auto 0 0;padding:42px 18px 17px;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.72));font:500 19px var(--serif)}.photo-story figcaption small{display:block;margin-bottom:5px;font:10px var(--sans);letter-spacing:1.6px;text-transform:uppercase;color:#e7d4c0}@media(max-width:760px){.photo-story-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.photo-story{min-height:180px}}@media(max-width:430px){.photo-story-grid{grid-template-columns:1fr}.photo-story{aspect-ratio:16/10}}
+
+/* Kaalaverse responsive polish — desktop, tablet and mobile */
+@media (max-width: 760px) {
+  html { scroll-behavior: smooth; }
+  body { overflow-x: hidden; }
+  .wrap { width: min(100% - 32px, 100%); }
+  header, .site-header, .nav-wrap { min-height: auto; }
+  nav, .main-nav, .nav-links { gap: 12px; }
+  .hero { min-height: auto; padding: 54px 0 42px; }
+  .hero h1 { font-size: clamp(2.15rem, 10vw, 3.5rem); line-height: 1.04; letter-spacing: -.04em; }
+  .hero p, .section-sub { font-size: 15px; line-height: 1.65; }
+  .section { padding: 52px 0; }
+  .section-head { align-items: flex-start; gap: 14px; flex-direction: column; margin-bottom: 22px; }
+  .section-head h2, .creator-row h2 { font-size: clamp(1.7rem, 7vw, 2.35rem); line-height: 1.12; }
+  .photo-story-grid, .experience-grid, .trust-grid, .artist-grid, .art-grid, .category-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .photo-story { min-width: 0; margin: 0; }
+  .photo-story img { width: 100%; aspect-ratio: 4 / 5; height: auto; object-fit: cover; border-radius: 12px; display: block; }
+  .photo-story figcaption { padding: 10px 2px 4px; font-size: 13px; line-height: 1.4; }
+  .photo-story figcaption small { display: block; margin-bottom: 4px; font-size: 10px; letter-spacing: .08em; }
+  .experience img { width: 100%; aspect-ratio: 4 / 3; height: auto; object-fit: cover; }
+  .experience .body { padding: 14px; }
+  .creator-row { display: flex; flex-direction: column; align-items: flex-start; gap: 20px; }
+  .creator-row .btn { width: 100%; justify-content: center; }
+  .btn, button { min-height: 44px; }
+  input, select, textarea { max-width: 100%; font-size: 16px; }
+  .photo-story-grid#kaalaverse-extra-photo-grid { margin-bottom: 26px; }
+}
+@media (max-width: 430px) {
+  .wrap { width: calc(100% - 24px); }
+  .photo-story-grid, .experience-grid, .trust-grid, .artist-grid, .art-grid, .category-grid { grid-template-columns: 1fr; gap: 16px; }
+  .photo-story img { aspect-ratio: 5 / 4; }
+  .hero h1 { font-size: clamp(2rem, 11vw, 2.8rem); }
+}
 </style>
 <style id="kaalaverse-unified-nav">
 .kv-header{position:relative;z-index:50;background:#fff!important;border-bottom:1px solid #e8e1d7!important;box-shadow:0 3px 16px rgba(30,25,18,.045)}
@@ -449,8 +482,15 @@ document.getElementById('year').textContent=new Date().getFullYear();
   if(!window.JSZip){await new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';s.onload=resolve;s.onerror=reject;document.head.appendChild(s);});}
   const response=await fetch('/assets/kaalaverse-client-photos-assets.zip');if(!response.ok)throw new Error('Photo archive unavailable');
   const zip=await JSZip.loadAsync(await response.blob());
-  const files=Object.values(zip.files).filter(f=>!f.dir&&/\.(jpe?g|png|webp)$/i.test(f.name));
-  if(!files.length)throw new Error('No image files found in archive');
+  const existing=new Set([...document.querySelectorAll('#client-photo-stories img, .experience img')].map(img=>(img.getAttribute('src')||'').split('/').pop().toLowerCase()).filter(Boolean));
+  const seen=new Set();
+  const files=Object.values(zip.files).filter(file=>{
+   if(file.dir||!/\.(jpe?g|png|webp)$/i.test(file.name))return false;
+   const base=file.name.split('/').pop().toLowerCase();
+   if(existing.has(base)||seen.has(base))return false;
+   seen.add(base);return true;
+  });
+  if(!files.length){grid.innerHTML='<p class="section-sub">All archive photographs are already represented in the existing gallery.</p>';return;}
   grid.innerHTML='';
   for(const file of files){
    const blob=await file.async('blob');const url=URL.createObjectURL(blob);
