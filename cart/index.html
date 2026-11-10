@@ -586,8 +586,8 @@ html,body{max-width:100%;overflow-x:hidden}
       </div>
 
       <p class="summary-note">
-        Please confirm the final artwork price and delivery charges with Kaalaverse
-        before making a bank transfer.
+        Submit your order request through WhatsApp. Kaalaverse will confirm artwork availability,
+        delivery charges and payment steps before you pay.
       </p>
 
       <section class="payment-details" aria-labelledby="paymentTitle">
@@ -606,11 +606,11 @@ html,body{max-width:100%;overflow-x:hidden}
       </section>
 
       <button class="checkout-btn" id="checkoutBtn">
-        Payment Instructions
+        Send Order via WhatsApp
       </button>
 
       <div class="checkout-message" id="checkoutMessage">
-        Bank transfer details are shown above. Please contact us before paying to confirm artwork availability, final price and delivery charges.
+        Your order request opens in WhatsApp with the selected artwork names and prices. Payment is confirmed manually by Kaalaverse.
       </div>
 
       <a href="/explore-art/" class="continue-link">
@@ -686,14 +686,14 @@ function getCart() {
   if (!slug || !Number.isFinite(price) || price <= 0) return;
 
   const products = {
-    "beyond-the-horizon": { title:"Beyond the Horizon", image:"/assets/behind-the-lens-mountain.jpg" },
-    "golden-hour": { title:"Golden Hour", image:"/assets/nature-sunset.jpg" },
-    "wings-in-the-wild": { title:"Wings in the Wild", image:"/assets/wildlife-hornbill-wide.jpg" },
-    "into-the-forest": { title:"Into the Forest", image:"/assets/wildlife-hornbill-portrait.jpg" },
-    "details-of-the-wild": { title:"Details of the Wild", image:"/assets/wildlife-green-snake.jpg" },
-    "movement-and-expression": { title:"Movement & Expression", image:"/assets/performing-arts-dancer.jpg" },
-    "small-wonders": { title:"Small Wonders", image:"/assets/wildlife-frog.jpg" },
-    "life-in-the-wild": { title:"Life in the Wild", image:"/assets/wildlife-tiger-deer.jpg" }
+    "beyond-the-horizon": { title:"Beyond the Horizon", image:"../assets/behind-the-lens-mountain.jpg" },
+    "golden-hour": { title:"Golden Hour", image:"../assets/nature-sunset.jpg" },
+    "wings-in-the-wild": { title:"Wings in the Wild", image:"../assets/wildlife-hornbill-wide.jpg" },
+    "into-the-forest": { title:"Into the Forest", image:"../assets/wildlife-hornbill-portrait.jpg" },
+    "details-of-the-wild": { title:"Details of the Wild", image:"../assets/wildlife-green-snake.jpg" },
+    "movement-and-expression": { title:"Movement & Expression", image:"../assets/performing-arts-dancer.jpg" },
+    "small-wonders": { title:"Small Wonders", image:"../assets/wildlife-frog.jpg" },
+    "life-in-the-wild": { title:"Life in the Wild", image:"../assets/wildlife-tiger-deer.jpg" }
   };
 
   const product = products[slug];
@@ -871,7 +871,32 @@ cartList.addEventListener("click", function(event) {
 });
 
 document.getElementById("checkoutBtn").addEventListener("click", function() {
-  document.getElementById("checkoutMessage").style.display = "block";
+  const cart = getCart();
+  if (!cart.length) {
+    document.getElementById("checkoutMessage").textContent = "Your cart is empty. Please add an artwork first.";
+    document.getElementById("checkoutMessage").style.display = "block";
+    return;
+  }
+  const lines = cart.map(function(item, index) {
+    const price = getPrice(item);
+    const quantity = Math.max(1, Number(item.quantity) || 1);
+    return (index + 1) + ". " + (item.title || item.name || "Artwork") +
+      " x " + quantity + " — " + (price === null ? "Price to confirm" : formatPrice(price * quantity));
+  });
+  const total = cart.reduce(function(sum, item) {
+    const price = getPrice(item);
+    return sum + (price === null ? 0 : price * Math.max(1, Number(item.quantity) || 1));
+  }, 0);
+  const hasUnknownPrice = cart.some(function(item) { return getPrice(item) === null; });
+  const message = [
+    "Hello Kaalaverse, I would like to place an artwork order.",
+    "",
+    ...lines,
+    "",
+    "Order total: " + (hasUnknownPrice ? "Please confirm" : formatPrice(total)),
+    "Please confirm artwork availability, delivery charges and payment steps."
+  ].join("\\n");
+  window.open("https://wa.me/919567497943?text=" + encodeURIComponent(message), "_blank", "noopener");
 });
 
 document.querySelectorAll(".copy-btn[data-copy]").forEach(function(button) {
