@@ -677,6 +677,34 @@ function getCart() {
   }
 }
 
+// Support direct Purchase links from the homepage and carry the selected artwork
+// into the cart with its matching image and displayed price.
+(function addDirectPurchaseFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get("artwork");
+  const price = Number(params.get("price"));
+  if (!slug || !Number.isFinite(price) || price <= 0) return;
+
+  const products = {
+    "beyond-the-horizon": { title:"Beyond the Horizon", image:"/assets/behind-the-lens-mountain.jpg" },
+    "golden-hour": { title:"Golden Hour", image:"/assets/nature-sunset.jpg" },
+    "wings-in-the-wild": { title:"Wings in the Wild", image:"/assets/wildlife-hornbill-wide.jpg" },
+    "into-the-forest": { title:"Into the Forest", image:"/assets/wildlife-hornbill-portrait.jpg" },
+    "details-of-the-wild": { title:"Details of the Wild", image:"/assets/wildlife-green-snake.jpg" },
+    "movement-and-expression": { title:"Movement & Expression", image:"/assets/performing-arts-dancer.jpg" },
+    "small-wonders": { title:"Small Wonders", image:"/assets/wildlife-frog.jpg" },
+    "life-in-the-wild": { title:"Life in the Wild", image:"/assets/wildlife-tiger-deer.jpg" }
+  };
+
+  const product = products[slug];
+  if (!product) return;
+
+  const cart = getCart();
+  cart.push({ title:product.title, name:product.title, price:price, image:product.image, quantity:1 });
+  localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  window.history.replaceState({}, document.title, window.location.pathname);
+})();
+
 function saveCart(cart) {
   localStorage.setItem(CART_KEY, JSON.stringify(cart));
 }
