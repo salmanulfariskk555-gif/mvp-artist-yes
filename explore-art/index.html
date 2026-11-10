@@ -168,6 +168,16 @@ body{overflow-x:hidden}
  .nav-actions .optional{display:none}
 }
 
+
+/* Reliable artwork presentation and responsive store cards */
+.art-visual{background:#e9e5dc;display:block;aspect-ratio:4/5;overflow:hidden;position:relative}
+.art-visual img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+.art-card{height:100%;display:flex;flex-direction:column}
+.art-info{display:flex;flex:1;flex-direction:column}
+.art-info .card-actions{margin-top:auto;padding-top:12px}
+.art-price{font-variant-numeric:tabular-nums}
+@media(max-width:950px){.art-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.art-grid{grid-template-columns:1fr}.art-visual{aspect-ratio:5/4}.art-info{padding:16px}.card-actions{grid-template-columns:1fr 1fr}}
 </style>
 <style id="kaalaverse-unified-nav">
 .kv-header{position:relative;z-index:50;background:#fff!important;border-bottom:1px solid #e8e1d7!important;box-shadow:0 3px 16px rgba(30,25,18,.045)}
@@ -241,31 +251,31 @@ body{overflow-x:hidden}
 
 <div class="art-grid" id="artGrid">
 <article class="art-card" data-category="photography" data-price="500000" data-search="beyond the horizon landscape mountain photography">
-<div class="art-visual"><img src="/assets/behind-the-lens-mountain.jpg" alt="Mountain landscape artwork"><span class="product-tag">Landscape photography</span><button class="wish" type="button" aria-label="Save Beyond the Horizon" aria-pressed="false" data-wish="beyond-the-horizon">♡</button></div>
-<div class="art-info"><div class="product-meta"><span>KAALAVERSE COLLECTION</span><span>KV-001</span></div><h3>Beyond the Horizon</h3><p>Mountain landscape photograph</p><div class="art-price">₹5,00,000</div><div class="card-actions"><button type="button" class="add-cart" data-cart="Beyond the Horizon" data-price="500000">Add to Cart</button><a class="buy-now" href="https://wa.me/919567497943?text=I%20would%20like%20to%20purchase%20Beyond%20the%20Horizon%20artwork%20listed%20at%20INR%20500000." target="_blank" rel="noopener">Buy Now</a></div></div></article>
+<div class="art-visual"><img src="../assets/behind-the-lens-mountain.jpg" alt="Mountain landscape artwork"><span class="product-tag">Landscape photography</span><button class="wish" type="button" aria-label="Save Beyond the Horizon" aria-pressed="false" data-wish="beyond-the-horizon">♡</button></div>
+<div class="art-info"><div class="product-meta"><span>KAALAVERSE COLLECTION</span><span>KV-001</span></div><h3>Beyond the Horizon</h3><p>Mountain landscape photograph</p><div class="art-price">₹5,00,000</div><div class="card-actions"><button type="button" class="add-cart" data-cart="Beyond the Horizon" data-price="500000">Add to Cart</button><a class="buy-now" href="../cart/?artwork=beyond-the-horizon&price=500000">Buy Now</a></div></div></article>
 <article class="art-card" data-category="photography" data-price="550000" data-search="golden hour sunset water nature photography">
-<div class="art-visual"><img src="/assets/nature-sunset.jpg" alt="Golden sunset artwork"><span class="product-tag">Nature photography</span><button class="wish" type="button" aria-label="Save Golden Hour" aria-pressed="false" data-wish="golden-hour">♡</button></div>
-<div class="art-info"><div class="product-meta"><span>KAALAVERSE COLLECTION</span><span>KV-002</span></div><h3>Golden Hour</h3><p>Sunset and water landscape photograph</p><div class="art-price">₹5,50,000</div><div class="card-actions"><button type="button" class="add-cart" data-cart="Golden Hour" data-price="550000">Add to Cart</button><a class="buy-now" href="https://wa.me/919567497943?text=I%20would%20like%20to%20purchase%20Golden%20Hour%20artwork%20listed%20at%20INR%20550000." target="_blank" rel="noopener">Buy Now</a></div></div></article>
+<div class="art-visual"><img src="../assets/nature-sunset.jpg" alt="Golden sunset artwork"><span class="product-tag">Nature photography</span><button class="wish" type="button" aria-label="Save Golden Hour" aria-pressed="false" data-wish="golden-hour">♡</button></div>
+<div class="art-info"><div class="product-meta"><span>KAALAVERSE COLLECTION</span><span>KV-002</span></div><h3>Golden Hour</h3><p>Sunset and water landscape photograph</p><div class="art-price">₹5,50,000</div><div class="card-actions"><button type="button" class="add-cart" data-cart="Golden Hour" data-price="550000">Add to Cart</button><a class="buy-now" href="../cart/?artwork=golden-hour&price=550000">Buy Now</a></div></div></article>
 <article class="art-card" data-category="wildlife" data-price="600000" data-search="wings in the wild hornbill bird wildlife photography">
-<div class="art-visual"><img src="/assets/wildlife-hornbill-wide.jpg" alt="Hornbill bird artwork"><span class="product-tag">Wildlife photography</span><button class="wish" type="button" aria-label="Save Wings in the Wild" aria-pressed="false" data-wish="wings-in-the-wild">♡</button></div>
-<div class="art-info"><div class="product-meta"><span>KAALAVERSE COLLECTION</span><span>KV-003</span></div><h3>Wings in the Wild</h3><p>Hornbill in its natural habitat</p><div class="art-price">₹6,00,000</div><div class="card-actions"><button type="button" class="add-cart" data-cart="Wings in the Wild" data-price="600000">Add to Cart</button><a class="buy-now" href="https://wa.me/919567497943?text=I%20would%20like%20to%20purchase%20Wings%20in%20the%20Wild%20artwork%20listed%20at%20INR%20600000." target="_blank" rel="noopener">Buy Now</a></div></div></article>
+<div class="art-visual"><img src="../assets/wildlife-hornbill-wide.jpg" alt="Hornbill bird artwork"><span class="product-tag">Wildlife photography</span><button class="wish" type="button" aria-label="Save Wings in the Wild" aria-pressed="false" data-wish="wings-in-the-wild">♡</button></div>
+<div class="art-info"><div class="product-meta"><span>KAALAVERSE COLLECTION</span><span>KV-003</span></div><h3>Wings in the Wild</h3><p>Hornbill in its natural habitat</p><div class="art-price">₹6,00,000</div><div class="card-actions"><button type="button" class="add-cart" data-cart="Wings in the Wild" data-price="600000">Add to Cart</button><a class="buy-now" href="../cart/?artwork=wings-in-the-wild&price=600000">Buy Now</a></div></div></article>
 <article class="art-card" data-category="wildlife" data-price="650000" data-search="into the forest hornbill wildlife bird">
-<div class="art-visual"><img src="/assets/wildlife-hornbill-portrait.jpg" alt="Hornbill in forest artwork"><span class="product-tag">Wildlife photography</span><button class="wish" type="button" aria-label="Save Into the Forest" aria-pressed="false" data-wish="into-the-forest">♡</button></div>
-<div class="art-info"><div class="product-meta"><span>KAALAVERSE COLLECTION</span><span>KV-004</span></div><h3>Into the Forest</h3><p>Birdlife surrounded by forest foliage</p><div class="art-price">₹6,50,000</div><div class="card-actions"><button type="button" class="add-cart" data-cart="Into the Forest" data-price="650000">Add to Cart</button><a class="buy-now" href="https://wa.me/919567497943?text=I%20would%20like%20to%20purchase%20Into%20the%20Forest%20artwork%20listed%20at%20INR%20650000." target="_blank" rel="noopener">Buy Now</a></div></div></article>
+<div class="art-visual"><img src="../assets/wildlife-hornbill-portrait.jpg" alt="Hornbill in forest artwork"><span class="product-tag">Wildlife photography</span><button class="wish" type="button" aria-label="Save Into the Forest" aria-pressed="false" data-wish="into-the-forest">♡</button></div>
+<div class="art-info"><div class="product-meta"><span>KAALAVERSE COLLECTION</span><span>KV-004</span></div><h3>Into the Forest</h3><p>Birdlife surrounded by forest foliage</p><div class="art-price">₹6,50,000</div><div class="card-actions"><button type="button" class="add-cart" data-cart="Into the Forest" data-price="650000">Add to Cart</button><a class="buy-now" href="../cart/?artwork=into-the-forest&price=650000">Buy Now</a></div></div></article>
 <article class="art-card" data-category="wildlife" data-price="700000" data-search="details of the wild green snake wildlife">
-<div class="art-visual"><img src="/assets/wildlife-green-snake.jpg" alt="Green snake close-up artwork"><span class="product-tag">Wildlife photography</span><button class="wish" type="button" aria-label="Save Details of the Wild" aria-pressed="false" data-wish="details-of-the-wild">♡</button></div>
-<div class="art-info"><div class="product-meta"><span>KAALAVERSE COLLECTION</span><span>KV-005</span></div><h3>Details of the Wild</h3><p>Close-up wildlife photograph</p><div class="art-price">₹7,00,000</div><div class="card-actions"><button type="button" class="add-cart" data-cart="Details of the Wild" data-price="700000">Add to Cart</button><a class="buy-now" href="https://wa.me/919567497943?text=I%20would%20like%20to%20purchase%20Details%20of%20the%20Wild%20artwork%20listed%20at%20INR%20700000." target="_blank" rel="noopener">Buy Now</a></div></div></article>
+<div class="art-visual"><img src="../assets/wildlife-green-snake.jpg" alt="Green snake close-up artwork"><span class="product-tag">Wildlife photography</span><button class="wish" type="button" aria-label="Save Details of the Wild" aria-pressed="false" data-wish="details-of-the-wild">♡</button></div>
+<div class="art-info"><div class="product-meta"><span>KAALAVERSE COLLECTION</span><span>KV-005</span></div><h3>Details of the Wild</h3><p>Close-up wildlife photograph</p><div class="art-price">₹7,00,000</div><div class="card-actions"><button type="button" class="add-cart" data-cart="Details of the Wild" data-price="700000">Add to Cart</button><a class="buy-now" href="../cart/?artwork=details-of-the-wild&price=700000">Buy Now</a></div></div></article>
 <article class="art-card" data-category="photography" data-price="800000" data-search="movement expression classical dance performance photography">
-<div class="art-visual"><img src="/assets/performing-arts-dancer.jpg" alt="Classical dance performance artwork"><span class="product-tag">Performance photography</span><button class="wish" type="button" aria-label="Save Movement and Expression" aria-pressed="false" data-wish="movement-expression">♡</button></div>
-<div class="art-info"><div class="product-meta"><span>KAALAVERSE COLLECTION</span><span>KV-006</span></div><h3>Movement & Expression</h3><p>Classical dance performance photograph</p><div class="art-price">₹8,00,000</div><div class="card-actions"><button type="button" class="add-cart" data-cart="Movement & Expression" data-price="800000">Add to Cart</button><a class="buy-now" href="https://wa.me/919567497943?text=I%20would%20like%20to%20purchase%20Movement%20and%20Expression%20artwork%20listed%20at%20INR%20800000." target="_blank" rel="noopener">Buy Now</a></div></div></article>
+<div class="art-visual"><img src="../assets/performing-arts-dancer.jpg" alt="Classical dance performance artwork"><span class="product-tag">Performance photography</span><button class="wish" type="button" aria-label="Save Movement and Expression" aria-pressed="false" data-wish="movement-expression">♡</button></div>
+<div class="art-info"><div class="product-meta"><span>KAALAVERSE COLLECTION</span><span>KV-006</span></div><h3>Movement & Expression</h3><p>Classical dance performance photograph</p><div class="art-price">₹8,00,000</div><div class="card-actions"><button type="button" class="add-cart" data-cart="Movement & Expression" data-price="800000">Add to Cart</button><a class="buy-now" href="../cart/?artwork=movement-and-expression&price=800000">Buy Now</a></div></div></article>
 <article class="art-card" data-category="wildlife" data-price="900000" data-search="small wonders frog wildlife nature photography">
-<div class="art-visual"><img src="/assets/wildlife-frog.jpg" alt="Frog wildlife artwork"><span class="product-tag">Wildlife photography</span><button class="wish" type="button" aria-label="Save Small Wonders" aria-pressed="false" data-wish="small-wonders">♡</button></div>
-<div class="art-info"><div class="product-meta"><span>KAALAVERSE COLLECTION</span><span>KV-007</span></div><h3>Small Wonders</h3><p>Small wildlife and nature photograph</p><div class="art-price">₹9,00,000</div><div class="card-actions"><button type="button" class="add-cart" data-cart="Small Wonders" data-price="900000">Add to Cart</button><a class="buy-now" href="https://wa.me/919567497943?text=I%20would%20like%20to%20purchase%20Small%20Wonders%20artwork%20listed%20at%20INR%20900000." target="_blank" rel="noopener">Buy Now</a></div></div></article>
+<div class="art-visual"><img src="../assets/wildlife-frog.jpg" alt="Frog wildlife artwork"><span class="product-tag">Wildlife photography</span><button class="wish" type="button" aria-label="Save Small Wonders" aria-pressed="false" data-wish="small-wonders">♡</button></div>
+<div class="art-info"><div class="product-meta"><span>KAALAVERSE COLLECTION</span><span>KV-007</span></div><h3>Small Wonders</h3><p>Small wildlife and nature photograph</p><div class="art-price">₹9,00,000</div><div class="card-actions"><button type="button" class="add-cart" data-cart="Small Wonders" data-price="900000">Add to Cart</button><a class="buy-now" href="../cart/?artwork=small-wonders&price=900000">Buy Now</a></div></div></article>
 <article class="art-card" data-category="wildlife" data-price="1000000" data-search="life in the wild tiger deer wildlife">
-<div class="art-visual"><img src="/assets/wildlife-tiger-deer.jpg" alt="Wildlife tiger and deer artwork"><span class="product-tag">Wildlife photography</span><button class="wish" type="button" aria-label="Save Life in the Wild" aria-pressed="false" data-wish="life-in-the-wild">♡</button></div>
-<div class="art-info"><div class="product-meta"><span>KAALAVERSE COLLECTION</span><span>KV-008</span></div><h3>Life in the Wild</h3><p>Wildlife in its natural habitat</p><div class="art-price">₹10,00,000</div><div class="card-actions"><button type="button" class="add-cart" data-cart="Life in the Wild" data-price="1000000">Add to Cart</button><a class="buy-now" href="https://wa.me/919567497943?text=I%20would%20like%20to%20purchase%20Life%20in%20the%20Wild%20artwork%20listed%20at%20INR%201000000." target="_blank" rel="noopener">Buy Now</a></div></div></article>
+<div class="art-visual"><img src="../assets/wildlife-tiger-deer.jpg" alt="Wildlife tiger and deer artwork"><span class="product-tag">Wildlife photography</span><button class="wish" type="button" aria-label="Save Life in the Wild" aria-pressed="false" data-wish="life-in-the-wild">♡</button></div>
+<div class="art-info"><div class="product-meta"><span>KAALAVERSE COLLECTION</span><span>KV-008</span></div><h3>Life in the Wild</h3><p>Wildlife in its natural habitat</p><div class="art-price">₹10,00,000</div><div class="card-actions"><button type="button" class="add-cart" data-cart="Life in the Wild" data-price="1000000">Add to Cart</button><a class="buy-now" href="../cart/?artwork=life-in-the-wild&price=1000000">Buy Now</a></div></div></article>
 <div class="empty" id="emptyState"><h3>No matching artwork</h3><p>Try another keyword or choose a different category.</p><button type="button" id="resetFilters">Show all artwork</button></div>
-</div>>
+</div>
 
 <section class="note">
 <div class="wrap note-row">
@@ -352,7 +362,7 @@ let activeCategory='all';
 function updateCards(){
  const query=$('#artSearch').value.trim().toLowerCase();
  const priceRange=$('#priceFilter').value;
- const cards=$('.art-card');
+ const cards=$$('.art-card');
 
  cards.forEach(card=>{
   const categoryMatch=activeCategory==='all'||card.dataset.category===activeCategory;
@@ -513,13 +523,7 @@ $('[data-cart]').forEach(button=>button.addEventListener('click',()=>{
  try{localStorage.setItem('kaalaverseCart',JSON.stringify(cart));refreshCart();button.textContent='Added ✓';setTimeout(()=>button.textContent='Add to Cart',1200);}
  catch{alert('Cart could not be saved in this browser.');}
 }));
-$('#cartCount').addEventListener('click',()=>{
- const cart=readCart();if(!cart.length){alert('Your cart is empty.');return;}
- const total=cart.reduce((sum,item)=>sum+item.price,0);
- const lines=cart.map(item=>item.name+' — ₹'+item.price.toLocaleString('en-IN')).join('\\n');
- const message='Hello Kaalaverse, I would like to purchase these artworks:\\n'+lines+'\\nTotal: ₹'+total.toLocaleString('en-IN');
- window.open('https://wa.me/919567497943?text='+encodeURIComponent(message),'_blank','noopener');
-});
+$('#cartCount').addEventListener('click',()=>{ window.location.href='../cart/'; });
 refreshCart();
 
 $('#year').textContent=new Date().getFullYear();
