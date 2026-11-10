@@ -449,12 +449,12 @@ document.getElementById('year').textContent=new Date().getFullYear();
   if(!window.JSZip){await new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';s.onload=resolve;s.onerror=reject;document.head.appendChild(s);});}
   const response=await fetch('/assets/kaalaverse-client-photos-assets.zip');if(!response.ok)throw new Error('Photo archive unavailable');
   const zip=await JSZip.loadAsync(await response.blob());
-  const files=Object.values(zip.files).filter(f=>!f.dir&&/\\.(jpe?g|png|webp)$/i.test(f.name));
+  const files=Object.values(zip.files).filter(f=>!f.dir&&/\.(jpe?g|png|webp)$/i.test(f.name));
   if(!files.length)throw new Error('No image files found in archive');
   grid.innerHTML='';
   for(const file of files){
    const blob=await file.async('blob');const url=URL.createObjectURL(blob);
-   const name=file.name.split('/').pop().replace(/\\.[^.]+$/,'').replace(/[-_]+/g,' ').replace(/\\b\\w/g,c=>c.toUpperCase());
+   const name=file.name.split('/').pop().replace(/\.[^.]+$/,'').replace(/[-_]+/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
    const figure=document.createElement('figure');figure.className='photo-story';
    const img=document.createElement('img');img.src=url;img.alt=name+' — Kaalaverse creator photograph';img.loading='lazy';
    const cap=document.createElement('figcaption');const small=document.createElement('small');small.textContent='Creator photography';cap.append(small,document.createTextNode(name));figure.append(img,cap);grid.appendChild(figure);
