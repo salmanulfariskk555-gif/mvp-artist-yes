@@ -506,7 +506,10 @@ $('#enquiryForm').addEventListener('submit',async event=>{
 function readCart(){try{return JSON.parse(localStorage.getItem('kaalaverseCart')||'[]')}catch{return []}}
 function refreshCart(){const cart=readCart();$('#cartCount').textContent='Cart ('+cart.length+')';}
 $('[data-cart]').forEach(button=>button.addEventListener('click',()=>{
- const cart=readCart();cart.push({name:button.dataset.cart,price:Number(button.dataset.price)});
+ const card=button.closest('.art-card');
+ const image=card?.querySelector('.art-visual img')?.getAttribute('src')||'';
+ const cart=readCart();
+ cart.push({name:button.dataset.cart,title:button.dataset.cart,price:Number(button.dataset.price),image:image,quantity:1});
  try{localStorage.setItem('kaalaverseCart',JSON.stringify(cart));refreshCart();button.textContent='Added ✓';setTimeout(()=>button.textContent='Add to Cart',1200);}
  catch{alert('Cart could not be saved in this browser.');}
 }));
