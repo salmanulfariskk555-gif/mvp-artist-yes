@@ -1,4 +1,4 @@
-name: Extract client photo assets
+name: Extract and publish Kaalaverse artwork batch
 
 on:
   push:
@@ -8,24 +8,55 @@ permissions:
   contents: write
 
 jobs:
-  extract:
-    if: ${{ github.event.head_commit.message != 'Extract client photo assets' }}
+  publish-artwork:
+    if: ${{ github.event.head_commit.message != 'Publish uploaded Kaalaverse artwork batch' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Extract optimized client photos
+      - name: Extract uploaded artwork files
         run: |
-          if [ -f "assets/kaalaverse-client-photos-assets.zip" ]; then
-            unzip -o assets/kaalaverse-client-photos-assets.zip -d /tmp/kaalaverse-photos
-            find /tmp/kaalaverse-photos -type f \\( -iname '*.jpg' -o -iname '*.jpeg' \\) -exec cp {} assets/ \;
-          fi
-          if [ -f "assets/kaalaverse-batch1-assets (5).zip" ]; then
-            unzip -o "assets/kaalaverse-batch1-assets (5).zip" -d /tmp/kaalaverse-batch1
-            find /tmp/kaalaverse-batch1 -type f -iname '*.webp' -exec cp {} assets/ \;
-            cp /tmp/kaalaverse-batch1/kaalaverse_batch1/artworks.csv assets/kaalaverse-batch1-artworks.csv
-          fi
+          unzip -o "assets/kaalaverse-batch1-assets (5).zip" -d /tmp/kaalaverse-batch1
+          find /tmp/kaalaverse-batch1/kaalaverse_batch1/assets -type f -iname '*.webp' -exec cp {} assets/ \;
+          cp /tmp/kaalaverse-batch1/kaalaverse_batch1/artworks.csv assets/kaalaverse-batch1-artworks.csv
+      - name: Add artwork cards to homepage and Explore Art
+        run: |
+          python3 - <<'PY'
+          import csv, html, re
+          from pathlib import Path
+          rows = list(csv.DictReader(open('assets/kaalaverse-batch1-artworks.csv', encoding='utf-8-sig')))
+          home = Path('index.html')
+          s = home.read_text(encoding='utf-8')
+          if 'data-batch1-artwork=' not in s:
+              cards = []
+              for n, r in enumerate(rows, 10):
+                  title, img, price = r['title'], r['image'], int(r['price_inr'])
+                  slug = re.sub(r'[^a-z0-9]+','-',title.lower()).strip('-')
+                  t, im = html.escape(title), html.escape(img)
+                  price_label = '₹' + format(price, ',')
+                  cards.append(f'<article class="artwork-card" data-batch1-artwork="{n}"><a class="artwork-photo" href="cart/?artwork={slug}&price={price}"><img src="{im}" alt="{t} — Kaalaverse artwork" loading="lazy"><span>Original artwork</span></a><div class="artwork-info"><div><small>New photography collection</small><h3>{t}</h3></div><strong>{price_label}</strong><a class="artwork-buy" href="cart/?artwork={slug}&price={price}">Purchase artwork ↗</a></div></article>')
+              marker = '<p class="artwork-disclaimer">'
+              if marker not in s: raise SystemExit('Homepage artwork insertion point not found')
+              s = s.replace(marker, '\\n'.join(cards)+'\\n'+marker, 1)
+              home.write_text(s, encoding='utf-8')
+          explore = Path('explore-art/index.html')
+          s = explore.read_text(encoding='utf-8')
+          if 'data-batch1-artwork=' not in s:
+              cards = []
+              for n, r in enumerate(rows, 10):
+                  title, img, price = r['title'], r['image'].replace('assets/','../assets/'), int(r['price_inr'])
+                  slug = re.sub(r'[^a-z0-9]+','-',title.lower()).strip('-')
+                  t, im = html.escape(title), html.escape(img)
+                  price_label = '₹' + format(price, ',')
+                  cards.append(f'<article class="art-card" data-batch1-artwork="{n}" data-category="photography" data-price="{price}" data-search="{html.escape((title+" photography art").lower())}"><div class="art-visual"><img src="{im}" alt="{t} — Kaalaverse artwork" loading="lazy"><span class="product-tag">New photography</span><button class="wish" type="button" aria-label="Save {t}" aria-pressed="false" data-wish="{slug}">♡</button></div><div class="art-info"><div class="product-meta"><span>KAALAVERSE COLLECTION</span><span>KV-{n:03d}</span></div><h3>{t}</h3><p>Photography artwork from the Kaalaverse collection</p><div class="art-price">{price_label}</div><div class="card-actions"><button type="button" class="add-cart" data-cart="{t}" data-price="{price}">Add to Cart</button><a class="buy-now" href="../cart/?artwork={slug}&price={price}">Buy Now</a></div></div></article>')
+              marker = '<div class="empty" id="emptyState">'
+              if marker not in s: raise SystemExit('Explore Art insertion point not found')
+              s = s.replace(marker, '\\n'.join(cards)+'\\n'+marker, 1)
+              explore.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit extracted assets and updated pages
+        run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/*.jpg assets/*.jpeg assets/*.webp assets/kaalaverse-batch1-artworks.csv
-          git commit -m "Extract client photo assets" || exit 0
+          git add assets/*.webp assets/kaalaverse-batch1-artworks.csv index.html explore-art/index.html
+          git commit -m "Publish uploaded Kaalaverse artwork batch" || exit 0
           git push
